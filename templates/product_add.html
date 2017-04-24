@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div>
+        {{ msgs }}
+    </div>
+    <div id="id-div-register">
+        <form method="post">
+            <input type="text" name="name" placeholder="商品名称">
+            <br>
+
+            <input type="text" name="price" placeholder="商品价格">
+            <br>
+            <button type="submit" formaction="{{ url_for('admin.add') }}">创建</button>
+        </form>
+
+    </div>
+{% endblock %}

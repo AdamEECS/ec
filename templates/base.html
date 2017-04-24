@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E.C.</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
+</head>
+<body data-channel="public">
+<div id="layout">
+    {% block head %}
+        <div>
+            <a href="{{ url_for('index.index') }}">首页</a>
+            <a href="{{ url_for('user.login') }}">登录</a>
+            <a href="{{ url_for('user.register') }}">注册</a>
+
+        </div>
+    {% endblock %}
+
+    {% block body %}
+    {% endblock %}
+
+    {% block foot %}
+        <div>copyright</div>
+    {% endblock %}
+</div>
+</body>
+
+</html>

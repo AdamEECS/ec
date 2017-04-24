@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>hello <span>{{ user.username }}</span></h1>
+<div>
+    {% for p in ps %}
+    <div data-id={{ p.id }}>
+
+        产品名称：{{ p.name }}
+        <br>
+        产品价格：{{ p.price }}
+        <br>
+        <a href="{{ url_for('user.cart_add', product_id=p.id) }}">加入购物车</a>
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

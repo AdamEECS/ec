@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div>
+        {{ u.username }}
+        {{ u.cart }}
+    </div>
+    {% for p in ps %}
+    <div data-id={{ p.id }}>
+
+        产品名称：{{ p.name }}
+        <br>
+        产品价格：{{ p.price }}
+        <hr>
+    </div>
+    {% endfor %}
+{% endblock %}

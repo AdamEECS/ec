@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% for p in ps %}
+    <div>
+        产品名称：{{ p.name }}
+        <br>
+        产品价格：{{ p.price }}
+        <hr>
+    </div>
+    {% endfor %}
+{% endblock %}

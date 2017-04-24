@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div id="id-div-login" class="div-hide">
+        <form method="post">
+            <input type="text" name="username" placeholder="用户名">
+            <br>
+            <input type="text" name="password" placeholder="密码">
+            <br>
+            <button type="submit" formaction="{{ url_for('user.login') }}">登录</button>
+        </form>
+    </div>
+
+{% endblock %}
+
