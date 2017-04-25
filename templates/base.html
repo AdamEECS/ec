@@ -12,9 +12,14 @@
     {% block head %}
         <div>
             <a href="{{ url_for('index.index') }}">首页</a>
+            {% if u %}
+            <span>欢迎，{{ u.username }}</span>
+            <a href="{{ url_for('user.cart') }}">购物车</a>
+            <a href="{{ url_for('user.logout') }}">登出</a>
+            {% else %}
             <a href="{{ url_for('user.login') }}">登录</a>
             <a href="{{ url_for('user.register') }}">注册</a>
-
+            {% endif %}
         </div>
     {% endblock %}
 

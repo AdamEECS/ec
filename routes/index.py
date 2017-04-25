@@ -8,9 +8,9 @@ main = Blueprint('index', __name__)
 def index():
     # ms = Product.all()
     u = current_user()
-    print('user:', u)
+    # print('user:', u)
     ps = Product.all()
-    return render_template('index.html', user=u, ps=ps)
+    return render_template('index.html', u=u, ps=ps)
 
 
 

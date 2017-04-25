@@ -2,6 +2,7 @@ from models.user import User
 from models.product import Product
 from routes import *
 from flask import current_app as app
+from decimal import Decimal
 
 main = Blueprint('user', __name__)
 
@@ -94,8 +95,15 @@ def cart_add():
 def cart():
     u = current_user()
     ps_id = u.cart
-    ps = []
-    for p_id in ps_id:
-        p = Product.get(p_id)
-        ps.append(p)
+    ps = [Product.get(p) for p in ps_id]
+    u.count_num = len(ps)
+    u.count_price = sum([Decimal(p.price) for p in ps])
     return render_template('user_cart.html', u=u, ps=ps)
+
+
+@main.route('/logout')
+@login_required
+def logout():
+    p = session.pop('uid')
+    print('logout: pop uid', p)
+    return redirect(url_for('index.index'))
