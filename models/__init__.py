@@ -2,7 +2,7 @@ import time
 from pymongo import *
 
 # mongodb config
-import config
+from config import config
 db = config.db
 
 

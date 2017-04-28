@@ -20,8 +20,8 @@ def register_routes(app):
 
 def configure_app():
 
-    import config
-    app.secret_key = config.secret_key
+    from config import key
+    app.secret_key = key.secret_key
     register_routes(app)
     # 设置 log, 否则输出会被 gunicorn 吃掉
     if not app.debug:
