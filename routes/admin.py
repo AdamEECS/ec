@@ -1,4 +1,5 @@
 from models.product import Product
+from models.user import User
 from routes import *
 from flask import current_app as app
 
@@ -32,3 +33,12 @@ def add():
 def product_list():
     ps = Model.all()
     return render_template('product_list.html', ps=ps)
+
+
+@main.route('/root')
+@login_required
+def root_set():
+    root = User.find_one(username='root')
+    root.role = 'admin'
+    root.save()
+    return redirect(url_for('admin.product_list'))
