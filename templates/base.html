@@ -2,7 +2,7 @@
 <html lang="zh-cmn-Hans">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>E.C.</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
@@ -14,10 +14,10 @@
         <div class="container ">
             <a class="navbar-brand" href="{{ url_for('index.index') }}">首页</a>
 
-            <div class="navbar-right">
+            <div class="right">
 
                 {% if u %}
-                <p class="navbar-text">欢迎，{{ u.username }}</p>
+                <span class="navbar-text">欢迎，{{ u.username }}</span>
                 <a class="btn btn-success navbar-btn" href="{{ url_for('user.cart') }}">购物车
                     <span class="badge">{{ u.cart|count }}</span>
                 </a>
