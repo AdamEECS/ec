@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
-
-    <div id="id-div-register">
-        <form method="post">
-            <input type="text" name="username" placeholder="用户名">
-            <br>
-
-            <input type="text" name="password" placeholder="密码">
-            <br>
-            <button type="submit" formaction="{{ url_for('user.register') }}">注册</button>
-        </form>
-
-    </div>
+<div id="id-div-register" class="div-form center-block div-margin-top-100">
+    <form method="post">
+        <input class="form-control" name="username" placeholder="用户名">
+        <br>
+        <input class="form-control" name="password" placeholder="密码">
+        <br>
+        <button class="btn btn-info btn-block" formaction="{{ url_for('user.register') }}">注册</button>
+    </form>
+</div>
 {% endblock %}

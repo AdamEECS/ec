@@ -8,26 +8,52 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
 </head>
 <body data-channel="public">
-<div id="layout">
+<div id="layout" class="">
     {% block head %}
-        <div>
-            <a href="{{ url_for('index.index') }}">首页</a>
-            {% if u %}
-            <span>欢迎，{{ u.username }}</span>
-            <a href="{{ url_for('user.cart') }}">购物车</a>
-            <a href="{{ url_for('user.logout') }}">登出</a>
-            {% else %}
-            <a href="{{ url_for('user.login') }}">登录</a>
-            <a href="{{ url_for('user.register') }}">注册</a>
-            {% endif %}
-        </div>
-    {% endblock %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container ">
+            <a class="navbar-brand" href="{{ url_for('index.index') }}">首页</a>
 
-    {% block body %}
+            <div class="navbar-right">
+
+                {% if u %}
+                <p class="navbar-text">欢迎，{{ u.username }}</p>
+                <a class="btn btn-success navbar-btn" href="{{ url_for('user.cart') }}">购物车
+                    <span class="badge">{{ u.cart|count }}</span>
+                </a>
+                <a class="btn btn-default navbar-btn" href="{{ url_for('user.logout') }}">登出</a>
+                {% else %}
+                <a class="btn btn-primary navbar-btn" href="{{ url_for('user.login') }}">登录</a>
+                <a class="btn btn-default navbar-btn" href="{{ url_for('user.register') }}">注册</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
     {% endblock %}
+    <div class="main body container">
+        {% block body %}
+        {% endblock %}
+    </div>
+
 
     {% block foot %}
-        <div>copyright</div>
+        <footer class="bs-docs-footer">
+            <div class="container">
+                <ul class="footer-links">
+                    <li><a href="#">GitHub 仓库</a></li>
+                    <li><a href="#">协议</a></li>
+                    <li><a href="#">加入我们</a></li>
+                    <li><a href="#">关于</a></li>
+                </ul>
+                <p>
+                    Designed and built with all the love in the world by @Suzumiya.
+                </p>
+                <p>
+                    本项目源码受 MIT开源协议保护.
+                </p>
+            </div>
+
+        </footer>
     {% endblock %}
 </div>
 </body>

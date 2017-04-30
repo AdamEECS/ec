@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div id="id-div-login" class="div-hide">
+    <div id="id-div-login" class="div-form center-block div-margin-top-100">
         <form method="post">
-            <input type="text" name="username" placeholder="用户名">
+            <input class="form-control" name="username" placeholder="用户名">
             <br>
-            <input type="text" name="password" placeholder="密码">
+            <input class="form-control" name="password" placeholder="密码">
             <br>
-            <button type="submit" formaction="{{ url_for('user.login') }}">登录</button>
+            <button class="btn btn-success btn-block" formaction="{{ url_for('user.login') }}">登录</button>
         </form>
     </div>
 
 {% endblock %}
-

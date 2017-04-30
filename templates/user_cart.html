@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
     <div>
-        {{ u.username }}
-        {{ u.cart }}
+        <h1>Shopping Cart</h1>
     </div>
     {% for p in ps %}
     <div data-id={{ p.id }}>
