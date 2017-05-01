@@ -23,7 +23,7 @@ class User(MongoModel):
             ('avatar', str, 'default.png'),
             ('role', str, 'client'),
             ('salt', str, 'q43129dhs*3'),
-            ('cart', list, []),
+            ('cart', dict, {}),
         ]
         fields.extend(super()._fields())
         return fields
