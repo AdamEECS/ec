@@ -92,3 +92,14 @@
     color: #999;
     margin-right: 30px;
 }
+.product-pic-s {
+    height: 50px;
+    width: 50px;
+}
+.product-pic-l {
+    height: 100px;
+    width: 100px;
+}
+.product-item {
+    padding:5px;
+}

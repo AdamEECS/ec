@@ -18,10 +18,12 @@ def add_page():
 @admin_required
 def add():
     form = request.form
+    pic = request.files['pic']
     status, msgs = Model.valid(form)
     print(status, msgs)
     if status is True:
         p = Model.new(form)
+        p.update_pic(pic)
         msgs.append('{}创建成功'.format(p.name))
         return redirect(url_for('admin.product_list'))
     else:

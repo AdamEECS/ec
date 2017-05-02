@@ -3,14 +3,14 @@
     <div>
         {{ msgs }}
     </div>
-    <div id="id-div-register">
-        <form method="post">
-            <input type="text" name="name" placeholder="商品名称">
+    <div id="id-div-register" class="div-form" >
+        <form method=POST enctype=multipart/form-data action="{{ url_for('admin.add') }}">
+            <input type=file name=pic>
+            <input class="form-control" name="name" placeholder="商品名称">
             <br>
-
-            <input type="text" name="price" placeholder="商品价格">
+            <input class="form-control" name="price" placeholder="商品价格">
             <br>
-            <button type="submit" formaction="{{ url_for('admin.add') }}">创建</button>
+            <button class="btn btn-success btn-block" >创建</button>
         </form>
 
     </div>

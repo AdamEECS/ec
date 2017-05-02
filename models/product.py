@@ -1,4 +1,6 @@
 from . import MongoModel
+from . import timestamp
+from flask import current_app as app
 
 
 class Product(MongoModel):
@@ -23,3 +25,11 @@ class Product(MongoModel):
         status = valid_name
         return status, msgs
 
+    def update_pic(self, pic):
+        allowed_type = ['jpg', 'jpeg', 'gif', 'png']
+        oldname = pic.filename
+        if oldname != '' and oldname.split('.')[-1] in allowed_type:
+            path = app.config['PRODUCT_PIC_DIR']
+            ext = app.config['PRODUCT_PIC_EXT']
+            filename = '{}.{}'.format(str(self.id), ext)
+            pic.save(path + filename)

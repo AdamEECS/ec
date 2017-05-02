@@ -15,7 +15,10 @@
     <tbody>
         {% for p in ps %}
         <tr data-id={{ p.id }}>
-            <td>{{ p.name }}</td>
+            <td>
+                <img src="{{ p.pic }}"  class="product-pic-s">
+                {{ p.name }}
+            </td>
             <td>{{ p.price }}</td>
             <td>
                 <div class="quantity-form">

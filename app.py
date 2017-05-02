@@ -22,6 +22,8 @@ def configure_app():
 
     from config import key
     app.secret_key = key.secret_key
+    from config.config import config_dict
+    app.config.update(config_dict)
     register_routes(app)
     # 设置 log, 否则输出会被 gunicorn 吃掉
     if not app.debug:
