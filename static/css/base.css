@@ -74,6 +74,9 @@
     .quantity-form span {
         width: 20px;
     }
+    .quantity-form a {
+        width: 15px;
+    }
 }
 .th-col-2 {
     width: 20%;
