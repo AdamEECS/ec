@@ -157,3 +157,19 @@ def pay():
     u = current_user()
 
     return render_template('user_pay.html', u=u)
+
+
+@main.route('/orders')
+@login_required
+def orders():
+    u = current_user()
+    os = u.orders()
+    for o in os:
+        o.ct = time_str(o.ct)
+        o.name_items = []
+        print('o.items', o.items)
+        for k, v in o.items.items():
+            p = Product.get(k)
+            p.count = v
+            o.name_items.append(p)
+    return render_template('user_orders.html', os=os, u=u)

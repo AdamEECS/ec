@@ -87,3 +87,8 @@
 #check-order {
     border-radius: 0px;
 }
+.panel-heading-time {
+    display: inline-block;
+    color: #999;
+    margin-right: 30px;
+}

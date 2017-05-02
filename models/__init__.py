@@ -10,6 +10,10 @@ def timestamp():
     return int(time.time())
 
 
+def time_str(t):
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t))
+
+
 def next_id(name):
     query = {
         'name': name,

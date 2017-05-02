@@ -22,6 +22,10 @@ def current_user():
     return u
 
 
+def time_str(t):
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t))
+
+
 def login_required(f):
     @wraps(f)
     def function(*args, **kwargs):

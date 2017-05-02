@@ -15,6 +15,7 @@ class Order(MongoModel):
     def _fields(cls):
         fields = [
             ('orderNo', str, ''),
+            ('items', dict, ''),
             ('amount', str, ''),
             ('user_id', int, -1),
             ('comment', str, ''),

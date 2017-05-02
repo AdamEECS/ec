@@ -103,6 +103,7 @@ class User(MongoModel):
         amount = sum([p.sum for p in ps])
         form = dict(
             user_id=self.id,
+            items=cart,
             amount=amount,
         )
         order = Order.new(form)
@@ -113,3 +114,7 @@ class User(MongoModel):
         self.cart = {}
         self.save()
         return self
+
+    def orders(self):
+        ms = Order.find(user_id=self.id)
+        return ms

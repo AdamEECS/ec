@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <h1>Orders</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            订单详情
+        </div>
+        <div class="col-xs-2">
+            金额
+        </div>
+        <div class="col-xs-2">
+            状态
+        </div>
+    </div>
+    {% for o in os %}
+    <div class="row panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-heading-time">{{ o.ct }}</span>
+            订单号：{{ o.orderNo }}
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-8">
+                {% for i in o.name_items %}
+                <div class="row">
+                    <div class="col-xs-3">
+                        {{ i.id }}
+                    </div>
+                    <div class="col-xs-7">
+                        {{ i.name }}
+                    </div>
+                    <div class="col-xs-2">
+                        x{{ i.count }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-xs-2">
+                {{ o.amount }}
+            </div>
+            <div class="col-xs-2">
+                {{ o.status }}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="th-col-4">订单号</th>
+            <th class="th-col-2">商品</th>
+            <th class="th-col-2">金额</th>
+            <th class="th-col-2">状态</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in ps %}
+        <tr data-id={{ p.id }}>
+            <td>{{ p.name }}</td>
+            <td>{{ p.price }}</td>
+            <td>
+                <div class="quantity-form">
+                    <a href="{{ url_for('user.cart_sub', product_id=p.id) }}"> - </a>
+                    <span>{{ p.count }}</span>
+                    <a href="{{ url_for('user.cart_add', product_id=p.id) }}"> + </a>
+                </div>
+            </td>
+            <td>{{ p.sum }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
