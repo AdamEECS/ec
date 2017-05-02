@@ -9,6 +9,7 @@ class Product(MongoModel):
         fields = [
             ('name', str, ''),
             ('price', str, ''),
+            ('pic', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -27,9 +28,12 @@ class Product(MongoModel):
 
     def update_pic(self, pic):
         allowed_type = ['jpg', 'jpeg', 'gif', 'png']
-        oldname = pic.filename
-        if oldname != '' and oldname.split('.')[-1] in allowed_type:
+        upload_name = pic.filename
+        if upload_name != '' and upload_name.split('.')[-1] in allowed_type:
             path = app.config['PRODUCT_PIC_DIR']
             ext = app.config['PRODUCT_PIC_EXT']
-            filename = '{}.{}'.format(str(self.id), ext)
-            pic.save(path + filename)
+            fullname = '{}{}.{}'.format(path, str(self.id), ext)
+            pic.save(fullname)
+            self.pic = '/' + fullname
+            self.save()
+        return self

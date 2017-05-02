@@ -5,11 +5,13 @@
     </div>
     <div id="id-div-register" class="div-form" >
         <form method=POST enctype=multipart/form-data action="{{ url_for('admin.add') }}">
-            <input type=file name=pic>
-            <input class="form-control" name="name" placeholder="商品名称">
-            <br>
-            <input class="form-control" name="price" placeholder="商品价格">
-            <br>
+            <label for="id-name">商品名称</label>
+            <input class="form-control" name="name" id=id-name >
+            <label for="id-price">商品价格</label>
+            <input class="form-control" name=price id=id-price >
+            <label for="id-pic">商品图片</label>
+            <input class="form-control" type=file name=pic id=id-pic>
+            <hr>
             <button class="btn btn-success btn-block" >创建</button>
         </form>
 

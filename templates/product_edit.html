@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div>
+        {{ msgs }}
+    </div>
+    <div id="id-div-register" class="div-form" >
+        <form method=POST enctype=multipart/form-data action="{{ url_for('admin.product_update', id=p.id) }}">
+            <label for="id-name">商品名称</label>
+            <input class="form-control" name="name" id=id-name value="{{ p.name }}">
+            <label for="id-price">商品价格</label>
+            <input class="form-control" name=price id=id-price value="{{ p.price }}">
+            <label for="id-pic">商品图片</label>
+            <input class="form-control" type=file name=pic id=id-pic>
+            <label for="id-pic-view">图片预览</label>
+            <br>
+            <img src="{{ p.pic }}"  class="product-pic-l" id=id-pic-view>
+            <hr>
+            <button class="btn btn-success btn-block">更新</button>
+        </form>
+
+    </div>
+{% endblock %}

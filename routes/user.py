@@ -118,7 +118,6 @@ def cart():
             p = Product.get(k)
             p.count = v
             p.sum = Decimal(p.price) * int(p.count)
-            p.pic = '/{}{}.{}'.format(app.config['PRODUCT_PIC_DIR'], str(p.id), app.config['PRODUCT_PIC_EXT'])
             ps.append(p)
         u.count_num = len(ps)
         u.count_price = sum([p.sum for p in ps])
@@ -168,10 +167,8 @@ def orders():
     for o in os:
         o.ct = time_str(o.ct)
         o.name_items = []
-        print('o.items', o.items)
         for k, v in o.items.items():
             p = Product.get(k)
             p.count = v
-            p.pic = '/{}{}.{}'.format(app.config['PRODUCT_PIC_DIR'], str(p.id), app.config['PRODUCT_PIC_EXT'])
             o.name_items.append(p)
     return render_template('user_orders.html', os=os, u=u)

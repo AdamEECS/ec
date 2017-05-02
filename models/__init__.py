@@ -156,6 +156,13 @@ class User(MongoModel):
         }
         db[name].update_one(query, values)
 
+    def update(self, form, hard=False):
+        for k, v in form.items():
+            if hard or hasattr(self, k):
+                setattr(self, k, v)
+        self.ut = timestamp()
+        self.save()
+
     def blacklist(self):
         b = [
             '_id',

@@ -1,11 +1,34 @@
 {% extends 'base.html' %}
 {% block body %}
-    {% for p in ps %}
-    <div>
-        产品名称：{{ p.name }}
-        <br>
-        产品价格：{{ p.price }}
-        <hr>
-    </div>
-    {% endfor %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="th-col-4">商品</th>
+            <th class="th-col-2">单价</th>
+            <th class="th-col-2">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in ps %}
+        <tr data-id={{ p.id }}>
+            <td>
+                <img src="{{ p.pic }}"  class="product-pic-s">
+                <a href="{{ url_for('admin.product_edit', id=p.id) }}">{{ p.name }}</a>
+            </td>
+            <td>{{ p.price }}</td>
+            <td>
+                <a>删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <!--{% for p in ps %}-->
+    <!--<div>-->
+        <!--产品名称：{{ p.name }}-->
+        <!--<br>-->
+        <!--产品价格：{{ p.price }}-->
+        <!--<hr>-->
+    <!--</div>-->
+    <!--{% endfor %}-->
 {% endblock %}
