@@ -101,5 +101,8 @@
     width: 200px;
 }
 .product-item {
-    padding:5px;
+    padding: 5px;
+}
+.block-center {
+    text-align: center;
 }
