@@ -4,6 +4,9 @@ import os
 from enum import Enum
 from . import MongoModel
 from . import timestamp
+from decimal import Decimal
+from .order import Order
+from .product import Product
 from flask import current_app as app
 
 
@@ -88,3 +91,25 @@ class User(MongoModel):
         hash1 = hashlib.sha1(password.encode('ascii')).hexdigest()
         hash2 = hashlib.sha1((hash1 + salt).encode('ascii')).hexdigest()
         return hash2
+
+    def buy(self):
+        cart = self.cart
+        ps = []
+        for k, v in cart.items():
+            p = Product.get(k)
+            p.count = v
+            p.sum = Decimal(p.price) * int(p.count)
+            ps.append(p)
+        amount = sum([p.sum for p in ps])
+        form = dict(
+            user_id=self.id,
+            amount=amount,
+        )
+        order = Order.new(form)
+        self.cart_clear()
+        return order
+
+    def cart_clear(self):
+        self.cart = {}
+        self.save()
+        return self

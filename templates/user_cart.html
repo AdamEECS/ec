@@ -1,21 +1,45 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div>
-        <h1>Shopping Cart</h1>
-    </div>
-    {% for p in ps %}
-    <div data-id={{ p.id }}>
+<div>
+    <h1>Shopping Cart</h1>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="th-col-4">商品</th>
+            <th class="th-col-2">单价</th>
+            <th class="th-col-2">数量</th>
+            <th class="th-col-2">小计</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in ps %}
+        <tr data-id={{ p.id }}>
+            <td>{{ p.name }}</td>
+            <td>{{ p.price }}</td>
+            <td>
+                <div class="quantity-form">
+                    <a href="{{ url_for('user.cart_sub', product_id=p.id) }}"> - </a>
+                    <span>{{ p.count }}</span>
+                    <a href="{{ url_for('user.cart_add', product_id=p.id) }}"> + </a>
+                </div>
+            </td>
+            <td>{{ p.sum }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="panel panel-default">
+    <div class="panel-body no-padding">
+        <div class="left panel-div">
+            总计 <span class="count_num">{{ u.count_num }}</span> 件，
+        </div>
+        <div class="left panel-div">
+            总金额 <span class="count_num">{{ u.count_price }}</span> 元。
+        </div>
+        <a href="{{ url_for('user.check_order') }}" class="btn btn-lg btn-danger right" id="check-order">去结算</a>
 
-        产品名称：{{ p.name }}
-        <br>
-        产品价格：{{ p.price }}
-        <br>
-        产品数量：{{ p.count }}
-        <hr>
     </div>
-    {% endfor %}
-    <div>
-        总计 <span class="count_num">{{ u.count_num }}</span> 件，
-        总金额 <span class="count_num">{{ u.count_price }}</span> 元。
-    </div>
+</div>
+
 {% endblock %}

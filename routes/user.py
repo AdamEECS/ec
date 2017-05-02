@@ -92,6 +92,21 @@ def cart_add():
     return redirect(url_for('user.cart'))
 
 
+@main.route('/cart_sub', methods=['GET'])
+@login_required
+def cart_sub():
+    u = current_user()
+    product_id = request.args.get('product_id', None)
+    if product_id:
+        count = u.cart.get(product_id, 0)
+        count -= 1
+        u.cart[product_id] = count
+        if count <= 0:
+            u.cart.pop(product_id)
+        u.save()
+    return redirect(url_for('user.cart'))
+
+
 @main.route('/cart')
 @login_required
 def cart():
@@ -102,9 +117,10 @@ def cart():
         for k, v in ps_id.items():
             p = Product.get(k)
             p.count = v
+            p.sum = Decimal(p.price) * int(p.count)
             ps.append(p)
         u.count_num = len(ps)
-        u.count_price = sum([Decimal(p.price) * int(p.count) for p in ps])
+        u.count_price = sum([p.sum for p in ps])
         return render_template('user_cart.html', u=u, ps=ps)
     except AttributeError:
         return redirect(url_for('user.cart_clear'))
@@ -125,3 +141,19 @@ def logout():
     p = session.pop('uid')
     print('logout: pop uid', p)
     return redirect(url_for('index.index'))
+
+
+@main.route('/check_order')
+@login_required
+def check_order():
+    u = current_user()
+    order = u.buy()
+    return render_template('user_pay.html', order=order, u=u)
+
+
+@main.route('/pay')
+@login_required
+def pay():
+    u = current_user()
+
+    return render_template('user_pay.html', u=u)
