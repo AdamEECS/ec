@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 {% block body %}
 <h1>Product List</h1>
-<div>
+<div class="container">
     {% for p in ps %}
-    <div data-id={{ p.id }}>
-        <img src="{{ p.pic }}" class="product-pic-s">
-        产品名称：{{ p.name }}
-        <br>
-        产品价格：{{ p.price }}
-        <br>
-        <a href="{{ url_for('user.cart_add', product_id=p.id) }}">加入购物车</a>
-        <hr>
+    <div data-id={{ p.id }} class="row product-item list-item">
+        <div class="col-xs-3 col-sm-2 list-pic-fix">
+            <img src="{{ p.pic }}" class="product-pic-m">
+        </div>
+        <div class="col-xs-5 col-sm-6">{{ p.name }}</div>
+        <div class="col-xs-4 col-sm-2">
+            <span class="count_num">￥ {{ p.price }}</span>
+        </div>
+        <div class="col-xs-4 col-sm-2 right">
+            <a class="btn btn-danger" href="{{ url_for('user.cart_add', product_id=p.id)}}">加入购物车</a>
+        </div>
+
     </div>
     {% endfor %}
 </div>

@@ -96,13 +96,27 @@
     height: 50px;
     width: 50px;
 }
+.product-pic-m {
+    height: 100px;
+    width: 100px;
+}
 .product-pic-l {
     height: 200px;
     width: 200px;
 }
 .product-item {
-    padding: 5px;
+    padding: 5px 0;
 }
 .block-center {
     text-align: center;
+}
+.list-item {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.list-item + .list-item {
+    border-top: 1px solid #ddd;
+}
+.list-pic-fix {
+    padding-left: 0;
 }
