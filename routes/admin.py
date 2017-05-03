@@ -67,10 +67,9 @@ def root_set():
 
 
 @main.route('/order_no_reset')
-@login_required
+@admin_required
 def order_no_reset():
     os = Order.all()
     for o in os:
-        o.orderNo = str(o.orderNo)
-        o.save()
+        o.set_uuid('orderNo')
     return redirect(url_for('admin.product_list'))
