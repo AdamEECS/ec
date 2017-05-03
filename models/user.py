@@ -127,4 +127,5 @@ class User(MongoModel):
 
     def orders(self):
         ms = Order.find(user_id=self.id)
+        ms.reverse()
         return ms
