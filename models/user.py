@@ -38,6 +38,16 @@ class User(MongoModel):
         m.save()
         return m
 
+    def update_user(self, form):
+        form = form.to_dict()
+        password = form.pop('password', '')
+        re_password = form.pop('re_password', '')
+        self.update(form)
+        if len(password) > 0 and password == re_password:
+            self.password = self.salted_password(password)
+        self.save()
+        return self
+
     def validate_login(self, form):
         password = form.get('password', '')
         password = self.salted_password(password)

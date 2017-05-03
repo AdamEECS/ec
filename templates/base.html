@@ -38,6 +38,7 @@
                            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                           欢迎，{{ u.username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a class="" href="{{ url_for('user.profile') }}">个人资料</a></li>
                             <li><a class="" href="{{ url_for('user.orders') }}">我的订单</a></li>
                         </ul>
                     </li>

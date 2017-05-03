@@ -48,8 +48,16 @@ def register():
 @login_required
 def profile():
     cu = current_user()
-    cu.avatar = '/' + app.config['USER_AVATARS_DIR'] + cu.avatar
-    return render_template('user_profile.html', cu=cu)
+    return render_template('user_profile.html', u=cu)
+
+
+@main.route('/profile', methods=['POST'])
+@login_required
+def profile_update():
+    cu = current_user()
+    form = request.form
+    cu.update_user(form)
+    return redirect(url_for('user.profile'))
 
 
 @main.route('/uploadavatar', methods=['POST'])
@@ -148,6 +156,7 @@ def logout():
 def check_order():
     u = current_user()
     order = u.buy()
+    # TODO 此处应该保存当时的商品具体信息
     return render_template('user_pay.html', order=order, u=u)
 
 
