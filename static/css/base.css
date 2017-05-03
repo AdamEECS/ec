@@ -123,3 +123,11 @@
 .list-pic-fix {
     padding-left: 0;
 }
+.add-default {
+    color: #ffcb23;
+    text-decoration:none;
+}
+.add-default:hover {
+    color: #ffcb23;
+    text-decoration:none;
+}

@@ -27,6 +27,8 @@ class User(MongoModel):
             ('role', str, 'client'),
             ('salt', str, 'q43129dhs*3'),
             ('cart', dict, {}),
+            ('add_list', list, []),
+            ('add_default', int, 0),
         ]
         fields.extend(super()._fields())
         return fields

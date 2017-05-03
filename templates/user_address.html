@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <h1>Address</h1>
+</div>
+<div id="" class="div-form" >
+        <form method=POST enctype=multipart/form-data action="{{ url_for('user.address') }}">
+            <label for="id-name">收件人姓名</label>
+            <input class="form-control" name="name" id=id-name >
+            <label for="id-phone">联系电话</label>
+            <input class="form-control" name=phone id=id-phone >
+            <label for="id-add">具体地址</label>
+            <input class="form-control" name=address id=id-add >
+            <hr>
+            <button class="btn btn-success btn-block" >创建新地址</button>
+        </form>
+
+    </div>
+<div class="container">
+    {% for add in u.add_list %}
+    <div class="row panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-heading-time">{{ loop.index0 }}：{{ add.name }}</span>
+            {% if loop.index0 == u.add_default %}
+            <a class="right add-default"><span class="glyphicon glyphicon-star-empty"></span> 默认地址</a>
+            {% else %}
+            <a class="right" href="{{ url_for('user.address_default', id=loop.index0)}}"><span>[设为默认地址]</span></a>
+            {% endif %}
+
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-7">
+                {{ add.address }}
+            </div>
+            <div class="col-xs-3">
+                {{ add.phone }}
+            </div>
+            <div class="col-xs-2">
+                {{ add.name }}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

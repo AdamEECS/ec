@@ -201,3 +201,30 @@ def order(orderNo):
         return render_template('user_order.html', o=o, u=u)
     else:
         return redirect(url_for('user.orders'))
+
+
+@main.route('/address')
+@login_required
+def address():
+    cu = current_user()
+    return render_template('user_address.html', u=cu)
+
+
+@main.route('/address', methods=['POST'])
+@login_required
+def address_add():
+    cu = current_user()
+    form = request.form
+    add = form.to_dict()
+    cu.add_list.append(add)
+    cu.save()
+    return render_template('user_address.html', u=cu)
+
+
+@main.route('/address_default/<int:id>')
+@login_required
+def address_default(id):
+    cu = current_user()
+    cu.add_default = id
+    cu.save()
+    return redirect(url_for('user.address'))
