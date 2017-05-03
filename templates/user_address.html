@@ -7,7 +7,11 @@
     {% endif %}
 </div>
 <br>
-<div id="id-div-address-new" class="div-form panel panel-primary" hidden="hidden">
+<div id="id-div-address-new" class="div-form panel panel-primary"
+{% if (u.add_list|count)>0 %}
+hidden="hidden"
+{% endif %}
+>
     <div class="panel-body">
         <form method=POST enctype=multipart/form-data action="{{ url_for('user.address') }}">
             <div class="row">
