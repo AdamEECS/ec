@@ -26,6 +26,13 @@ def time_str(t):
     return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(int(t) + 3600 * 8))
 
 
+def safe_list_get(l, idx, default):
+    try:
+        return l[idx]
+    except IndexError:
+        return default
+
+
 def login_required(f):
     @wraps(f)
     def function(*args, **kwargs):

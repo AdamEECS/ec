@@ -207,7 +207,14 @@ def order(orderNo):
 @login_required
 def address():
     cu = current_user()
-    return render_template('user_address.html', u=cu)
+    address_id = int(request.args.get('id', -1))
+    if address_id >= 0:
+        address_editing = safe_list_get(cu.add_list, address_id, None)
+        if address_editing:
+            address_editing['id'] = address_id
+    else:
+        address_editing = None
+    return render_template('user_address.html', u=cu, a=address_editing)
 
 
 @main.route('/address', methods=['POST'])
@@ -219,6 +226,20 @@ def address_add():
     cu.add_list.append(add)
     cu.save()
     return render_template('user_address.html', u=cu)
+
+
+@main.route('/address_update/<int:id>', methods=['POST'])
+@login_required
+def address_update(id):
+    cu = current_user()
+    form = request.form
+    add = form.to_dict()
+    try:
+        cu.add_list[id] = add
+        cu.save()
+    except IndexError:
+        pass
+    return redirect(url_for('user.address'))
 
 
 @main.route('/address_default/<int:id>')

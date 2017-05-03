@@ -2,31 +2,75 @@
 {% block body %}
 <div>
     <h1>Address</h1>
+    {% if not a %}
+    <button type="button" class="btn btn-danger" id="id-button-address-new">新增地址</button>
+    {% endif %}
 </div>
-<div id="" class="div-form" >
+<br>
+<div id="id-div-address-new" class="div-form panel panel-primary" hidden="hidden">
+    <div class="panel-body">
         <form method=POST enctype=multipart/form-data action="{{ url_for('user.address') }}">
-            <label for="id-name">收件人姓名</label>
-            <input class="form-control" name="name" id=id-name >
-            <label for="id-phone">联系电话</label>
-            <input class="form-control" name=phone id=id-phone >
-            <label for="id-add">具体地址</label>
-            <input class="form-control" name=address id=id-add >
-            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label for="id-name">收件人姓名</label>
+                    <input class="form-control" name="name" id=id-name >
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <label for="id-phone">联系电话</label>
+                    <input class="form-control" name=phone id=id-phone >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="id-add">具体地址</label>
+                    <input class="form-control" name=address id=id-add >
+                </div>
+            </div>
+            <br>
             <button class="btn btn-success btn-block" >创建新地址</button>
         </form>
-
     </div>
+<br>
+</div>
+{% if a %}
+<div class="div-form panel panel-primary">
+    <div class="panel-body">
+        <form method=POST action="{{ url_for('user.address_update', id=a.id)}}">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label for="id-name-update">收件人姓名</label>
+                    <input class="form-control" name="name" id=id-name-update value="{{ a.name }}">
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <label for="id-phone-update">联系电话</label>
+                    <input class="form-control" name=phone id=id-phone-update value="{{ a.phone }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="id-add-update">具体地址</label>
+                    <input class="form-control" name=address id=id-add-update value="{{ a.address }}">
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-success btn-block" >更新地址</button>
+        </form>
+    </div>
+<br>
+</div>
+{% endif %}
 <div class="container">
     {% for add in u.add_list %}
     <div class="row panel panel-default">
         <div class="panel-heading">
             <span class="panel-heading-time">{{ loop.index0 }}：{{ add.name }}</span>
+            <a class="right address-edit-button"
+            href="{{ url_for('user.address', id=loop.index0)}}"><span>[编辑]</span></a>
             {% if loop.index0 == u.add_default %}
             <a class="right add-default"><span class="glyphicon glyphicon-star-empty"></span> 默认地址</a>
             {% else %}
             <a class="right" href="{{ url_for('user.address_default', id=loop.index0)}}"><span>[设为默认地址]</span></a>
             {% endif %}
-
         </div>
         <div class="panel-body">
             <div class="col-xs-7">
@@ -43,5 +87,9 @@
     </div>
     {% endfor %}
 </div>
-
+<script>
+    $('#id-button-address-new').click(function(){
+        $('#id-div-address-new').toggle()
+    })
+</script>
 {% endblock %}
