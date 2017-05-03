@@ -47,6 +47,7 @@ class MongoModel(object):
         fields = [
             '_id',
             ('id', int, -1),
+            ('uuid', str, ''),
             ('type', str, ''),
             ('deleted', bool, False),
             ('ct', int, 0),
@@ -100,6 +101,7 @@ class User(MongoModel):
         m.ct = ts
         m.ut = ts
         m.type = name.lower()
+        m.set_uuid()
         m.save()
         return m
 

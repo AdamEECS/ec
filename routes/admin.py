@@ -66,10 +66,17 @@ def root_set():
     return redirect(url_for('admin.product_list'))
 
 
-@main.route('/order_no_reset')
+@main.route('/uuid_reset_all')
 @admin_required
 def order_no_reset():
     os = Order.all()
+    us = User.all()
+    ps = Product.all()
     for o in os:
         o.set_uuid('orderNo')
+        o.set_uuid()
+    for u in us:
+        u.set_uuid()
+    for p in ps:
+        p.set_uuid()
     return redirect(url_for('admin.product_list'))
