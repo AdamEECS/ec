@@ -27,7 +27,7 @@ class Order(MongoModel):
     @classmethod
     def new(cls, form):
         m = super().new(form)
-        m.orderNo = uuid1()
+        m.orderNo = str(uuid1())
         m.status = 'pending'
         m.save()
         return m

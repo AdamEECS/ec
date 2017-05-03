@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
-    <h1>Orders</h1>
+    <h1>Order</h1>
 </div>
 <div class="container">
     <div class="row">
@@ -15,11 +15,10 @@
             状态
         </div>
     </div>
-    {% for o in os %}
     <div class="row panel panel-default">
         <div class="panel-heading">
             <span class="panel-heading-time">{{ o.ct }}</span>
-            <a href="{{ url_for('user.order', orderNo=o.orderNo) }}">订单号：{{ o.orderNo }}</a>
+            订单号：{{ o.orderNo }}
         </div>
         <div class="panel-body">
             <div class="col-xs-8">
@@ -46,7 +45,6 @@
         </div>
 
     </div>
-    {% endfor %}
 </div>
 
 {% endblock %}

@@ -1,4 +1,5 @@
 from models.product import Product
+from models.order import Order
 from models.user import User
 from routes import *
 from flask import current_app as app
@@ -62,4 +63,14 @@ def root_set():
     root = User.find_one(username='root')
     root.role = 'admin'
     root.save()
+    return redirect(url_for('admin.product_list'))
+
+
+@main.route('/order_no_reset')
+@login_required
+def order_no_reset():
+    os = Order.all()
+    for o in os:
+        o.orderNo = str(o.orderNo)
+        o.save()
     return redirect(url_for('admin.product_list'))

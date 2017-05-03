@@ -11,7 +11,7 @@ def timestamp():
 
 
 def time_str(t):
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t))
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(int(t) + 3600 * 8))
 
 
 def next_id(name):

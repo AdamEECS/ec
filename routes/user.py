@@ -1,5 +1,6 @@
 from models.user import User
 from models.product import Product
+from models.order import Order
 from routes import *
 from flask import current_app as app
 from decimal import Decimal
@@ -181,3 +182,22 @@ def orders():
             p.count = v
             o.name_items.append(p)
     return render_template('user_orders.html', os=os, u=u)
+
+
+@main.route('/order/<orderNo>')
+@login_required
+def order(orderNo):
+    u = current_user()
+    print(orderNo)
+    o = Order.find_one(orderNo=orderNo)
+    print(o)
+    if o is not None and o.user_id == u.id:
+        o.ct = time_str(o.ct)
+        o.name_items = []
+        for k, v in o.items.items():
+            p = Product.get(k)
+            p.count = v
+            o.name_items.append(p)
+        return render_template('user_order.html', o=o, u=u)
+    else:
+        return redirect(url_for('user.orders'))
