@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
-<div id="" class="div-form" >
+<div>
+    <h1>Profile</h1>
+</div>
+<div class="div-form sign-flow" >
     <form method=POST enctype=multipart/form-data action="{{ url_for('user.profile') }}">
         <label for="id-name">用户名</label>
         <input class="form-control" name="username" id=id-name value="{{ u.username }}">
@@ -9,7 +12,7 @@
         <label for="id-re-password">重复密码</label>
         <input class="form-control" name=re_password id=id-re-password >
         <hr>
-        <button class="btn btn-success btn-block" >更新</button>
+        <button class="btn btn-success btn-block">更新</button>
     </form>
 
 </div>
