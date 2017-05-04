@@ -1,20 +1,18 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block login %}
 <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
-<div class="row">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-10 col-sm-6 col-md-4">
-        <div id="id-div-register" class="div-form div-margin-top-100 ">
-            <form method="post" action="{{ url_for('user.register') }}">
-                <input class="form-control" name="username" id="id-input-username" placeholder="用户名">
-                <input class="form-control" name="password" id="id-input-password" placeholder="密码">
-                <br>
-                <button class="btn btn-info btn-block">注册</button>
-            </form>
+
+<div id="id-div-register" class="div-form sign-flow">
+    <form method="post" action="{{ url_for('user.register') }}">
+        <div class="group-inputs">
+            <input name="username" id="id-input-username" placeholder="用户名">
+            <input name="password" id="id-input-password" placeholder="密码">
         </div>
-    </div>
-    <div class="col-xs-1"></div>
+        <br>
+        <button class="btn btn-info btn-block">注册</button>
+    </form>
 </div>
+
 <div id="particles-js"></div>
 <script type="text/javascript">
     particlesJS.load('particles-js', '/static/js/particles.json');

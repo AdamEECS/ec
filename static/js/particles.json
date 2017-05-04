@@ -71,8 +71,8 @@
         "detect_on": "canvas",
         "events": {
             "onhover": {
-                "enable": false,
-                "mode": "repulse"
+                "enable": true,
+                "mode": "grab"
             },
             "onclick": {
                 "enable": true,
@@ -82,7 +82,7 @@
         },
         "modes": {
             "grab": {
-                "distance": 800,
+                "distance": 500,
                 "line_linked": {
                     "opacity": 1
                 }
@@ -99,7 +99,7 @@
                 "duration": 0.4
             },
             "push": {
-                "particles_nb": 4
+                "particles_nb": 3
             },
             "remove": {
                 "particles_nb": 2

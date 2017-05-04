@@ -10,90 +10,90 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body data-channel="public">
-<div id="layout" class="">
-    {% block head %}
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#base-nav-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('index.index') }}">首页</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="base-nav-collapse-1">
-                <form class="navbar-form navbar-left" action="{{ url_for('index.index')}}" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="search">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if u %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"
-                           data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                          欢迎，{{ u.username }} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="" href="{{ url_for('user.profile') }}">个人资料</a></li>
-                            <li><a class="" href="{{ url_for('user.orders') }}">我的订单</a></li>
-                            <li><a class="" href="{{ url_for('user.address') }}">地址管理</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="block-center" href="{{ url_for('user.cart') }}">购物车
-                        <span class="badge">{{ u.cart|count }}</span>
-                    </a></li>
-                    <li>
-                        <a class="block-center" href="{{ url_for('user.logout') }}">
-                            <span class="glyphicon glyphicon-off"></span> 登出
-                        </a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a class="block-center" href="{{ url_for('user.login') }}">
-                            <span class="glyphicon glyphicon-log-in"></span> 登录
-                        </a>
-                    </li>
-                    <li>
-                        <a class="block-center" href="{{ url_for('user.register') }}">
-                            <span class="glyphicon glyphicon-user"></span> 注册
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+{% block head %}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#base-nav-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('index.index') }}">首页</a>
         </div>
-    </nav>
-    {% endblock %}
-    <div class="main body container">
-        {% block body %}
-        {% endblock %}
+
+        <div class="collapse navbar-collapse" id="base-nav-collapse-1">
+            <form class="navbar-form navbar-left" action="{{ url_for('index.index')}}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if u %}
+                <li class="dropdown">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                      欢迎，{{ u.username }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="" href="{{ url_for('user.profile') }}">个人资料</a></li>
+                        <li><a class="" href="{{ url_for('user.orders') }}">我的订单</a></li>
+                        <li><a class="" href="{{ url_for('user.address') }}">地址管理</a></li>
+                    </ul>
+                </li>
+                <li><a class="block-center" href="{{ url_for('user.cart') }}">购物车
+                    <span class="badge">{{ u.cart|count }}</span>
+                </a></li>
+                <li>
+                    <a class="block-center" href="{{ url_for('user.logout') }}">
+                        <span class="glyphicon glyphicon-off"></span> 登出
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a class="block-center" href="{{ url_for('user.login') }}">
+                        <span class="glyphicon glyphicon-log-in"></span> 登录
+                    </a>
+                </li>
+                <li>
+                    <a class="block-center" href="{{ url_for('user.register') }}">
+                        <span class="glyphicon glyphicon-user"></span> 注册
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
+</nav>
+{% endblock %}
 
-
-    {% block foot %}
-        <footer class="bs-docs-footer">
-            <div class="container">
-                <ul class="footer-links">
-                    <li><a href="#">GitHub 仓库</a></li>
-                    <li><a href="#">协议</a></li>
-                    <li><a href="#">加入我们</a></li>
-                    <li><a href="#">关于</a></li>
-                </ul>
-                <p>
-                    Designed and built with all the love in the world by @Suzumiya.
-                </p>
-                <p>
-                    本项目源码受 MIT开源协议保护.
-                </p>
-            </div>
-
-        </footer>
+{% block login %}
+<div class="main body container">
+    {% block body %}
     {% endblock %}
 </div>
+{% endblock %}
+
+{% block foot %}
+<footer class="bs-docs-footer">
+    <div class="container">
+        <ul class="footer-links">
+            <li><a href="#">GitHub 仓库</a></li>
+            <li><a href="#">协议</a></li>
+            <li><a href="#">加入我们</a></li>
+            <li><a href="#">关于</a></li>
+        </ul>
+        <p>
+            Designed and built with all the love in the world by @Suzumiya.
+        </p>
+        <p>
+            本项目源码受 MIT 开源协议保护.
+        </p>
+    </div>
+
+</footer>
+{% endblock %}
 </body>
 
 </html>
