@@ -60,14 +60,14 @@ hidden="hidden"
             <button class="btn btn-success btn-block" >更新地址</button>
         </form>
     </div>
-<br>
+    <br>
 </div>
 {% endif %}
 <div class="container">
     {% for add in u.add_list %}
     <div class="row panel panel-default">
         <div class="panel-heading">
-            <span class="panel-heading-time">{{ loop.index0 }}：{{ add.name }}</span>
+            <span class="panel-heading-time {% if loop.index0 == u.add_default %} add-default {% endif %}">{{ add.name }}</span>
             <a class="right address-edit-button"
             href="{{ url_for('user.address', id=loop.index0)}}"><span>[编辑]</span></a>
             {% if loop.index0 == u.add_default %}
@@ -77,15 +77,31 @@ hidden="hidden"
             {% endif %}
         </div>
         <div class="panel-body">
-            <div class="col-xs-7">
-                {{ add.address }}
+            <div class="row">
+                <div class="col-xs-3 col-md-2">
+                    <span class="right">姓名：</span>
+                </div>
+                <div class="col-xs-9 col-md-10">
+                    {{ add.name }}
+                </div>
             </div>
-            <div class="col-xs-3">
-                {{ add.phone }}
+            <div class="row">
+                <div class="col-xs-3 col-md-2">
+                    <span class="right">电话：</span>
+                </div>
+                <div class="col-xs-9 col-md-10">
+                    {{ add.phone }}
+                </div>
             </div>
-            <div class="col-xs-2">
-                {{ add.name }}
+            <div class="row">
+                <div class="col-xs-3 col-md-2">
+                    <span class="right">地址：</span>
+                </div>
+                <div class="col-xs-9 col-md-10">
+                    {{add.address}}
+                </div>
             </div>
+
         </div>
 
     </div>

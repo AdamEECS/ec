@@ -57,7 +57,7 @@ def profile():
 def profile_update():
     cu = current_user()
     form = request.form
-    cu.update_user(form)
+    cu.safe_update_user(form)
     return redirect(url_for('user.profile'))
 
 
@@ -130,8 +130,7 @@ def cart():
 @login_required
 def cart_clear():
     u = current_user()
-    u.cart = {}
-    u.save()
+    u.cart_clear()
     return redirect(url_for('user.cart'))
 
 

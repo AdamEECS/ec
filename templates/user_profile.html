@@ -4,7 +4,7 @@
     <h1>Profile</h1>
 </div>
 <div class="div-form sign-flow" >
-    <form method=POST enctype=multipart/form-data action="{{ url_for('user.profile') }}">
+    <form method=POST enctype=multipart/form-data action="{{ url_for('user.profile_update') }}">
         <label for="id-name">用户名</label>
         <input class="form-control" name="username" id=id-name value="{{ u.username }}">
         <label for="id-password">修改密码</label>

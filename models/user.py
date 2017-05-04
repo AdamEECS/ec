@@ -43,9 +43,21 @@ class User(MongoModel):
 
     def update_user(self, form):
         form = form.to_dict()
+        form.pop('role', '')
         password = form.pop('password', '')
         re_password = form.pop('re_password', '')
         self.update(form)
+        if len(password) > 0 and password == re_password:
+            self.password = self.salted_password(password)
+        self.save()
+        return self
+
+    def safe_update_user(self, form):
+        username = form.get('username', '')
+        password = form.get('password', '')
+        re_password = form.get('re_password', '')
+        if len(username) > 0:
+            self.username = username
         if len(password) > 0 and password == re_password:
             self.password = self.salted_password(password)
         self.save()
@@ -108,11 +120,14 @@ class User(MongoModel):
     def get_cart_detail(self):
         cart = self.cart
         ps = []
-        for k, v in cart.items():
-            p = Product.get(k)
-            p.count = v
-            p.sum = str(Decimal(p.price) * int(p.count))
-            ps.append(p)
+        try:
+            for k, v in cart.items():
+                p = Product.get(k)
+                p.count = v
+                p.sum = str(Decimal(p.price) * int(p.count))
+                ps.append(p)
+        except AttributeError:
+            self.cart_clear()
         return ps
 
     def buy(self, kwargs):

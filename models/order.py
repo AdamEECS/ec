@@ -39,6 +39,11 @@ class Order(MongoModel):
         self.save()
         return self
 
+    def delivery(self):
+        self.status = 'delivery'
+        self.save()
+        return self
+
     def finish(self):
         self.status = 'finish'
         self.save()

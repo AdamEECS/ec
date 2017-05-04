@@ -3,7 +3,7 @@
     <div>
         {{ msgs }}
     </div>
-    <div id="id-div-register" class="div-form" >
+    <div class="div-form sign-flow" >
         <form method=POST enctype=multipart/form-data action="{{ url_for('admin.product_update', id=p.id) }}">
             <label for="id-name">商品名称</label>
             <input class="form-control" name="name" id=id-name value="{{ p.name }}">

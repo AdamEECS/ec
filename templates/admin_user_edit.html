@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <h1>Profile</h1>
+</div>
+<h3>基本信息</h3>
+<div class="div-form sign-flow" >
+    <form method=POST enctype=multipart/form-data action="{{ url_for('admin.user_update', id=m.id) }}">
+        <label for="id-name">用户名</label>
+        <input class="form-control" name="username" id=id-name value="{{ m.username }}">
+        <label for="id-password">修改密码</label>
+        <input class="form-control" name=password id=id-password >
+        <label for="id-re-password">重复密码</label>
+        <input class="form-control" name=re_password id=id-re-password >
+        <hr>
+        <button class="btn btn-success btn-block">更新</button>
+    </form>
+</div>
+<h3>购物车</h3>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="th-col-4">商品</th>
+            <th class="th-col-1">单价</th>
+            <th class="th-col-2">数量</th>
+            <th class="th-col-1">小计</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in ps %}
+        <tr data-id={{ p.id }}>
+            <td>{{ p.name }}</td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.count }}</td>
+            <td>{{ p.sum }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h3>收货地址</h3>
+<div class="container">
+    {% for add in m.add_list %}
+    <div class="row panel panel-default">
+        <div class="panel-body {% if loop.index0 == m.add_default %} add-default {% endif %}">
+            <div class="row">
+                <div class="col-xs-3 col-md-2">
+                    <span class="right">姓名：</span>
+                </div>
+                <div class="col-xs-9 col-md-10">
+                    {{ add.name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3 col-md-2">
+                    <span class="right">电话：</span>
+                </div>
+                <div class="col-xs-9 col-md-10">
+                    {{ add.phone }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3 col-md-2">
+                    <span class="right">地址：</span>
+                </div>
+                <div class="col-xs-9 col-md-10">
+                    {{add.address}}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
