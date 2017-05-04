@@ -27,7 +27,15 @@ html, body {
   margin-left: auto;
   margin-right: auto;
 }
-
+.page-wrap {
+    min-height: 100%;
+    margin-bottom: -300px;
+}
+.page-wrap:after {
+    content: "";
+    display: block;
+    height: 300px;
+}
 .div-margin-top-100 {
     margin-top: 170px;
 }
@@ -39,10 +47,11 @@ html, body {
     text-align: center;
     background-color: #2a2730;
     text-align: left;
+    z-index: 1;
+    position: relative;
 }
 .main {
     padding-top: 70px;
-    min-height: 420px;
 }
 .footer-links {
     padding-left: 0;
