@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="">
+    <div class="stepflex" >
+        <dl class="first done">
+            <dt class="s-num">1</dt>
+            <dd class="s-text">我的购物车</dd>
+        </dl>
+        <dl class="normal doing">
+            <dt class="s-num">2</dt>
+            <dd class="s-text">填写核对订单信息</dd>
+        </dl>
+        <dl class="normal last">
+            <dt class="s-num">3</dt>
+            <dd class="s-text">成功提交订单</dd>
+        </dl>
+    </div>
+    <h1>结算页
+        <span class="count_num"></span>
+    </h1>
+    <br><br>
+</div>
+
+<form action="{{ url_for('user.pay')}}" method="post">
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4>收货人信息</h4>
+        <div class="container-fluid" id=id-div-add-default>
+            {% if not u.add %}
+            还没有地址，去<a href="{{ url_for('user.address')}}">创建</a>
+            {% else %}
+            <label>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1">
+                        <input class="right" type="radio" name="add" value="{{ u.add_default }}" checked required>
+                    </div>
+                    <div class="col-xs-5 col-sm-2">
+                        {{ u.add.name }}
+                    </div>
+                    <div class="col-xs-5 col-sm-2">
+                        {{ u.add.phone }}
+                    </div>
+                    <div class="col-xs-12 col-sm-7">
+                        {{ u.add.address }}
+                    </div>
+                </div>
+            </label>
+            <a href="#" id=id-button-more>更多地址</a>
+            {% endif %}
+        </div>
+        <div class="container-fluid" id=id-div-add-more hidden>
+            {% for add in u.add_list %}
+            <label>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1">
+                        <input class="right" type="radio" name="add" value="{{ loop.index0 }}">
+                    </div>
+                    <div class="col-xs-5 col-sm-2">
+                        {{ add.name }}
+                    </div>
+                    <div class="col-xs-5 col-sm-2">
+                        {{ add.phone }}
+                    </div>
+                    <div class="col-xs-12 col-sm-7">
+                        {{ add.address }}
+                    </div>
+                </div>
+            </label>
+            {% endfor %}
+            <a href="#" id=id-button-less>收起地址</a>
+        </div>
+
+        <h4>支付方式</h4>
+        <div class="container-fluid">
+            <label>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1">
+                        <input class=right type="radio" name="pay" value="alipay" required>
+                    </div>
+                    <div class="col-xs-10 col-sm-10">
+                        支付宝
+                    </div>
+                </div>
+            </label>
+            <label>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1">
+                        <input class=right type="radio" name="pay" value="wechat" >
+                    </div>
+                    <div class="col-xs-10 col-sm-10">
+                        微信支付
+                    </div>
+                </div>
+            </label>
+            <label>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1">
+                        <input class=right type="radio" name="pay" value="face2face">
+                    </div>
+                    <div class="col-xs-10 col-sm-10">
+                        货到付款
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <h4>商品清单</h4>
+        <div class="container-fluid">
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th class="th-col-4">商品</th>
+                        <th class="th-col-1">单价</th>
+                        <th class="th-col-2">数量</th>
+                        <th class="th-col-1">小计</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in ps %}
+                    <tr data-id={{ p.id }}>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.price }}</td>
+                        <td>x{{ p.count }}</td>
+                        <td>{{ p.sum }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body no-padding">
+        <div class="left panel-h4">
+            <h4>应付总额 : <span class="count_num">{{ u.count_price }}</span> 元</h4>
+        </div>
+        <button class="btn btn-lg btn-danger right" id="check-order">确认付款</button>
+    </div>
+</div>
+</form>
+
+<script>
+$('#id-button-more').click(function(){
+    $('#id-div-add-more').show()
+    $('#id-div-add-default').hide()
+})
+$('#id-button-less').click(function(){
+    $('#id-div-add-more').hide()
+    $('#id-div-add-default').show()
+})
+</script>
+{% endblock %}

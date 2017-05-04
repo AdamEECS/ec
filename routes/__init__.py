@@ -53,3 +53,13 @@ def admin_required(f):
         return f(*args, **kwargs)
 
     return function
+
+
+def cart_not_empty_required(f):
+    @wraps(f)
+    def function(*args, **kwargs):
+        if not current_user().cart_not_empty():
+            return redirect(url_for('index.index'))
+        return f(*args, **kwargs)
+
+    return function

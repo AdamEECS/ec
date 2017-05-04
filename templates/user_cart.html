@@ -35,14 +35,29 @@
 </table>
 <div class="panel panel-default">
     <div class="panel-body no-padding">
+        {% if (ps|count) == 0 %}
+        <div class="left ">
+            <div class="empty-cart-title">
+                什么？购物车里竟然是空的！
+            </div>
+            <div class="empty-cart">
+                “再忙，也要买点东西犒劳自己~”
+            </div>
+
+        </div>
+        {% else %}
         <div class="left panel-div">
             总计 <span class="count_num">{{ u.count_num }}</span> 件，
         </div>
         <div class="left panel-div">
             总金额 <span class="count_num">{{ u.count_price }}</span> 元。
         </div>
-        <a href="{{ url_for('user.check_order') }}" class="btn btn-lg btn-danger right" id="check-order">去结算</a>
-
+        {% endif %}
+        <a href="{{ url_for('user.check_order') }}" class="btn btn-lg btn-danger right" id="check-order"
+        {% if (ps|count) == 0 %}
+        disabled
+        {% endif %}
+        >去结算</a>
     </div>
 </div>
 

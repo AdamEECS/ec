@@ -80,3 +80,22 @@ def product_update(id):
 #     for p in ps:
 #         p.set_uuid()
 #     return redirect(url_for('admin.product_list'))
+
+
+@main.route('/clear_order_items')
+@admin_required
+def clear_order_items():
+    os = Order.all()
+    for o in os:
+        o.items = []
+        o.save()
+    return redirect(url_for('admin.product_list'))
+
+
+@main.route('/clear_orders')
+@admin_required
+def clear_orders():
+    os = Order.all()
+    for o in os:
+        o.delete()
+    return redirect(url_for('admin.product_list'))

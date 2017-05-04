@@ -120,19 +120,10 @@ def cart_sub():
 @login_required
 def cart():
     u = current_user()
-    ps_id = u.cart
-    ps = []
-    try:
-        for k, v in ps_id.items():
-            p = Product.get(k)
-            p.count = v
-            p.sum = Decimal(p.price) * int(p.count)
-            ps.append(p)
-        u.count_num = len(ps)
-        u.count_price = sum([p.sum for p in ps])
-        return render_template('user_cart.html', u=u, ps=ps)
-    except AttributeError:
-        return redirect(url_for('user.cart_clear'))
+    ps = u.get_cart_detail()
+    u.count_num = len(ps)
+    u.count_price = sum([Decimal(p.sum) for p in ps])
+    return render_template('user_cart.html', u=u, ps=ps)
 
 
 @main.route('/cart_clear')
@@ -154,19 +145,24 @@ def logout():
 
 @main.route('/check_order')
 @login_required
+@cart_not_empty_required
 def check_order():
     u = current_user()
-    order = u.buy()
-    # TODO 此处应该保存当时的商品具体信息
-    return render_template('user_pay.html', order=order, u=u)
+    u.get_default_add()
+    ps = u.get_cart_detail()
+    u.count_num = len(ps)
+    u.count_price = sum([Decimal(p.sum) for p in ps])
+    return render_template('user_check_order.html', u=u, ps=ps)
 
 
-@main.route('/pay')
+@main.route('/pay', methods=['POST'])
 @login_required
+@cart_not_empty_required
 def pay():
     u = current_user()
-
-    return render_template('user_pay.html', u=u)
+    form = request.form
+    u.buy(form)
+    return redirect(url_for('user.orders'))
 
 
 @main.route('/orders')
@@ -176,11 +172,6 @@ def orders():
     os = u.orders()
     for o in os:
         o.ct = time_str(o.ct)
-        o.name_items = []
-        for k, v in o.items.items():
-            p = Product.get(k)
-            p.count = v
-            o.name_items.append(p)
     return render_template('user_orders.html', os=os, u=u)
 
 
@@ -188,16 +179,9 @@ def orders():
 @login_required
 def order(orderNo):
     u = current_user()
-    print(orderNo)
     o = Order.find_one(orderNo=orderNo)
-    print(o)
     if o is not None and o.user_id == u.id:
         o.ct = time_str(o.ct)
-        o.name_items = []
-        for k, v in o.items.items():
-            p = Product.get(k)
-            p.count = v
-            o.name_items.append(p)
         return render_template('user_order.html', o=o, u=u)
     else:
         return redirect(url_for('user.orders'))

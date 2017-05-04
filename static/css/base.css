@@ -99,6 +99,9 @@ html, body {
 .panel-div {
     margin: 12px;
 }
+.panel-h4 {
+    margin: 2px 12px;
+}
 #check-order {
     border-radius: 0px;
 }
@@ -198,3 +201,72 @@ html, body {
 .group-inputs input + input {
     border-top: 1px solid #d5d5d5;
 }
+label {
+    width: 100%;
+}
+.empty-cart-title {
+    margin-top: 2px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 16px;
+}
+.empty-cart {
+    margin-left: 20px;
+    color: #bbb;
+}
+
+/*       -----------购物车局部css开始-----------     */
+.stepflex {
+    display: inline-block;
+    display: block;
+    border-top: 5px solid #ccc;
+    text-align: center;
+    margin: 30px 0 0;
+    float: right;
+}
+.stepflex:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.stepflex dl.done {
+    border-top-color: #caecb6;
+}
+.stepflex dl.doing {
+    border-top-color: #7abd54;
+}
+.stepflex dl {
+    float: left;
+    position: relative;
+    width: 160px;
+    top: -5px;
+    border-top: 5px solid #ccc;
+}
+.stepflex dl.done .s-num {
+    background-position: -46px 0;
+}
+.stepflex dl.doing .s-num {
+    background-position: -23px 0;
+}
+.stepflex .s-num {
+    position: relative;
+    margin: -15px auto 0;
+    color: #fff;
+    font-weight: 700;
+    width: 23px;
+    height: 23px;
+    background-image: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/step2013.png);
+    line-height: 23px;
+}
+.stepflex dl.done .s-text {
+    color: #caecb6;
+}
+.stepflex dl.doing .s-text {
+    color: #7abd54;
+}
+.stepflex .s-text {
+    color: #ccc;
+}
+/*       -----------购物车局部css结束-----------     */

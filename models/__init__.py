@@ -4,6 +4,7 @@ from uuid import uuid4
 
 # mongodb config
 from config import config
+
 db = config.db
 
 
@@ -13,6 +14,13 @@ def timestamp():
 
 def time_str(t):
     return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(int(t) + 3600 * 8))
+
+
+def safe_list_get(l, idx, default):
+    try:
+        return l[idx]
+    except IndexError:
+        return default
 
 
 def short_uuid():
@@ -161,7 +169,9 @@ class User(MongoModel):
             'id': self.id,
         }
         values = {
-            'deleted': True
+            '$set': {
+                'deleted': True,
+            },
         }
         db[name].update_one(query, values)
 

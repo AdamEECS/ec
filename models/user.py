@@ -4,6 +4,7 @@ import os
 from enum import Enum
 from . import MongoModel
 from . import timestamp
+from . import safe_list_get
 from decimal import Decimal
 from .order import Order
 from .product import Product
@@ -104,18 +105,30 @@ class User(MongoModel):
         hash2 = hashlib.sha1((hash1 + salt).encode('ascii')).hexdigest()
         return hash2
 
-    def buy(self):
+    def get_cart_detail(self):
         cart = self.cart
         ps = []
         for k, v in cart.items():
             p = Product.get(k)
             p.count = v
-            p.sum = Decimal(p.price) * int(p.count)
+            p.sum = str(Decimal(p.price) * int(p.count))
             ps.append(p)
-        amount = sum([p.sum for p in ps])
+        return ps
+
+    def buy(self, kwargs):
+        ps = self.get_cart_detail()
+        print('obj-ps:', ps)
+        amount = sum([Decimal(p.sum) for p in ps])
+        add_id = int(kwargs.get('add', 0))
+        address = safe_list_get(self.add_list, add_id, '')
+        ps = [p.__dict__ for p in ps]
+        print('dic-ps:', ps)
         form = dict(
             user_id=self.id,
-            items=cart,
+            user_uuid=self.uuid,
+            address=address,
+            payment=kwargs.get('pay'),
+            items=ps,
             amount=amount,
         )
         order = Order.new(form)
@@ -127,7 +140,17 @@ class User(MongoModel):
         self.save()
         return self
 
+    def cart_not_empty(self):
+        if len(self.cart) > 0:
+            return True
+        else:
+            return False
+
     def orders(self):
         ms = Order.find(user_id=self.id)
         ms.reverse()
         return ms
+
+    def get_default_add(self):
+        self.add = safe_list_get(self.add_list, self.add_default, None)
+
