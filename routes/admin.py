@@ -95,10 +95,10 @@ def product_edit(uuid):
 def product_update(uuid):
     p = Model.find_one(uuid=uuid)
     form = request.form
-    pic = request.files['pic']
-    p.update(form, hard=True)
-    p.update_pic(pic)
-    return redirect(url_for('admin.product_list'))
+    # pic = request.files['pic']
+    p.update(form)
+    # p.update_pic(pic)
+    return redirect(url_for('admin.product_edit', uuid=p.uuid))
 
 
 @main.route('/delete/<int:id>')
