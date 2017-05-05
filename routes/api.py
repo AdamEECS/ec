@@ -44,3 +44,12 @@ def cart_sub():
         u.save()
         response['status'] = 'OK'
     return json.dumps(response)
+
+
+@main.route('/callback', methods=['POST'])
+@login_required
+def callback():
+    # u = current_user()
+    form = request.form
+    with open('log.txt', 'ab+') as f:
+        f.write(form)
