@@ -72,7 +72,7 @@ def order_list():
     return render_template('admin_order.html', ms=ms, u=u)
 
 
-@main.route('/product/<uuid>')
+@main.route('/product/<uuid>', methods=['POST', 'GET'])
 @admin_required
 def product_edit(uuid):
     u = current_user()
@@ -82,7 +82,7 @@ def product_edit(uuid):
         'callbackBody': 'filename=$(fname)&'
                         'filesize=$(fsize)&'
                         'route=$(x:route)&',
-        'returnUrl': 'https://buy.suzumiya.cc/admin/orders',
+        'returnUrl': url_for('admin.product_edit', uuid=p.uuid),
         'mimeLimit': 'image/*',
     }
     u.token = q.upload_token(app.config['CDN_BUCKET'], key=uuid, policy=policy)
