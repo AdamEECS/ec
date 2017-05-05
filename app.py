@@ -12,10 +12,12 @@ def register_routes(app):
     from routes.product import main as routes_product
     from routes.index import main as routes_index
     from routes.admin import main as routes_admin
+    from routes.api import main as routes_api
     app.register_blueprint(routes_user, url_prefix='/user')
     app.register_blueprint(routes_product, url_prefix='/product')
     app.register_blueprint(routes_index, url_prefix='/')
     app.register_blueprint(routes_admin, url_prefix='/admin')
+    app.register_blueprint(routes_api, url_prefix='/api')
 
 
 def configure_app():
