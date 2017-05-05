@@ -46,7 +46,7 @@ class Product(MongoModel):
         return self
 
     def qiniu_pic(self):
-        self.pic = '/{}/{}{}.{}'.format(
+        self.pic = '{}{}{}.{}'.format(
             app.config['CDN_URL'],
             app.config['CDN_PRODUCT_PIC_DIR'],
             self.uuid,
