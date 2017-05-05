@@ -74,10 +74,10 @@ def product_edit(uuid):
         'returnUrl': 'https://buy.suzumiya.cc/admin/products',
         'mimeLimit': 'image/*',
     }
-    qiniu_key = '{}.{}'.format(uuid, app.config['PRODUCT_PIC_EXT'])
+    qiniu_key = '{}{}.{}'.format(app.config['CDN_PRODUCT_PIC_DIR'], uuid, app.config['PRODUCT_PIC_EXT'])
     u.token = q.upload_token(app.config['CDN_BUCKET'], key=qiniu_key, policy=policy)
     u.upload_url = app.config['PIC_UPLOAD_URL']
-    u.key = '{}.{}'.format(uuid, app.config['PRODUCT_PIC_EXT'])
+    u.key = qiniu_key
     return render_template('product_edit.html', p=p, u=u)
 
 
