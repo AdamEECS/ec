@@ -13,11 +13,13 @@ def register_routes(app):
     from routes.index import main as routes_index
     from routes.admin import main as routes_admin
     from routes.api import main as routes_api
+    from routes.callback import main as routes_callback
     app.register_blueprint(routes_user, url_prefix='/user')
     app.register_blueprint(routes_product, url_prefix='/product')
     app.register_blueprint(routes_index, url_prefix='/')
     app.register_blueprint(routes_admin, url_prefix='/admin')
     app.register_blueprint(routes_api, url_prefix='/api')
+    app.register_blueprint(routes_callback, url_prefix='/callback')
 
 
 def configure_app():
@@ -44,7 +46,7 @@ def server():
     config = dict(
         debug=True,
         host='0.0.0.0',
-        port=3000,
+        port=8001,
     )
     app.run(**config)
 
