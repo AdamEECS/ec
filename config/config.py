@@ -9,7 +9,7 @@ config_dict = dict(
     CDN_PRODUCT_PIC_DIR='/product_pic/',
     CDN_BUCKET='buy-suzumiya',
     QINIU_CALLBACK_URL='https://buy.suzumiya.cc/callback/all',
-    PIC_UPLOAD_URL='http://up-z1.qiniu.com/',
+    PIC_UPLOAD_URL='https://up-z1.qbox.me/',
 )
 
 # mongodb config
