@@ -23,8 +23,8 @@ def product_add():
     form = request.form
     header = request.headers
     auth = header.get('Authorization')
-    body = request.body
-    url = request.url
+    body = request.get_data()
+    url = 'https://buy.suzumiya.cc/callback/product_add'
     print(header)
     print(form)
     print('body', body)
