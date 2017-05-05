@@ -19,7 +19,6 @@ def callback():
 
 
 @main.route('/product_add', methods=['POST'])
-@admin_required
 def product_add():
     form = request.form
     header = request.headers
