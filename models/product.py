@@ -10,6 +10,7 @@ class Product(MongoModel):
             ('name', str, ''),
             ('price', str, ''),
             ('pic', str, ''),
+            ('detail', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -22,7 +23,6 @@ class Product(MongoModel):
         if not valid_name:
             message = '商品已经存在'
             msgs.append(message)
-
         status = valid_name
         return status, msgs
 

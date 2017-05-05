@@ -7,10 +7,10 @@ from decimal import Decimal
 import qiniu
 
 main = Blueprint('callback', __name__)
-access_key = '4inGYVb4FYcXg5V9suieWkx80yKefQphTpJ4rELS'
-secret_key = 'LqW9ei2fXQDHR9UQEg_Ay-6qff00dwTmNu9tDpLz'
-q = qiniu.Auth(access_key, secret_key)
-bucket_name = 'buy-suzumiya'
+
+from config import key
+
+q = qiniu.Auth(key.qiniu_access_key, key.qiniu_secret_key)
 
 
 @main.route('/callback', methods=['POST'])
@@ -18,21 +18,15 @@ def callback():
     form = request.form
 
 
-@main.route('/product_add', methods=['POST'])
+@main.route('/all', methods=['POST'])
 def product_add():
     body = request.get_data()
-    form = request.form
-    header = request.headers
-    auth = header.get('Authorization')
-    url = 'https://buy.suzumiya.cc/callback/product_add'
-    print(header)
-    print(form)
-    print('body', body)
     body = body.decode('utf-8')
-    print('body decode', body)
-    print('url', url)
+    form = request.form
+    auth = request.headers.get('Authorization')
+    url = app.config['QINIU_CALLBACK_URL']
+    print(form)
     test = q.verify_callback(auth, url, body)
     print('auth:', test)
     r = {"success": True}
     return json.dumps(r)
-

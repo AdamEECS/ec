@@ -3,17 +3,32 @@ from models.order import Order
 from models.user import User
 from routes import *
 from flask import current_app as app
+import qiniu
 
 main = Blueprint('admin', __name__)
 
 Model = Product
+from config import key
+
+q = qiniu.Auth(key.qiniu_access_key, key.qiniu_secret_key)
 
 
 @main.route('/add')
 @admin_required
 def add_page():
     u = current_user()
-    return render_template('product_add.html', u=u)
+    key = 'my-python-logo.png'
+    # 上传文件到七牛后， 七牛将文件名和文件大小回调给业务服务器。
+    policy = {
+        'callbackUrl': app.config['QINIU_CALLBACK_URL'],
+        'callbackBody': 'filename=$(fname)&'
+                        'filesize=$(fsize)&'
+                        'route=$(x:route)&'
+                        'name=$(x:name)&'
+                        'price=$(x:price)',
+    }
+    token = q.upload_token(app.config['CDN_BUCKET'], policy=policy)
+    return render_template('product_add.html', u=u, token=token)
 
 
 @main.route('/add', methods=['POST'])
@@ -21,14 +36,10 @@ def add_page():
 def add():
     u = current_user()
     form = request.form
-    pic = request.files['pic']
     status, msgs = Model.valid(form)
-    print(status, msgs)
     if status is True:
         p = Model.new(form)
-        p.update_pic(pic)
-        msgs.append('{}创建成功'.format(p.name))
-        return redirect(url_for('admin.product_list'))
+        return redirect(url_for('admin.product_edit', uuid=p.uuid))
     else:
         return render_template('product_add.html', msgs=msgs, u=u)
 
@@ -61,19 +72,28 @@ def order_list():
     return render_template('admin_order.html', ms=ms, u=u)
 
 
-@main.route('/edit/<int:id>')
+@main.route('/product/<uuid>')
 @admin_required
-def product_edit(id):
+def product_edit(uuid):
     u = current_user()
-    p = Model.get(id)
-    print(p)
+    p = Model.find_one(uuid=uuid)
+    policy = {
+        'callbackUrl': app.config['QINIU_CALLBACK_URL'],
+        'callbackBody': 'filename=$(fname)&'
+                        'filesize=$(fsize)&'
+                        'route=$(x:route)&',
+        'returnUrl': url_for('admin.product_edit', uuid=p.uuid),
+        'mimeLimit': 'image/*',
+    }
+    u.token = q.upload_token(app.config['CDN_BUCKET'], key=uuid, policy=policy)
+    u.upload_url = app.config['PIC_UPLOAD_URL']
     return render_template('product_edit.html', p=p, u=u)
 
 
-@main.route('/update/<int:id>', methods=['POST'])
+@main.route('/update/<uuid>', methods=['POST'])
 @admin_required
-def product_update(id):
-    p = Model.get(id)
+def product_update(uuid):
+    p = Model.find_one(uuid=uuid)
     form = request.form
     pic = request.files['pic']
     p.update(form, hard=True)

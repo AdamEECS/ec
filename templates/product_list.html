@@ -18,7 +18,7 @@
         <tr data-id={{ p.id }}>
             <td>
                 <img src="{{ p.pic }}"  class="product-pic-s">
-                <a href="{{ url_for('admin.product_edit', id=p.id) }}">{{ p.name }}</a>
+                <a href="{{ url_for('admin.product_edit', uuid=p.uuid) }}">{{ p.name }}</a>
             </td>
             <td>{{ p.price }}</td>
             <td>
