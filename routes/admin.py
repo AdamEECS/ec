@@ -17,18 +17,7 @@ q = qiniu.Auth(key.qiniu_access_key, key.qiniu_secret_key)
 @admin_required
 def add_page():
     u = current_user()
-    key = 'my-python-logo.png'
-    # 上传文件到七牛后， 七牛将文件名和文件大小回调给业务服务器。
-    policy = {
-        'callbackUrl': app.config['QINIU_CALLBACK_URL'],
-        'callbackBody': 'filename=$(fname)&'
-                        'filesize=$(fsize)&'
-                        'route=$(x:route)&'
-                        'name=$(x:name)&'
-                        'price=$(x:price)',
-    }
-    token = q.upload_token(app.config['CDN_BUCKET'], policy=policy)
-    return render_template('product_add.html', u=u, token=token)
+    return render_template('product_add.html', u=u)
 
 
 @main.route('/add', methods=['POST'])
@@ -85,8 +74,10 @@ def product_edit(uuid):
         'returnUrl': 'https://buy.suzumiya.cc/admin/products',
         'mimeLimit': 'image/*',
     }
-    u.token = q.upload_token(app.config['CDN_BUCKET'], key=uuid, policy=policy)
+    qiniu_key = '{}.{}'.format(uuid, app.config['PRODUCT_PIC_EXT'])
+    u.token = q.upload_token(app.config['CDN_BUCKET'], key=qiniu_key, policy=policy)
     u.upload_url = app.config['PIC_UPLOAD_URL']
+    u.key = '{}.{}'.format(uuid, app.config['PRODUCT_PIC_EXT'])
     return render_template('product_edit.html', p=p, u=u)
 
 
@@ -97,7 +88,7 @@ def product_update(uuid):
     form = request.form
     # pic = request.files['pic']
     p.update(form)
-    # p.update_pic(pic)
+    p.qiniu_pic()
     return redirect(url_for('admin.product_edit', uuid=p.uuid))
 
 

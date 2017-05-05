@@ -26,7 +26,8 @@ def product_add():
     auth = request.headers.get('Authorization')
     url = app.config['QINIU_CALLBACK_URL']
     print(form)
-    test = q.verify_callback(auth, url, body)
-    print('auth:', test)
+    verify = q.verify_callback(auth, url, body)
+    if verify:
+        print('verify :', verify)
     r = {"success": True}
     return json.dumps(r)

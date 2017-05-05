@@ -26,6 +26,13 @@ class Product(MongoModel):
         status = valid_name
         return status, msgs
 
+    @classmethod
+    def new(cls, form):
+        m = super().new(form)
+        m.qiniu_pic()
+        m.save()
+        return m
+
     def update_pic(self, pic):
         allowed_type = ['jpg', 'jpeg', 'gif', 'png']
         upload_name = pic.filename
@@ -37,3 +44,11 @@ class Product(MongoModel):
             self.pic = '/' + fullname
             self.save()
         return self
+
+    def qiniu_pic(self):
+        self.pic = '{}{}{}.{}'.format(
+            app.config['CDN_URL'],
+            app.config['CDN_PRODUCT_PIC_DIR'],
+            self.uuid,
+            app.config['PRODUCT_PIC_EXT'])
+        self.save()

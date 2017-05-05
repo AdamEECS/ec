@@ -36,7 +36,7 @@
                 <h3>上传图片</h3>
                 <form method="post" action="{{ u.upload_url }}"
                  enctype="multipart/form-data">
-                    <input name="key" hidden value="{{ p.uuid }}">
+                    <input name="key" hidden value="{{ p.key }}">
                     <input name="x:route"  value="product_pic" hidden >
                     <input name="token" hidden value="{{ u.token }}">
                     <input name="file" type="file" class="form-control">
