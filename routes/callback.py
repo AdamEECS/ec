@@ -28,6 +28,8 @@ def product_add():
     print(header)
     print(form)
     print('body', body)
+    body = body.decode('utf-8')
+    print('body decode', body)
     print('url', url)
     test = q.verify_callback(auth, url, body)
     print('auth:', test)
