@@ -82,7 +82,7 @@ def product_edit(uuid):
         'callbackBody': 'filename=$(fname)&'
                         'filesize=$(fsize)&'
                         'route=$(x:route)&',
-        'returnUrl': url_for('admin.product_edit', uuid=p.uuid),
+        'returnUrl': 'https://buy.suzumiya.cc/admin/orders',
         'mimeLimit': 'image/*',
     }
     u.token = q.upload_token(app.config['CDN_BUCKET'], key=uuid, policy=policy)
