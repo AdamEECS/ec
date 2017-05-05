@@ -22,8 +22,15 @@ def callback():
 def product_add():
     form = request.form
     header = request.headers
+    auth = header.get('Authorization')
+    body = request.body
+    url = request.url
     print(header)
     print(form)
+    print('body', body)
+    print('url', url)
+    test = q.verify_callback(auth, url, body)
+    print('auth:', test)
     r = {"success": True}
     return json.dumps(r)
 
