@@ -20,10 +20,10 @@ def callback():
 
 @main.route('/product_add', methods=['POST'])
 def product_add():
+    body = request.get_data()
     form = request.form
     header = request.headers
     auth = header.get('Authorization')
-    body = request.get_data()
     url = 'https://buy.suzumiya.cc/callback/product_add'
     print(header)
     print(form)
