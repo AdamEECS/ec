@@ -3,24 +3,25 @@
 <div>
     {{ msgs }}
 </div>
-<!-- <div class="div-form sign-flow" >
-    <form method=POST enctype=multipart/form-data action="{{ url_for('admin.product_update', uuid=p.uuid) }}">
-        <label for="id-name">商品名称</label>
-        <input class="form-control" name="name" id=id-name value="{{ p.name }}">
-        <label for="id-price">商品价格</label>
-        <input class="form-control" name=price id=id-price value="{{ p.price }}">
-        <label for="id-pic">商品图片</label>
-        <input class="form-control" type=file name=pic id=id-pic>
-        <label for="id-pic-view">图片预览</label>
-        <br>
-        <img src="{{ p.pic }}"  class="product-pic-l" id=id-pic-view>
-        <hr>
-        <button class="btn btn-success btn-block">更新</button>
-    </form>
-</div> -->
 <div class="row">
     <div class="col-xs-12 col-sm-6">
-        <div class="" >
+        <div class="row">
+
+            <div class="col-xs-5">
+                <form method="post" action="{{ u.upload_url }}"
+                 enctype="multipart/form-data">
+                    <input name="key" hidden value="{{ u.key }}">
+                    <input name="x:route"  value="product_pic" hidden >
+                    <input name="token" hidden value="{{ u.token }}">
+                    <input name="file" type="file" class="form-control">
+                    <br>
+                    <button class="btn btn-success btn-block" >上传图片</button>
+                </form>
+            </div>
+            <div class="col-xs-7">
+                <img src="{{ p.pic }}"  class="product-pic-l" id=id-pic-view>
+            </div>
+        </div>
             <form method=POST enctype=multipart/form-data action="{{ url_for('admin.product_update', uuid=p.uuid) }}">
                 <label for="id-name">商品名称</label>
                 <input class="form-control" name="name" id=id-name value="{{ p.name }}" required>
@@ -32,22 +33,6 @@
                 <hr>
                 <button class="btn btn-success btn-block" >更新</button>
             </form>
-            <div class="">
-                <h3>上传图片</h3>
-                <form method="post" action="{{ u.upload_url }}"
-                 enctype="multipart/form-data">
-                    <input name="key" hidden value="{{ u.key }}">
-                    <input name="x:route"  value="product_pic" hidden >
-                    <input name="token" hidden value="{{ u.token }}">
-                    <input name="file" type="file" class="form-control">
-                    <br>
-                    <button class="btn btn-success btn-block" >上传图片</button>
-                    <label for="id-pic-view">图片预览</label>
-                    <br>
-                    <img src="{{ p.pic }}"  class="product-pic-l" id=id-pic-view>
-                </form>
-            </div>
-        </div>
     </div>
     <div class="col-xs-12 col-sm-6">
         <div id="preview"> </div>

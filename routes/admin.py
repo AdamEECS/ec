@@ -38,6 +38,7 @@ def add():
 def product_list():
     u = current_user()
     ms = Model.all()
+    ms.reverse()
     return render_template('product_list.html', ms=ms, u=u)
 
 
