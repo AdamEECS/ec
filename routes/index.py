@@ -9,7 +9,7 @@ main = Blueprint('index', __name__)
 def index():
     u = current_user()
     ps = Product.all()
-    return render_template('index.html', u=u, ps=ps)
+    return render_template('front.html', u=u, ps=ps)
 
 
 @main.route('/', methods=['POST'])

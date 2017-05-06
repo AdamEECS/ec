@@ -1,15 +1,13 @@
 html, body {
     height: 100%;
 }
-/*@media (min-height: 768px) {
-    .main {
-        padding-top: 70px;
-        min-height: 500px;
+@media (min-width: 780px) {
+    #carousel-front {
+        width: 780px;
+        margin-left: auto;
+        margin-right: auto;
     }
-    .div-form {
-        max-width: 300px;
-    }
-}*/
+}
 .count_num {
     color: red;
 }

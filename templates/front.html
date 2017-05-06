@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block body %}
+<div id="carousel-front" class="carousel slide" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-front" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-front" data-slide-to="1"></li>
+        <li data-target="#carousel-front" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner" style="text-align:center">
+        <div class="item active"><a href="https://buy.suzumiya.cc/product/detail/86c8ca548787">
+            <img alt="First slide" src="https://img14.360buyimg.com/cms/jfs/t5539/314/1049933395/266172/48846618/590af987Nb1072447.jpg" ></img>
+        </a></div>
+        <div class="item"><a href="https://buy.suzumiya.cc/product/detail/04c1a939d020">
+            <img alt="Second slide" src="https://img11.360buyimg.com/cms/jfs/t3277/257/8094332354/310381/16f92f42/58be2debN6384aaa1.jpg" ></img>
+        </a></div>
+        <div class="item"><a href="https://buy.suzumiya.cc/product/detail/865f1cceaf15">
+            <img alt="Third slide" src="https://img13.360buyimg.com/cms/jfs/t4366/266/1347141947/317631/4bc64b3f/58c0cee3N9a780268.jpg"  ></img>
+        </a></div>
+    </div>
+
+    <a class="left carousel-control" href="#carousel-front" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-front" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+    </div>
+
+<script type="text/javascript">
+$('.carousel').carousel({
+    interval: 300000
+})
+</script>
+
+
+<div class="container">
+    {% for p in ps %}
+    <div data-id={{ p.id }} class="row product-item list-item">
+        <div class="col-xs-3 col-sm-2 list-pic-fix">
+            <a href="{{ url_for('product.detail', uuid=p.uuid) }}">
+                <img src="{{ p.pic }}" class="product-pic-m">
+            </a>
+        </div>
+        <div class="col-xs-5 col-sm-6">
+            <a href="{{ url_for('product.detail', uuid=p.uuid) }}">{{ p.name }}</a>
+        </div>
+        <div class="col-xs-4 col-sm-2">
+            <span class="count_num">￥ {{ p.price }}</span>
+        </div>
+        <div class="col-xs-4 col-sm-2 right">
+            <a class="btn btn-danger" href="{{ url_for('user.cart_add', product_id=p.id)}}">加入购物车</a>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
