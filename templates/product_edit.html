@@ -6,14 +6,14 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6">
         <div class="row">
-
             <div class="col-xs-5">
-                <form method="post" action="{{ u.upload_url }}"
-                 enctype="multipart/form-data">
+                <form method="post" action="{{ u.upload_url }}" enctype="multipart/form-data"
+                id=pic-upload-form onsubmit="return ajaxFormSubmit();"
+                data-uuid={{ p.uuid }} data-key={{ u.key }} data-url={{ u.url }}>
                     <input name="key" hidden value="{{ u.key }}">
                     <input name="x:route"  value="product_pic" hidden >
                     <input name="token" hidden value="{{ u.token }}">
-                    <input name="file" type="file" class="form-control">
+                    <input name="file" type="file" class="form-control" required>
                     <br>
                     <button class="btn btn-success btn-block" >上传图片</button>
                 </form>
@@ -46,6 +46,24 @@ function Editor(input, preview) {
     };
     input.editor = this;
     this.update();
+}
+const log = function log(){
+  console.log.apply(console, arguments);
+}
+function ajaxFormSubmit() {
+    let ajaxForm = $(event.target)
+    ajaxForm.ajaxSubmit(function(message) {
+        if(message.success == true){
+            let data = {
+                key:ajaxForm.data('key')
+            }
+            let url = ajaxForm.data('url')
+            $.post(url, data, function(){
+                location.reload()
+            })
+        }
+    });
+    return false;
 }
 new Editor(document.getElementById("text-input"), document.getElementById("preview"));
 </script>

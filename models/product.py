@@ -30,7 +30,6 @@ class Product(MongoModel):
     def new(cls, form):
         m = super().new(form)
         m.qiniu_pic()
-        m.save()
         return m
 
     def update_pic(self, pic):
@@ -45,10 +44,6 @@ class Product(MongoModel):
             self.save()
         return self
 
-    def qiniu_pic(self):
-        self.pic = '{}{}{}.{}'.format(
-            app.config['CDN_URL'],
-            app.config['CDN_PRODUCT_PIC_DIR'],
-            self.uuid,
-            app.config['PRODUCT_PIC_EXT'])
+    def qiniu_pic(self, key='default.png'):
+        self.pic = '{}{}'.format(app.config['CDN_URL'], key)
         self.save()

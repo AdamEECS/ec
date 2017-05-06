@@ -72,13 +72,15 @@ def product_edit(uuid):
         'callbackBody': 'filename=$(fname)&'
                         'filesize=$(fsize)&'
                         'route=$(x:route)&',
-        'returnUrl': 'https://buy.suzumiya.cc/admin/products',
+        # 'returnUrl': 'https://buy.suzumiya.cc/admin/products',
         'mimeLimit': 'image/*',
     }
-    qiniu_key = '{}{}.{}'.format(app.config['CDN_PRODUCT_PIC_DIR'], uuid, app.config['PRODUCT_PIC_EXT'])
+    t = current_time()
+    qiniu_key = '{}{}_{}.{}'.format(app.config['CDN_PRODUCT_PIC_DIR'], uuid, t, app.config['PRODUCT_PIC_EXT'])
     u.token = q.upload_token(app.config['CDN_BUCKET'], key=qiniu_key, policy=policy)
     u.upload_url = app.config['PIC_UPLOAD_URL']
     u.key = qiniu_key
+    u.url = url_for('admin.ajax_pic', uuid=uuid)
     return render_template('product_edit.html', p=p, u=u)
 
 
@@ -90,6 +92,15 @@ def product_update(uuid):
     # pic = request.files['pic']
     p.update(form)
     p.qiniu_pic()
+    return redirect(url_for('admin.product_edit', uuid=p.uuid))
+
+
+@main.route('/ajax_pic/<uuid>', methods=['POST'])
+@admin_required
+def ajax_pic(uuid):
+    p = Product.find_one(uuid=uuid)
+    qiniu_key = request.form.get('key')
+    p.qiniu_pic(qiniu_key)
     return redirect(url_for('admin.product_edit', uuid=p.uuid))
 
 
