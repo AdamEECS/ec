@@ -21,6 +21,13 @@
                     <br>
                     <button class="btn btn-success btn-block" >上传图片</button>
                 </form>
+                <br>
+                <form method="post" action="{{ url_for('admin.set_product_pic_url', uuid=p.uuid) }}"
+                enctype="multipart/form-data" data-uuid={{ p.uuid }}>
+                    <input name="file_url" class="form-control" required>
+                    <br>
+                    <button class="btn btn-success btn-block" >指定图片url</button>
+                </form>
             </div>
             <div class="col-xs-7">
                 <img src="{{ p.pic }}"  class="product-pic-l" id=id-pic-view>

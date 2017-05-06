@@ -47,3 +47,7 @@ class Product(MongoModel):
     def qiniu_pic(self, key='default.png'):
         self.pic = '{}{}{}'.format(app.config['CDN_URL'], key, '-webp')
         self.save()
+
+    def set_pic_url(self, url):
+        self.pic = url
+        self.save()

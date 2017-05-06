@@ -148,6 +148,15 @@ def product_update(uuid):
     return redirect(url_for('admin.product_edit', uuid=p.uuid))
 
 
+@main.route('/set_product_pic_url/<uuid>', methods=['POST'])
+@admin_required
+def set_product_pic_url(uuid):
+    p = Model.find_one(uuid=uuid)
+    url = request.form.get('file_url')
+    p.set_pic_url(url)
+    return redirect(url_for('admin.product_edit', uuid=p.uuid))
+
+
 @main.route('/ajax_pic/<uuid>', methods=['POST'])
 @admin_required
 def ajax_pic(uuid):
