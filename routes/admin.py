@@ -144,7 +144,7 @@ def product_update(uuid):
     form = request.form
     # pic = request.files['pic']
     p.update(form)
-    p.qiniu_pic()
+    # p.qiniu_pic()
     return redirect(url_for('admin.product_edit', uuid=p.uuid))
 
 
