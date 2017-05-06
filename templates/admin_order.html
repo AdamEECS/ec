@@ -20,7 +20,9 @@
             <td>
                 <a href="{{ url_for('admin.order_edit', orderNo=m.orderNo) }}">{{ m.orderNo }}</a>
             </td>
-            <td>{{ m.user.username }}</td>
+            <td>
+                <a href="{{ url_for('admin.user_edit', id=m.user.id) }}">{{ m.user.username }}</a>
+            </td>
             <td>{{ m.amount }}</td>
             <td>
                 {% if m.status == 'pending' %}

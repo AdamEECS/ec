@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
-<div>
-    <h1>Order Detail</h1>
-</div>
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.order_list') }}">Order Manage</a></li>
+    <li class="active">Order Detail</li>
+</ol>
+
 <div class="container">
 
     <div class="row panel panel-default">

@@ -2,10 +2,12 @@ from . import *
 from models.user import User
 from models.product import Product
 
-main = Blueprint('reaction', __name__)
+main = Blueprint('product', __name__)
 
 
-def current_user():
-    uid = int(session.get('uid', -1))
-    u = User.query.get(uid)
-    return u
+@main.route('/detail/<uuid>')
+def detail(uuid):
+    u = current_user()
+    p = Product.find_one(uuid=uuid)
+
+    return render_template('product_detail.html', p=p, u=u)

@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
-<div>
-    <h1>Profile</h1>
-</div>
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.user_list') }}">User Manage</a></li>
+    <li class="active">User Profile</li>
+</ol>
+
 <h3>基本信息</h3>
 <div class="div-form sign-flow" >
     <form method=POST enctype=multipart/form-data action="{{ url_for('admin.user_update', id=m.id) }}">
@@ -16,6 +18,7 @@
         <button class="btn btn-success btn-block">更新</button>
     </form>
 </div>
+<hr>
 <h3>购物车</h3>
 <table class="table table-striped table-hover">
     <thead>
@@ -37,6 +40,7 @@
         {% endfor %}
     </tbody>
 </table>
+<hr>
 <h3>收货地址</h3>
 <div class="container">
     {% for add in m.add_list %}

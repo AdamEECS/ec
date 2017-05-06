@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.product_list') }}">Product Manage</a></li>
+    <li class="active">add</li>
+</ol>
 <div>
     {{ msgs }}
 </div>

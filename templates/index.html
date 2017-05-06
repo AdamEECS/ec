@@ -5,9 +5,13 @@
     {% for p in ps %}
     <div data-id={{ p.id }} class="row product-item list-item">
         <div class="col-xs-3 col-sm-2 list-pic-fix">
-            <img src="{{ p.pic }}" class="product-pic-m">
+            <a href="{{ url_for('product.detail', uuid=p.uuid) }}">
+                <img src="{{ p.pic }}" class="product-pic-m">
+            </a>
         </div>
-        <div class="col-xs-5 col-sm-6">{{ p.name }}</div>
+        <div class="col-xs-5 col-sm-6">
+            <a href="{{ url_for('product.detail', uuid=p.uuid) }}">{{ p.name }}</a>
+        </div>
         <div class="col-xs-4 col-sm-2">
             <span class="count_num">￥ {{ p.price }}</span>
         </div>
