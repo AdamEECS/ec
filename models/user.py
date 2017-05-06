@@ -141,6 +141,7 @@ class User(MongoModel):
         form = dict(
             user_id=self.id,
             user_uuid=self.uuid,
+            username=self.username,
             address=address,
             payment=kwargs.get('pay'),
             items=ps,

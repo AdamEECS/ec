@@ -144,6 +144,17 @@ class User(MongoModel):
         return l
 
     @classmethod
+    def find_or(cls, args):
+        name = cls.__name__
+        search = {"$or": []}
+        for i in args:
+            i['deleted'] = i.pop('deleted', False)
+            search['$or'].append(i)
+        ds = db[name].find(search)
+        l = [cls._new_with_bson(d) for d in ds]
+        return l
+
+    @classmethod
     def get(cls, id):
         can = isinstance(id, str) and id.isdigit()
         if can == True:

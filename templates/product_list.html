@@ -5,6 +5,10 @@
     <h1>Product Manage</h1>
 
 </div>
+<form class="navbar-form " action="{{ url_for('admin.product_list_search')}}" method="post">
+    <input type="text" class="form-control" name="search" placeholder="按商品名检索">
+    <button type="submit" class="btn btn-default">Search</button>
+</form>
 <table class="table table-striped table-hover">
     <thead>
         <tr>

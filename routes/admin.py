@@ -42,12 +42,44 @@ def product_list():
     return render_template('product_list.html', ms=ms, u=u)
 
 
+@main.route('/products', methods=['POST'])
+@admin_required
+def product_list_search():
+    u = current_user()
+    search = request.form.get('search', None)
+    if search:
+        ps = Product.find(name={'$regex': search, '$options': '$i'})
+        ps.reverse()
+        return render_template('product_list.html', u=u, ms=ps)
+    else:
+        return redirect(url_for('admin.product_list'))
+
+
 @main.route('/users')
 @admin_required
 def user_list():
     u = current_user()
     ms = User.all()
     return render_template('admin_user.html', ms=ms, u=u)
+
+
+@main.route('/users', methods=['POST'])
+@admin_required
+def user_list_search():
+    u = current_user()
+    username = request.form.get('username', None)
+    uuid = request.form.get('uuid', None)
+    search = []
+    if uuid:
+        search.append({'uuid': {'$regex': uuid, '$options': '$i'}})
+    if username:
+        search.append({'username': {'$regex': username, '$options': '$i'}})
+    if len(search) > 0:
+        ms = User.find_or(search)
+        ms.reverse()
+        return render_template('admin_user.html', u=u, ms=ms)
+    else:
+        return redirect(url_for('admin.user_list'))
 
 
 @main.route('/orders')
@@ -57,9 +89,30 @@ def order_list():
     ms = Order.all()
     ms.reverse()
     for m in ms:
-        m.user = User.get(m.user_id)
         m.ct = time_str(m.ct)
     return render_template('admin_order.html', ms=ms, u=u)
+
+
+@main.route('/orders', methods=['POST'])
+@admin_required
+def order_list_search():
+    u = current_user()
+    username = request.form.get('username', None)
+    orderNo = request.form.get('orderNo', None)
+    search = []
+    if orderNo:
+        search.append({'orderNo': {'$regex': orderNo, '$options': '$i'}})
+    if username:
+        search.append({'username': {'$regex': username, '$options': '$i'}})
+    if len(search) > 0:
+        print(search)
+        ms = Order.find_or(search)
+        ms.reverse()
+        for m in ms:
+            m.ct = time_str(m.ct)
+        return render_template('admin_order.html', u=u, ms=ms)
+    else:
+        return redirect(url_for('admin.order_list'))
 
 
 @main.route('/product/<uuid>')

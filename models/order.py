@@ -20,6 +20,8 @@ class Order(MongoModel):
             ('items', list, []),
             ('amount', str, ''),
             ('user_id', int, -1),
+            ('user_uuid', str, ''),
+            ('username', str, ''),
             ('comment', str, ''),
             ('status', str, ''),
         ]
