@@ -39,9 +39,9 @@
                        data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                       管理员: {{ u.role }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a class="" href="{{ url_for('admin.product_list') }}">产品管理</a></li>
-                        <li><a class="" href="{{ url_for('admin.user_list') }}">用户管理</a></li>
-                        <li><a class="" href="{{ url_for('admin.order_list') }}">订单管理</a></li>
+                        <li><a class="" href="{{ url_for('admin.products') }}">产品管理</a></li>
+                        <li><a class="" href="{{ url_for('admin.users') }}">用户管理</a></li>
+                        <li><a class="" href="{{ url_for('admin.orders') }}">订单管理</a></li>
                     </ul>
                 </li>
                 {% endif %}

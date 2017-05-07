@@ -1,5 +1,4 @@
 from . import MongoModel
-from uuid import uuid1
 from enum import Enum
 
 

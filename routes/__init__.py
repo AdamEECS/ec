@@ -8,30 +8,15 @@ from flask import Response
 from flask import session
 
 from models.user import User
-import time
-import json
 from functools import wraps
-
-
-def current_time():
-    return int(time.time())
+from usr_util.utils import *
+import json
 
 
 def current_user():
     uid = int(session.get('uid', -1))
     u = User.get(uid)
     return u
-
-
-def time_str(t):
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(int(t) + 3600 * 8))
-
-
-def safe_list_get(l, idx, default):
-    try:
-        return l[idx]
-    except IndexError:
-        return default
 
 
 def login_required(f):

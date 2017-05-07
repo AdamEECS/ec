@@ -1,5 +1,4 @@
 from . import MongoModel
-from . import timestamp
 from flask import current_app as app
 
 
@@ -49,5 +48,6 @@ class Product(MongoModel):
         self.save()
 
     def set_pic_url(self, url):
-        self.pic = url
-        self.save()
+        if len(url) > 0:
+            self.pic = url
+            self.save()

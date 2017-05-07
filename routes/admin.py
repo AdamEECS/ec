@@ -1,160 +1,92 @@
+from routes import *
 from models.product import Product
 from models.order import Order
 from models.user import User
-from routes import *
 from flask import current_app as app
+
 import qiniu
-
-main = Blueprint('admin', __name__)
-
-Model = Product
 from config import key
 
 q = qiniu.Auth(key.qiniu_access_key, key.qiniu_secret_key)
 
+main = Blueprint('admin', __name__)
 
-@main.route('/add')
+
+# ------------------------- 产品管理 --------------------------
+@main.route('/product_new')
 @admin_required
-def add_page():
+def product_new_page():
     u = current_user()
-    return render_template('product_add.html', u=u)
+    return render_template('admin/product_new.html', u=u)
 
 
-@main.route('/add', methods=['POST'])
+@main.route('/product_new', methods=['POST'])
 @admin_required
-def add():
+def product_new():
     u = current_user()
     form = request.form
-    status, msgs = Model.valid(form)
+    status, msgs = Product.valid(form)
     if status is True:
-        p = Model.new(form)
-        return redirect(url_for('admin.product_edit', uuid=p.uuid))
+        p = Product.new(form)
+        return redirect(url_for('admin.product', uuid=p.uuid))
     else:
-        return render_template('product_add.html', msgs=msgs, u=u)
+        return render_template('admin/product_new.html', msgs=msgs, u=u)
 
 
 @main.route('/products')
 @admin_required
-def product_list():
+def products():
     u = current_user()
-    ms = Model.all()
+    ms = Product.all()
     ms.reverse()
-    return render_template('product_list.html', ms=ms, u=u)
+    return render_template('admin/products.html', ms=ms, u=u)
 
 
 @main.route('/products', methods=['POST'])
 @admin_required
-def product_list_search():
+def products_search():
     u = current_user()
-    search = request.form.get('search', None)
-    if search:
-        ps = Product.find(name={'$regex': search, '$options': '$i'})
-        ps.reverse()
-        return render_template('product_list.html', u=u, ms=ps)
-    else:
-        return redirect(url_for('admin.product_list'))
-
-
-@main.route('/users')
-@admin_required
-def user_list():
-    u = current_user()
-    ms = User.all()
-    return render_template('admin_user.html', ms=ms, u=u)
-
-
-@main.route('/users', methods=['POST'])
-@admin_required
-def user_list_search():
-    u = current_user()
-    username = request.form.get('username', None)
-    uuid = request.form.get('uuid', None)
-    search = []
-    if uuid:
-        search.append({'uuid': {'$regex': uuid, '$options': '$i'}})
-    if username:
-        search.append({'username': {'$regex': username, '$options': '$i'}})
-    if len(search) > 0:
-        ms = User.find_or(search)
-        ms.reverse()
-        return render_template('admin_user.html', u=u, ms=ms)
-    else:
-        return redirect(url_for('admin.user_list'))
-
-
-@main.route('/orders')
-@admin_required
-def order_list():
-    u = current_user()
-    ms = Order.all()
+    form = request.form
+    ms = Product.search_or(form)
     ms.reverse()
-    for m in ms:
-        m.ct = time_str(m.ct)
-    return render_template('admin_order.html', ms=ms, u=u)
-
-
-@main.route('/orders', methods=['POST'])
-@admin_required
-def order_list_search():
-    u = current_user()
-    username = request.form.get('username', None)
-    orderNo = request.form.get('orderNo', None)
-    search = []
-    if orderNo:
-        search.append({'orderNo': {'$regex': orderNo, '$options': '$i'}})
-    if username:
-        search.append({'username': {'$regex': username, '$options': '$i'}})
-    if len(search) > 0:
-        print(search)
-        ms = Order.find_or(search)
-        ms.reverse()
-        for m in ms:
-            m.ct = time_str(m.ct)
-        return render_template('admin_order.html', u=u, ms=ms)
-    else:
-        return redirect(url_for('admin.order_list'))
+    return render_template('admin/products.html', u=u, ms=ms)
 
 
 @main.route('/product/<uuid>')
 @admin_required
-def product_edit(uuid):
+def product(uuid):
     u = current_user()
-    p = Model.find_one(uuid=uuid)
+    p = Product.find_one(uuid=uuid)
     policy = {
         'callbackUrl': app.config['QINIU_CALLBACK_URL'],
-        'callbackBody': 'filename=$(fname)&'
-                        'filesize=$(fsize)&'
-                        'route=$(x:route)&',
-        # 'returnUrl': 'https://buy.suzumiya.cc/admin/products',
+        'callbackBody': 'filename=$(fname)&filesize=$(fsize)&route=$(x:route)&',
         'mimeLimit': 'image/*',
     }
-    t = current_time()
+    t = timestamp()
     qiniu_key = '{}{}_{}.{}'.format(app.config['CDN_PRODUCT_PIC_DIR'], uuid, t, app.config['PRODUCT_PIC_EXT'])
     u.token = q.upload_token(app.config['CDN_BUCKET'], key=qiniu_key, policy=policy)
     u.upload_url = app.config['PIC_UPLOAD_URL']
     u.key = qiniu_key
     u.url = url_for('admin.ajax_pic', uuid=uuid)
-    return render_template('product_edit.html', p=p, u=u)
+    return render_template('admin/product.html', p=p, u=u)
 
 
 @main.route('/update/<uuid>', methods=['POST'])
 @admin_required
 def product_update(uuid):
-    p = Model.find_one(uuid=uuid)
+    p = Product.find_one(uuid=uuid)
     form = request.form
-    # pic = request.files['pic']
     p.update(form)
-    # p.qiniu_pic()
-    return redirect(url_for('admin.product_edit', uuid=p.uuid))
+    return redirect(url_for('admin.product', uuid=p.uuid))
 
 
 @main.route('/set_product_pic_url/<uuid>', methods=['POST'])
 @admin_required
 def set_product_pic_url(uuid):
-    p = Model.find_one(uuid=uuid)
+    p = Product.find_one(uuid=uuid)
     url = request.form.get('file_url')
     p.set_pic_url(url)
-    return redirect(url_for('admin.product_edit', uuid=p.uuid))
+    return redirect(url_for('admin.product', uuid=p.uuid))
 
 
 @main.route('/ajax_pic/<uuid>', methods=['POST'])
@@ -163,32 +95,52 @@ def ajax_pic(uuid):
     p = Product.find_one(uuid=uuid)
     qiniu_key = request.form.get('key')
     p.qiniu_pic(qiniu_key)
-    return redirect(url_for('admin.product_edit', uuid=p.uuid))
+    return redirect(url_for('admin.product', uuid=p.uuid))
 
 
 @main.route('/delete/<int:id>')
 @admin_required
 def product_delete(id):
-    p = Model.get(id)
+    # p = Model.get(id)
     # p.delete()
-    return redirect(url_for('admin.product_list'))
+    # TODO 先不让删
+    return redirect(url_for('admin.products'))
 
 
-@main.route('/user_edit/<int:id>')
+# ------------------------- 用户管理 --------------------------
+@main.route('/users')
 @admin_required
-def user_edit(id):
+def users():
+    u = current_user()
+    ms = User.all()
+    return render_template('admin/users.html', ms=ms, u=u)
+
+
+@main.route('/users', methods=['POST'])
+@admin_required
+def users_search():
+    u = current_user()
+    form = request.form
+    ms = User.search_or(form)
+    return render_template('admin/users.html', u=u, ms=ms)
+
+
+@main.route('/user/<int:id>')
+@admin_required
+def user(id):
     u = current_user()
     m = User.get(id)
     ps = m.get_cart_detail()
-    return render_template('admin_user_edit.html', m=m, ps=ps, u=u)
+    return render_template('admin/user.html', m=m, ps=ps, u=u)
 
 
 @main.route('/user_delete/<int:id>')
 @admin_required
 def user_delete(id):
-    m = User.get(id)
+    # m = User.get(id)
     # m.delete()
-    return redirect(url_for('admin.user_list'))
+    # TODO 先不让删
+    return redirect(url_for('admin.users'))
 
 
 @main.route('/user_update/<int:id>', methods=['POST'])
@@ -197,17 +149,36 @@ def user_update(id):
     m = User.get(id)
     form = request.form
     m.update_user(form)
-    return redirect(url_for('admin.user_list'))
+    return redirect(url_for('admin.user', id=m.id))
 
 
-@main.route('/order_edit/<orderNo>')
+# ------------------------- 订单管理 --------------------------
+@main.route('/orders')
 @admin_required
-def order_edit(orderNo):
+def orders():
     u = current_user()
-    m = Order.find_one(orderNo=orderNo)
-    m.user = User.get(m.user_id)
-    m.ct = time_str(m.ct)
-    return render_template('admin_order_edit.html', o=m, u=u)
+    ms = Order.all()
+    ms.reverse()
+    return render_template('admin/orders.html', ms=ms, u=u)
+
+
+@main.route('/orders', methods=['POST'])
+@admin_required
+def orders_search():
+    u = current_user()
+    form = request.form
+    ms = Order.search_or(form)
+    ms.reverse()
+    return render_template('admin/orders.html', u=u, ms=ms)
+
+
+@main.route('/order/<orderNo>')
+@admin_required
+def order(orderNo):
+    u = current_user()
+    o = Order.find_one(orderNo=orderNo)
+    o.user = User.get(o.user_id)
+    return render_template('admin/order.html', o=o, u=u)
 
 
 @main.route('/order_delivery/<orderNo>')
@@ -215,8 +186,7 @@ def order_edit(orderNo):
 def order_delivery(orderNo):
     o = Order.find_one(orderNo=orderNo)
     o.delivery()
-    return redirect(url_for('admin.order_list'))
-
+    return redirect(url_for('admin.orders'))
 
 # @main.route('/root')
 # @login_required
@@ -224,7 +194,7 @@ def order_delivery(orderNo):
 #     root = User.find_one(username='root')
 #     root.role = 'admin'
 #     root.save()
-#     return redirect(url_for('admin.product_list'))
+#     return redirect(url_for('admin.products'))
 #
 #
 # @main.route('/uuid_reset_all')
@@ -240,17 +210,17 @@ def order_delivery(orderNo):
 #         u.set_uuid()
 #     for p in ps:
 #         p.set_uuid()
-#     return redirect(url_for('admin.product_list'))
-
-
-@main.route('/clear_order_items')
-@admin_required
-def clear_order_items():
-    os = Order.all()
-    for o in os:
-        o.items = []
-        o.save()
-    return redirect(url_for('admin.product_list'))
+#     return redirect(url_for('admin.products'))
+#
+#
+# @main.route('/clear_order_items')
+# @admin_required
+# def clear_order_items():
+#     os = Order.all()
+#     for o in os:
+#         o.items = []
+#         o.save()
+#     return redirect(url_for('admin.products'))
 
 
 @main.route('/clear_orders')
@@ -259,4 +229,13 @@ def clear_orders():
     os = Order.all()
     for o in os:
         o.delete()
-    return redirect(url_for('admin.product_list'))
+    return redirect(url_for('admin.products'))
+
+
+@main.route('/clear_carts')
+@admin_required
+def clear_carts():
+    us = User.all()
+    for u in us:
+        u.cart_clear()
+    return redirect(url_for('admin.products'))

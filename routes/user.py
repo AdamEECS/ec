@@ -1,8 +1,6 @@
-from models.user import User
-from models.product import Product
-from models.order import Order
 from routes import *
-from flask import current_app as app
+from models.user import User
+from models.order import Order
 from decimal import Decimal
 
 main = Blueprint('user', __name__)
@@ -12,7 +10,7 @@ Model = User
 
 @main.route('/login')
 def index():
-    return render_template('login.html')
+    return render_template('user/login.html')
 
 
 @main.route('/login', methods=['POST'])
@@ -24,32 +22,31 @@ def login():
         session['uid'] = u.id
         return redirect(url_for('index.index'))
     else:
-        return redirect(url_for('.index'))
+        return redirect(url_for('user.index'))
 
 
 @main.route('/register')
 def register_page():
-    return render_template('register.html')
+    return render_template('user/register.html')
 
 
 @main.route('/register', methods=['POST'])
 def register():
     form = request.form
     status, msgs = User.valid(form)
-    print(status, msgs)
     if status is True:
         u = User.new(form)
         session['uid'] = u.id
         return redirect(url_for('index.index'))
     else:
-        return render_template('login.html', msgs=msgs)
+        return redirect(url_for('user.register'))
 
 
 @main.route('/profile')
 @login_required
 def profile():
     cu = current_user()
-    return render_template('user_profile.html', u=cu)
+    return render_template('user/profile.html', u=cu)
 
 
 @main.route('/profile', methods=['POST'])
@@ -70,34 +67,12 @@ def avatar():
     return redirect(url_for('.profile'))
 
 
-@main.route('/nickname', methods=['POST'])
-@login_required
-def nickname():
-    u = current_user()
-    nickname = request.form['nickname']
-    u.update_dict(nickname=nickname)
-    return redirect(url_for('.profile'))
-
-
-@main.route('/password', methods=['POST'])
-@login_required
-def password():
-    u = current_user()
-    password = request.form['password']
-    u.update_dict(password=password)
-    return redirect(url_for('.profile'))
-
-
 @main.route('/cart_add', methods=['GET'])
 @login_required
 def cart_add():
     u = current_user()
-    product_id = request.args.get('product_id', None)
-    if product_id:
-        count = u.cart.get(product_id, 0)
-        count += 1
-        u.cart[product_id] = count
-        u.save()
+    product_uuid = request.args.get('product_uuid', None)
+    u.cart_add(product_uuid)
     return redirect(url_for('user.cart'))
 
 
@@ -105,14 +80,8 @@ def cart_add():
 @login_required
 def cart_sub():
     u = current_user()
-    product_id = request.args.get('product_id', None)
-    if product_id:
-        count = u.cart.get(product_id, 0)
-        count -= 1
-        u.cart[product_id] = count
-        if count <= 0:
-            u.cart.pop(product_id)
-        u.save()
+    product_uuid = request.args.get('product_uuid', None)
+    u.cart_sub(product_uuid)
     return redirect(url_for('user.cart'))
 
 
@@ -122,8 +91,8 @@ def cart():
     u = current_user()
     ps = u.get_cart_detail()
     u.count_num = u.get_cart_count()
-    u.count_price = sum([Decimal(p.sum) for p in ps])
-    return render_template('user_cart.html', u=u, ps=ps)
+    u.count_price = str(sum([Decimal(p.sum) for p in ps]))
+    return render_template('user/cart.html', u=u, ps=ps)
 
 
 @main.route('/cart_clear')
@@ -147,11 +116,11 @@ def logout():
 @cart_not_empty_required
 def check_order():
     u = current_user()
-    u.get_default_add()
+    u.add = u.get_default_add()
     ps = u.get_cart_detail()
-    u.count_num = len(ps)
-    u.count_price = sum([Decimal(p.sum) for p in ps])
-    return render_template('user_check_order.html', u=u, ps=ps)
+    u.count_num = u.get_cart_count()
+    u.count_price = str(sum([Decimal(p.sum) for p in ps]))
+    return render_template('user/check_order.html', u=u, ps=ps)
 
 
 @main.route('/pay', methods=['POST'])
@@ -169,9 +138,7 @@ def pay():
 def orders():
     u = current_user()
     os = u.orders()
-    for o in os:
-        o.ct = time_str(o.ct)
-    return render_template('user_orders.html', os=os, u=u)
+    return render_template('user/orders.html', os=os, u=u)
 
 
 @main.route('/order/<orderNo>')
@@ -180,8 +147,7 @@ def order(orderNo):
     u = current_user()
     o = Order.find_one(orderNo=orderNo)
     if o is not None and o.user_id == u.id:
-        o.ct = time_str(o.ct)
-        return render_template('user_order.html', o=o, u=u)
+        return render_template('user/order.html', o=o, u=u)
     else:
         return redirect(url_for('user.orders'))
 
@@ -197,7 +163,7 @@ def address():
             address_editing['id'] = address_id
     else:
         address_editing = None
-    return render_template('user_address.html', u=cu, a=address_editing)
+    return render_template('user/address.html', u=cu, a=address_editing)
 
 
 @main.route('/address', methods=['POST'])
@@ -208,7 +174,7 @@ def address_add():
     add = form.to_dict()
     cu.add_list.append(add)
     cu.save()
-    return render_template('user_address.html', u=cu)
+    return render_template('user/address.html', u=cu)
 
 
 @main.route('/address_update/<int:id>', methods=['POST'])

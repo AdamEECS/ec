@@ -1,6 +1,4 @@
 import hashlib
-import os
-
 from enum import Enum
 from . import MongoModel
 from . import timestamp
@@ -122,7 +120,7 @@ class User(MongoModel):
         ps = []
         try:
             for k, v in cart.items():
-                p = Product.get(k)
+                p = Product.find_one(uuid=k)
                 p.count = v
                 p.sum = '{0:.2f}'.format(Decimal(p.price) * int(p.count))
                 print(p.sum)
@@ -138,7 +136,7 @@ class User(MongoModel):
     def buy(self, kwargs):
         ps = self.get_cart_detail()
         print('obj-ps:', ps)
-        amount = sum([Decimal(p.sum) for p in ps])
+        amount = str(sum([Decimal(p.sum) for p in ps]))
         add_id = int(kwargs.get('add', 0))
         address = safe_list_get(self.add_list, add_id, '')
         ps = [p.__dict__ for p in ps]
@@ -173,5 +171,19 @@ class User(MongoModel):
         return ms
 
     def get_default_add(self):
-        self.add = safe_list_get(self.add_list, self.add_default, None)
+        return safe_list_get(self.add_list, self.add_default, None)
 
+    def cart_add(self, product_uuid):
+        if Product.has(uuid=product_uuid):
+            count = self.cart.get(product_uuid, 0)
+            count += 1
+            self.cart[product_uuid] = count
+            self.save()
+
+    def cart_sub(self, product_uuid):
+        count = self.cart.get(product_uuid, 0)
+        count -= 1
+        self.cart[product_uuid] = count
+        if count <= 0:
+            self.cart.pop(product_uuid)
+        self.save()

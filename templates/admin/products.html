@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="">
-    <a href="{{ url_for('admin.add') }}" class="btn btn-info right">新建商品</a>
+    <a href="{{ url_for('admin.product_new') }}" class="btn btn-info right">新建商品</a>
     <h1>Product Manage</h1>
-
 </div>
-<form class="navbar-form " action="{{ url_for('admin.product_list_search')}}" method="post">
-    <input type="text" class="form-control" name="search" placeholder="按商品名检索">
+<form class="navbar-form " action="{{ url_for('admin.products_search')}}" method="post">
+    <input type="text" class="form-control" name="name" placeholder="按商品名检索">
     <button type="submit" class="btn btn-default">Search</button>
 </form>
 <table class="table table-striped table-hover">
@@ -22,7 +21,7 @@
         <tr data-id={{ p.id }}>
             <td>
                 <img src="{{ p.pic }}"  class="product-pic-s">
-                <a href="{{ url_for('admin.product_edit', uuid=p.uuid) }}">{{ p.name }}</a>
+                <a href="{{ url_for('admin.product', uuid=p.uuid) }}">{{ p.name }}</a>
             </td>
             <td>{{ p.price }}</td>
             <td>

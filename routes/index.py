@@ -1,6 +1,5 @@
 from . import *
 from models.product import Product
-from flask import current_app as app
 
 main = Blueprint('index', __name__)
 

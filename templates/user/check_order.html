@@ -118,7 +118,7 @@
                 </thead>
                 <tbody>
                     {% for p in ps %}
-                    <tr data-id={{ p.id }}>
+                    <tr data-id={{ p.uuid }}>
                         <td>{{ p.name }}</td>
                         <td>{{ p.price }}</td>
                         <td>x{{ p.count }}</td>
@@ -136,7 +136,7 @@
         <div class="left panel-h4">
             <h4>应付总额 : <span class="count_num">{{ u.count_price }}</span> 元</h4>
         </div>
-        <button class="btn btn-lg btn-danger right" id="check-order">确认付款</button>
+        <button class="btn btn-lg btn-danger right" id="check-order" {% if not u.add %} disabled {% endif %}>确认付款</button>
     </div>
 </div>
 </form>

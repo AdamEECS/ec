@@ -38,8 +38,9 @@ $('a.cart-add').click(function(){
     let target = $(event.target)
     let product_tr = target.closest('tr')
     let data = {
-        'product_id': product_tr.data('id')
+        'product_uuid': product_tr.data('uuid')
     }
+    log(data)
     let request = {
         url: '/api/cart_add',
         type: 'post',
@@ -63,7 +64,7 @@ $('a.cart-sub').click(function(){
     let target = $(event.target)
     let product_tr = target.closest('tr')
     let data = {
-        'product_id': product_tr.data('id')
+        'product_uuid': product_tr.data('uuid')
     }
     let request = {
         url: '/api/cart_sub',

@@ -18,7 +18,7 @@
     {% for o in os %}
     <div class="row panel panel-default">
         <div class="panel-heading">
-            <span class="panel-heading-time">{{ o.ct }}</span>
+            <span class="panel-heading-time">{{ o.ct|time_str }}</span>
             <a href="{{ url_for('user.order', orderNo=o.orderNo) }}">订单号：{{ o.orderNo }}</a>
         </div>
         <div class="panel-body">

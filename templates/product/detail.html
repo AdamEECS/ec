@@ -16,7 +16,7 @@
     <div class="col-xs-12 col-sm-8">
         <h3>{{ p.name }}</h3>
         <h3 class="count_num">￥{{ p.price }}</h3>
-        <a class="btn btn-danger" href="{{ url_for('user.cart_add', product_id=p.id)}}">加入购物车</a>
+        <a class="btn btn-danger" href="{{ url_for('user.cart_add', product_uuid=p.uuid)}}">加入购物车</a>
     </div>
 
 </div>

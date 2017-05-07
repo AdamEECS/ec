@@ -1,9 +1,10 @@
-from flask import Flask
-from flask_script import Manager
 import logging
 
+from flask import Flask
+from flask_script import Manager
 
 app = Flask(__name__)
+
 manager = Manager(app)
 
 
@@ -22,13 +23,18 @@ def register_routes(app):
     app.register_blueprint(routes_callback, url_prefix='/callback')
 
 
-def configure_app():
+def register_filters(app):
+    from usr_util.filters import filters
+    app.jinja_env.filters.update(filters)
 
+
+def configure_app():
     from config import key
     app.secret_key = key.secret_key
     from config.config import config_dict
     app.config.update(config_dict)
     register_routes(app)
+    register_filters(app)
     # 设置 log, 否则输出会被 gunicorn 吃掉
     if not app.debug:
         stream_handler = logging.StreamHandler()

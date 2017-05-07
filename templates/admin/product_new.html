@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
 <ol class="breadcrumb">
-    <li><a href="{{ url_for('admin.product_list') }}">Product Manage</a></li>
-    <li class="active">add</li>
+    <li><a href="{{ url_for('admin.products') }}">Product Manage</a></li>
+    <li class="active">Product New</li>
 </ol>
 <div>
     {{ msgs }}
@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6">
         <div class="" >
-            <form method=POST enctype=multipart/form-data action="{{ url_for('admin.add') }}">
+            <form method=POST enctype=multipart/form-data action="{{ url_for('admin.product_new') }}">
                 <label for="id-name">商品名称</label>
                 <input class="form-control" name="name" id=id-name required>
                 <label for="id-price">商品价格</label>

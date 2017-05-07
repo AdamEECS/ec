@@ -3,7 +3,7 @@
 <h1>Product List</h1>
 <div class="container">
     {% for p in ps %}
-    <div data-id={{ p.id }} class="row product-item list-item">
+    <div data-id={{ p.uuid }} class="row product-item list-item">
         <div class="col-xs-3 col-sm-2 list-pic-fix">
             <a href="{{ url_for('product.detail', uuid=p.uuid) }}">
                 <img src="{{ p.pic }}" class="product-pic-m">
@@ -16,7 +16,7 @@
             <span class="count_num">￥ {{ p.price }}</span>
         </div>
         <div class="col-xs-4 col-sm-2 right">
-            <a class="btn btn-danger" href="{{ url_for('user.cart_add', product_id=p.id)}}">加入购物车</a>
+            <a class="btn btn-danger" href="{{ url_for('user.cart_add', product_uuid=p.uuid)}}">加入购物车</a>
         </div>
 
     </div>

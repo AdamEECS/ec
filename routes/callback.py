@@ -1,21 +1,12 @@
-from models.user import User
-from models.product import Product
-from models.order import Order
 from routes import *
 from flask import current_app as app
-from decimal import Decimal
+
 import qiniu
-
-main = Blueprint('callback', __name__)
-
 from config import key
 
 q = qiniu.Auth(key.qiniu_access_key, key.qiniu_secret_key)
 
-
-@main.route('/callback', methods=['POST'])
-def callback():
-    form = request.form
+main = Blueprint('callback', __name__)
 
 
 @main.route('/all', methods=['POST'])
