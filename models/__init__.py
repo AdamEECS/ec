@@ -207,6 +207,7 @@ class User(MongoModel):
             field: new_uuid,
         }
         while self.__class__.has(**kwargs):
-            kwargs[field] = short_uuid()
+            new_uuid = short_uuid()
+            kwargs[field] = new_uuid
         setattr(self, field, new_uuid)
         self.save()
