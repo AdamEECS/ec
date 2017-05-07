@@ -56,7 +56,7 @@
                     </ul>
                 </li>
                 <li><a class="block-center" href="{{ url_for('user.cart') }}">购物车
-                    <span class="badge">{{ u.cart|count }}</span>
+                    <span class="badge class-cart-count">{{ u.get_cart_count() }}</span>
                 </a></li>
                 <li>
                     <a class="block-center" href="{{ url_for('user.logout') }}">

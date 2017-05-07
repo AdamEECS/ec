@@ -121,7 +121,7 @@ def cart_sub():
 def cart():
     u = current_user()
     ps = u.get_cart_detail()
-    u.count_num = len(ps)
+    u.count_num = u.get_cart_count()
     u.count_price = sum([Decimal(p.sum) for p in ps])
     return render_template('user_cart.html', u=u, ps=ps)
 

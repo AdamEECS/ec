@@ -47,10 +47,10 @@
         </div>
         {% else %}
         <div class="left panel-div">
-            总计 <span class="count_num">{{ u.count_num }}</span> 件，
+            总计 <span class="count_num class-cart-count">{{ u.count_num }}</span> 件，
         </div>
         <div class="left panel-div">
-            总金额 <span class="count_num">{{ u.count_price }}</span> 元。
+            总金额 <span class="count_num class-cart-total">{{ u.count_price }}</span> 元。
         </div>
         {% endif %}
         <a href="{{ url_for('user.check_order') }}" class="btn btn-lg btn-danger right" id="check-order"

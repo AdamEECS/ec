@@ -16,7 +16,7 @@ def index():
 def index_search():
     u = current_user()
     search = request.form.get('search', None)
-    if search:
+    if search is not None:
         ps = Product.find(name={'$regex': search, '$options': '$i'})
         return render_template('index.html', u=u, ps=ps)
     else:

@@ -124,11 +124,16 @@ class User(MongoModel):
             for k, v in cart.items():
                 p = Product.get(k)
                 p.count = v
-                p.sum = str(Decimal(p.price) * int(p.count))
+                p.sum = '{0:.2f}'.format(Decimal(p.price) * int(p.count))
+                print(p.sum)
                 ps.append(p)
         except AttributeError:
             self.cart_clear()
         return ps
+
+    def get_cart_count(self):
+        cart = self.cart
+        return sum([v for k, v in cart.items()])
 
     def buy(self, kwargs):
         ps = self.get_cart_detail()
