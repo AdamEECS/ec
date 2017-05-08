@@ -212,6 +212,9 @@ label {
     margin-left: 20px;
     color: #bbb;
 }
+#id-input-captcha {
+    width: 183px;
+}
 
 /*       -----------购物车局部css开始-----------     */
 .stepflex {

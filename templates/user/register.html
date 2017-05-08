@@ -5,8 +5,11 @@
 <div id="id-div-register" class="div-form sign-flow">
     <form method="post" action="{{ url_for('user.register') }}">
         <div class="group-inputs">
-            <input name="username" id="id-input-username" placeholder="用户名">
-            <input name="password" id="id-input-password" placeholder="密码">
+            <input name="username" id="id-input-username" placeholder="用户名" required>
+            <input name="password" id="id-input-password" placeholder="密码" required>
+            <input name="captcha" id="id-input-captcha" placeholder="验证码（不区分大小写" required>
+            <img onclick="this.setAttribute('src','/img/captcha?nocache='+Math.random());"
+                 src="/img/captcha" alt="Captcha" class="right"/>
         </div>
         <br>
         <button class="btn btn-info btn-block">注册</button>

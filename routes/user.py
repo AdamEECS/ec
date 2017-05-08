@@ -17,6 +17,9 @@ def index():
 def login():
     form = request.form
     username = form.get('username', '')
+    captcha = form.get('captcha', '').lower()
+    if captcha != session.get('captcha', 'no captcha!'):
+        return redirect(url_for('user.index'))
     u = User.find_one(username=username)
     if u is not None and u.validate_login(form):
         session['uid'] = u.id
@@ -33,6 +36,9 @@ def register_page():
 @main.route('/register', methods=['POST'])
 def register():
     form = request.form
+    captcha = form.get('captcha', '').lower()
+    if captcha != session.get('captcha', 'no captcha!'):
+        return redirect(url_for('user.register'))
     status, msgs = User.valid(form)
     if status is True:
         u = User.new(form)

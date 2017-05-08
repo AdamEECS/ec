@@ -25,3 +25,4 @@ six==1.10.0
 SQLAlchemy==1.1.6
 Werkzeug==0.12.1
 qiniu==7.1.2
+pillow==4.1.1

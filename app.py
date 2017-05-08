@@ -15,12 +15,15 @@ def register_routes(app):
     from routes.admin import main as routes_admin
     from routes.api import main as routes_api
     from routes.callback import main as routes_callback
+    from routes.img import main as routes_img
+
     app.register_blueprint(routes_user, url_prefix='/user')
     app.register_blueprint(routes_product, url_prefix='/product')
     app.register_blueprint(routes_index, url_prefix='/')
     app.register_blueprint(routes_admin, url_prefix='/admin')
     app.register_blueprint(routes_api, url_prefix='/api')
     app.register_blueprint(routes_callback, url_prefix='/callback')
+    app.register_blueprint(routes_img, url_prefix='/img')
 
 
 def register_filters(app):
