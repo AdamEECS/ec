@@ -47,11 +47,11 @@ def register():
         tb64 = u.set_email_token(u.email)
         url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
         body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
-        send(u.email, 'Verify Email', body)
+        send(u.email, 'Verify Email', body)       # TODO 管理客户邮箱功能
         session['uid'] = u.id
-        return redirect(url_for('index.index'))
+        return redirect(url_for('index.index'))   # TODO 邮件重置密码
     else:
-        return redirect(url_for('user.register'))
+        return redirect(url_for('user.register'))  # TODO 改为flash提示
 
 
 @main.route('/mail')
@@ -87,18 +87,24 @@ def profile_update():
 
 
 @main.route('/update_email', methods=['POST'])
+@login_required
 def update_email():
+    u = current_user()
     form = request.form
+    new_email = form.get('email', '')
     captcha = form.get('captcha', '').lower()
     if captcha != session.get('captcha', 'no captcha!'):
-        return redirect(url_for('user.register'))
-    status, msgs = User.valid(form)
-    if status is True:
-        u = User.new(form)
-        session['uid'] = u.id
-        return redirect(url_for('index.index'))
+        return json.dumps({'status': 'error', 'msg': 'captcha error'})
+    if User.has(email=new_email) and User.find_one(email=new_email).uuid != u.uuid:
+        return json.dumps({'status': 'error', 'msg': 'email exist'})
+    if u.validate_login(form):
+        tb64 = u.set_email_token(new_email)
+        url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
+        body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
+        send(new_email, 'Verify Email', body)
+        return redirect(url_for('user.profile'))
     else:
-        return redirect(url_for('user.register'))
+        return json.dumps({'status': 'error', 'msg': 'password error'})
 
 
 @main.route('/uploadavatar', methods=['POST'])

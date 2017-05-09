@@ -223,7 +223,6 @@ class User(MongoModel):
         uuid, token_sha1 = s.split('-', 1)
         u = cls.get_uuid(uuid)
         if u.email_token_valid(token_sha1):
-            print('valid')
             u.email = u.email_token.split('-')[1]
             u.email_verify = True
             u.save()
@@ -237,5 +236,3 @@ class User(MongoModel):
             return False
         return token_sha1 == self.sha1_email_token(self.email_token)
 
-    def update_email(self):
-        pass
