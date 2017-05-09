@@ -212,8 +212,19 @@ label {
     margin-left: 20px;
     color: #bbb;
 }
-#id-input-captcha {
-    width: 183px;
+#id-input-captcha,#id-input-mail-code {
+    width: 186px;
+}
+#id-input-mail-code {
+    border-top: 1px solid #ddd;
+}
+#id-button-mail-code {
+    width: 112px;
+    height: 49px;
+    display: inline-block;
+    border-radius: 0px;
+    border-top: 1px solid #ddd;
+    line-height: 35px;
 }
 
 /*       -----------购物车局部css开始-----------     */

@@ -21,6 +21,8 @@ class User(MongoModel):
         fields = [
             ('username', str, ''),
             ('nickname', str, ''),
+            ('email', str, ''),
+            ('email_verify', bool, False),
             ('password', str, ''),
             ('avatar', str, 'default.png'),
             ('role', str, 'client'),
@@ -70,7 +72,9 @@ class User(MongoModel):
     def valid(cls, form):
         username = form.get('username', '')
         password = form.get('password', '')
+        email = form.get('email', '')
         valid_username = cls.find_one(username=username) is None
+        valid_email = cls.find_one(email=email) is None
         valid_username_len = len(username) >= 3
         valid_password_len = len(password) >= 3
         # valid_captcha = self.captcha == '3'
@@ -84,7 +88,10 @@ class User(MongoModel):
         if not valid_password_len:
             message = '密码长度必须大于等于 3'
             msgs.append(message)
-        status = valid_username and valid_username_len and valid_password_len
+        if not valid_email:
+            message = '邮箱已经存在'
+            msgs.append(message)
+        status = valid_username and valid_username_len and valid_password_len and valid_email
         return status, msgs
 
     def update_avatar(self, avatar):

@@ -10,6 +10,8 @@ config_dict = dict(
     CDN_BUCKET='buy-suzumiya',
     QINIU_CALLBACK_URL='https://buy.suzumiya.cc/callback/all',
     PIC_UPLOAD_URL='https://up-z1.qbox.me/',
+    SEND_EMAIL_URL='https://api.mailgun.net/v3/mg.suzumiya.cc/messages',
+    SEND_EMAIL_FROM='Suzumiya <no-replay@mg.suzumiya.cc>',
 )
 
 # mongodb config

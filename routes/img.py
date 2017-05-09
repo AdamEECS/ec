@@ -10,12 +10,12 @@ main = Blueprint('img', __name__)
 
 @main.route('/captcha')
 def captcha():
-    width = 115
+    width = 112
     height = 49
     size = (width, height)
     image = Image.new('RGB', size, color=(255, 255, 255))
     font_file = 'static/font/MONACO.TTF'
-    font = ImageFont.truetype(font_file, 40)
+    font = ImageFont.truetype(font_file, 39)
     draw = ImageDraw.Draw(image)
     rand_str = ''.join(random.sample(string.ascii_lowercase + string.digits, 4))
     draw.text((7, 0), rand_str, fill=rand_rgb(), font=font)

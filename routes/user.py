@@ -1,6 +1,7 @@
 from routes import *
 from models.user import User
 from models.order import Order
+from models.mail import send_simple_message
 from decimal import Decimal
 
 main = Blueprint('user', __name__)
@@ -46,6 +47,12 @@ def register():
         return redirect(url_for('index.index'))
     else:
         return redirect(url_for('user.register'))
+
+
+@main.route('/mail')
+def register_mail():
+    send_simple_message()
+    return redirect(url_for('index.index'))
 
 
 @main.route('/profile')
