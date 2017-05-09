@@ -71,6 +71,21 @@ def profile_update():
     return redirect(url_for('user.profile'))
 
 
+@main.route('/update_email', methods=['POST'])
+def update_email():
+    form = request.form
+    captcha = form.get('captcha', '').lower()
+    if captcha != session.get('captcha', 'no captcha!'):
+        return redirect(url_for('user.register'))
+    status, msgs = User.valid(form)
+    if status is True:
+        u = User.new(form)
+        session['uid'] = u.id
+        return redirect(url_for('index.index'))
+    else:
+        return redirect(url_for('user.register'))
+
+
 @main.route('/uploadavatar', methods=['POST'])
 @login_required
 def avatar():

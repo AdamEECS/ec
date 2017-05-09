@@ -226,6 +226,9 @@ label {
     border-top: 1px solid #ddd;
     line-height: 35px;
 }
+.panel-profile {
+    max-width: 400px;
+}
 
 /*       -----------购物车局部css开始-----------     */
 .stepflex {
