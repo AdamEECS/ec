@@ -3,6 +3,7 @@ from models.user import User
 from models.order import Order
 from models.mail import send
 from decimal import Decimal
+from flask import current_app as app
 
 main = Blueprint('user', __name__)
 
@@ -44,7 +45,7 @@ def register():
     if status is True:
         u = User.new(form)
         tb64 = u.set_email_token(u.email)
-        url = url_for('user.email_verify', tb64=tb64, _external=True)
+        url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
         body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
         send(u.email, 'Verify Email', body)
         session['uid'] = u.id
