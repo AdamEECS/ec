@@ -52,6 +52,8 @@ def configured_app():
 
 @manager.command
 def server():
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.jinja_env.auto_reload = True
     config = dict(
         debug=True,
         host='0.0.0.0',

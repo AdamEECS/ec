@@ -150,6 +150,10 @@ class User(MongoModel):
         return cls.find_one(id=id)
 
     @classmethod
+    def get_uuid(cls, uuid):
+        return cls.find_one(uuid=uuid)
+
+    @classmethod
     def find_one(cls, **kwargs):
         kwargs['deleted'] = kwargs.pop('deleted', False)
         l = cls.find(**kwargs)

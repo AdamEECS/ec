@@ -1,11 +1,14 @@
 import hashlib
+import base64
 from enum import Enum
 from . import MongoModel
 from . import timestamp
 from . import safe_list_get
+from . import short_uuid
 from decimal import Decimal
 from .order import Order
 from .product import Product
+from .mail import send
 from flask import current_app as app
 
 
@@ -23,6 +26,8 @@ class User(MongoModel):
             ('nickname', str, ''),
             ('email', str, ''),
             ('email_verify', bool, False),
+            ('email_token', str, ''),
+            ('email_token_exp', int, 0),
             ('password', str, ''),
             ('avatar', str, 'default.png'),
             ('role', str, 'client'),
@@ -194,3 +199,43 @@ class User(MongoModel):
         if count <= 0:
             self.cart.pop(product_uuid)
         self.save()
+
+    def set_email_token(self, email):
+        token = '{}-{}'.format(short_uuid(), email)
+        self.email_token = token
+        self.email_token_exp = timestamp() + 3600
+        self.save()
+        return self.encode_email_token(token)
+
+    @staticmethod
+    def sha1_email_token(token):
+        return hashlib.sha1(token.encode('ascii')).hexdigest()
+
+    def encode_email_token(self, token):
+        token_sha1 = self.sha1_email_token(token)
+        s = '{}-{}'.format(self.uuid, token_sha1)
+        tb64 = base64.b64encode(s.encode('ascii'))
+        return tb64
+
+    @classmethod
+    def email_verify(cls, tb64):
+        s = base64.b64decode(tb64).decode('ascii')
+        uuid, token_sha1 = s.split('-', 1)
+        u = cls.get_uuid(uuid)
+        if u.email_token_valid(token_sha1):
+            print('valid')
+            u.email = u.email_token.split('-')[1]
+            u.email_verify = True
+            u.save()
+            return True
+        else:
+            return False
+
+    def email_token_valid(self, token_sha1):
+        now = timestamp()
+        if now > self.email_token_exp:
+            return False
+        return token_sha1 == self.sha1_email_token(self.email_token)
+
+    def update_email(self):
+        pass

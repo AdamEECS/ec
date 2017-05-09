@@ -20,4 +20,4 @@ def send(email, subject, body):
         data={"from": app.config['SEND_EMAIL_FROM'],
               "to": [email],
               "subject": subject,
-              "text": body})
+              "html": body})

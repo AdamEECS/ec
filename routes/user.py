@@ -1,7 +1,7 @@
 from routes import *
 from models.user import User
 from models.order import Order
-from models.mail import send_simple_message
+from models.mail import send
 from decimal import Decimal
 
 main = Blueprint('user', __name__)
@@ -43,6 +43,10 @@ def register():
     status, msgs = User.valid(form)
     if status is True:
         u = User.new(form)
+        tb64 = u.set_email_token(u.email)
+        url = url_for('user.email_verify', tb64=tb64, _external=True)
+        body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
+        send(u.email, 'Verify Email', body)
         session['uid'] = u.id
         return redirect(url_for('index.index'))
     else:
@@ -50,9 +54,19 @@ def register():
 
 
 @main.route('/mail')
+@admin_required
 def register_mail():
-    send_simple_message()
+    email = 'test@test.cc'
+    subject = 'Hello'
+    body = 'test'
+    send(email, subject, body)
     return redirect(url_for('index.index'))
+
+
+@main.route('/email_verify/<tb64>')
+def email_verify(tb64):
+    User.email_verify(tb64)
+    return redirect(url_for('user.profile'))
 
 
 @main.route('/profile')
