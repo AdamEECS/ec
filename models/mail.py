@@ -28,3 +28,10 @@ def send_verify_email(email, tb64):
     url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
     body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
     send(email, 'Verify Email', body)
+
+
+def send_password_email(email, tb64):
+    url = app.config['BASE_URL'] + url_for('user.forget_password_verify', tb64=tb64)
+    body = "Click to reset your password: <a href='{0}'>{0}</a>".format(url)
+    send(email, 'Reset Password', body)
+

@@ -9,6 +9,7 @@ from decimal import Decimal
 from .order import Order
 from .product import Product
 from .mail import send_verify_email
+from .mail import send_password_email
 from flask import current_app as app
 
 
@@ -210,13 +211,16 @@ class User(MongoModel):
             self.cart.pop(product_uuid)
         self.save()
 
-    def set_email_token(self, email):
+    def send_email_verify(self, email):
+        tb64 = self.set_token(email)
+        send_verify_email(email, tb64)
+
+    def set_token(self, email):
         token = '{}-{}'.format(short_uuid(), email)
         self.email_token = token
         self.email_token_exp = timestamp() + 3600
         self.save()
         tb64 = self.encode_email_token(token)
-        send_verify_email(email, tb64)
         return tb64
 
     @staticmethod
@@ -238,6 +242,7 @@ class User(MongoModel):
             u.email = u.email_token.split('-')[1]
             u.email_verify = True
             u.save()
+            u.clear_token()
             return True
         else:
             return False
@@ -258,3 +263,43 @@ class User(MongoModel):
         if len(self.email) <= 0:
             return False
         return self.email_verify
+
+    @classmethod
+    def forget_password(cls, form):
+        username = form.get('username')
+        email = form.get('email')
+        u = cls.find_one(username=username)
+        if u.email_verified() and u.email == email:
+            tb64 = u.set_token(email)
+            send_password_email(email, tb64)
+
+    @classmethod
+    def forget_password_verify(cls, tb64):
+        s = base64.b64decode(tb64).decode('ascii')
+        uuid, token_sha1 = s.split('-', 1)
+        u = cls.get_uuid(uuid)
+        if u.email_token_valid(token_sha1):
+            return True
+        else:
+            return False
+
+    @classmethod
+    def get_user_by_tb64(cls, tb64):
+        s = base64.b64decode(tb64).decode('ascii')
+        uuid, token_sha1 = s.split('-', 1)
+        u = cls.get_uuid(uuid)
+        if u.email_token_valid(token_sha1):
+            return u
+        else:
+            return None
+
+    def reset_password(self, password):
+        self.password = self.salted_password(password)
+        self.save()
+        self.clear_token()
+        return self
+
+    def clear_token(self):
+        self.email_token = ''
+        self.email_token_exp = 0
+        self.save()

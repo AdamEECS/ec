@@ -1,7 +1,6 @@
 from routes import *
 from models.user import User
 from models.order import Order
-from models.mail import send_verify_email
 from decimal import Decimal
 from flask import current_app as app
 
@@ -44,27 +43,48 @@ def register():
     status, msgs = User.valid(form)
     if status is True:
         u = User.new(form)
-        u.set_email_token(u.email)
+        u.send_email_verify(u.email)
         session['uid'] = u.id
         return redirect(url_for('index.index'))  # TODO 邮件重置密码
     else:
         return redirect(url_for('user.register'))  # TODO 改为flash提示
 
 
-# @main.route('/mail')
-# @admin_required
-# def register_mail():
-#     email = 'test@test.cc'
-#     subject = 'Hello'
-#     body = 'test'
-#     send(email, subject, body)
-#     return redirect(url_for('index.index'))
+@main.route('/forget_password')
+def forget_password():
+    return render_template('user/forget_password.html')
+
+
+@main.route('/forget_password', methods=['POST'])
+def forget_password_send():
+    form = request.form
+    captcha = form.get('captcha', '').lower()
+    if captcha != session.get('captcha', 'no captcha!'):
+        return redirect(url_for('user.forget_password'))
+    User.forget_password(form)
+    return redirect(url_for('user.forget_password'))
 
 
 @main.route('/email_verify/<tb64>')
 def email_verify(tb64):
     User.email_verify(tb64)
     return redirect(url_for('user.profile'))
+
+
+@main.route('/forget_password_verify/<tb64>')
+def forget_password_verify(tb64):
+    if User.forget_password_verify(tb64):
+        return render_template('user/reset_password.html', tb64=tb64)
+
+
+@main.route('/reset_password/<tb64>', methods=['POST'])
+def reset_password(tb64):
+    password = request.form.get('password', '')
+    if User.forget_password_verify(tb64):
+        u = User.get_user_by_tb64(tb64)
+        u.reset_password(password)
+        session['uid'] = u.id
+        return redirect(url_for('index.index'))
 
 
 @main.route('/profile')
@@ -95,7 +115,7 @@ def update_email():
     if User.has(email=new_email) and User.find_one(email=new_email).uuid != u.uuid:
         return json.dumps({'status': 'error', 'msg': 'email exist'})
     if u.validate_login(form):
-        u.set_email_token(new_email)
+        u.send_email_verify(new_email)
         return redirect(url_for('user.profile'))
     else:
         return json.dumps({'status': 'error', 'msg': 'password error'})
