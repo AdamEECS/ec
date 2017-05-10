@@ -1,5 +1,6 @@
 import requests
 from flask import current_app as app
+from flask import url_for
 from config import key
 
 
@@ -21,3 +22,9 @@ def send(email, subject, body):
               "to": [email],
               "subject": subject,
               "html": body})
+
+
+def send_verify_email(email, tb64):
+    url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
+    body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
+    send(email, 'Verify Email', body)

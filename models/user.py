@@ -8,7 +8,7 @@ from . import short_uuid
 from decimal import Decimal
 from .order import Order
 from .product import Product
-from .mail import send
+from .mail import send_verify_email
 from flask import current_app as app
 
 
@@ -205,7 +205,9 @@ class User(MongoModel):
         self.email_token = token
         self.email_token_exp = timestamp() + 3600
         self.save()
-        return self.encode_email_token(token)
+        tb64 = self.encode_email_token(token)
+        send_verify_email(email, tb64)
+        return tb64
 
     @staticmethod
     def sha1_email_token(token):

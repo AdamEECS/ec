@@ -1,7 +1,7 @@
 from routes import *
 from models.user import User
 from models.order import Order
-from models.mail import send
+from models.mail import send_verify_email
 from decimal import Decimal
 from flask import current_app as app
 
@@ -44,24 +44,21 @@ def register():
     status, msgs = User.valid(form)
     if status is True:
         u = User.new(form)
-        tb64 = u.set_email_token(u.email)
-        url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
-        body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
-        send(u.email, 'Verify Email', body)       # TODO 管理客户邮箱功能
+        u.set_email_token(u.email)   # TODO 管理客户邮箱功能
         session['uid'] = u.id
         return redirect(url_for('index.index'))   # TODO 邮件重置密码
     else:
         return redirect(url_for('user.register'))  # TODO 改为flash提示
 
 
-@main.route('/mail')
-@admin_required
-def register_mail():
-    email = 'test@test.cc'
-    subject = 'Hello'
-    body = 'test'
-    send(email, subject, body)
-    return redirect(url_for('index.index'))
+# @main.route('/mail')
+# @admin_required
+# def register_mail():
+#     email = 'test@test.cc'
+#     subject = 'Hello'
+#     body = 'test'
+#     send(email, subject, body)
+#     return redirect(url_for('index.index'))
 
 
 @main.route('/email_verify/<tb64>')
@@ -98,10 +95,7 @@ def update_email():
     if User.has(email=new_email) and User.find_one(email=new_email).uuid != u.uuid:
         return json.dumps({'status': 'error', 'msg': 'email exist'})
     if u.validate_login(form):
-        tb64 = u.set_email_token(new_email)
-        url = app.config['BASE_URL'] + url_for('user.email_verify', tb64=tb64)
-        body = "Click to verify your email: <a href='{0}'>{0}</a>".format(url)
-        send(new_email, 'Verify Email', body)
+        u.set_email_token(new_email)
         return redirect(url_for('user.profile'))
     else:
         return json.dumps({'status': 'error', 'msg': 'password error'})
