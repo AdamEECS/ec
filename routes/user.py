@@ -44,9 +44,9 @@ def register():
     status, msgs = User.valid(form)
     if status is True:
         u = User.new(form)
-        u.set_email_token(u.email)   # TODO 管理客户邮箱功能
+        u.set_email_token(u.email)
         session['uid'] = u.id
-        return redirect(url_for('index.index'))   # TODO 邮件重置密码
+        return redirect(url_for('index.index'))  # TODO 邮件重置密码
     else:
         return redirect(url_for('user.register'))  # TODO 改为flash提示
 

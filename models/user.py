@@ -18,6 +18,12 @@ class Role(Enum):
     client = 3
 
 
+bool_dict = {
+    'true': True,
+    'false': False,
+}
+
+
 class User(MongoModel):
     @classmethod
     def _fields(cls):
@@ -51,6 +57,10 @@ class User(MongoModel):
         form.pop('role', '')
         password = form.pop('password', '')
         re_password = form.pop('re_password', '')
+        email_verify = form.pop('email_verify', 'true')
+        form['email_verify'] = bool_dict.get(email_verify, False)
+        if(self.email_exist(form.get('email'))):
+            form.pop('email')
         self.update(form)
         if len(password) > 0 and password == re_password:
             self.password = self.salted_password(password)
@@ -238,3 +248,8 @@ class User(MongoModel):
             return False
         return token_sha1 == self.sha1_email_token(self.email_token)
 
+    def email_exist(self, email):
+        if self.has(email=email) and self.find_one(email=email).uuid != self.uuid:
+            return True
+        else:
+            return False

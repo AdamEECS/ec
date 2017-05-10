@@ -71,7 +71,7 @@ def product(uuid):
     return render_template('admin/product.html', p=p, u=u)
 
 
-@main.route('/update/<uuid>', methods=['POST'])
+@main.route('/product/<uuid>', methods=['POST'])
 @admin_required
 def product_update(uuid):
     p = Product.find_one(uuid=uuid)
