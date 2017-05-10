@@ -157,6 +157,7 @@ def logout():
 @main.route('/check_order')
 @login_required
 @cart_not_empty_required
+@email_verify_required
 def check_order():
     u = current_user()
     u.add = u.get_default_add()
@@ -169,6 +170,7 @@ def check_order():
 @main.route('/pay', methods=['POST'])
 @login_required
 @cart_not_empty_required
+@email_verify_required
 def pay():
     u = current_user()
     form = request.form

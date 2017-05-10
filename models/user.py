@@ -253,3 +253,8 @@ class User(MongoModel):
             return True
         else:
             return False
+
+    def email_verified(self):
+        if len(self.email) <= 0:
+            return False
+        return self.email_verify

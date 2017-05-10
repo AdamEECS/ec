@@ -49,3 +49,13 @@ def cart_not_empty_required(f):
         return f(*args, **kwargs)
 
     return function
+
+
+def email_verify_required(f):
+    @wraps(f)
+    def function(*args, **kwargs):
+        if not current_user().email_verified():
+            return redirect(url_for('user.profile'))
+        return f(*args, **kwargs)
+
+    return function
