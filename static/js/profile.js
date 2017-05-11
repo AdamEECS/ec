@@ -16,6 +16,16 @@
 //     }, 1000);
 //     return false
 // })
+let template = function (r) {
+    let div = `
+<div class="alert alert-${r.status} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    ${r.msg}
+</div>`
+    return div
+}
 
 $('.button-re-verify').click(function() {
     $('#id-div-email-info').toggle()
@@ -27,11 +37,14 @@ let ajaxFormSubmit = function() {
     let img = ajaxForm.find('img')
     img.click()
     let mailCodeButton = ajaxForm.find('#id-button-verify')
-    ajaxForm.ajaxSubmit(function(message) {
-        if(message.success == true){
-        }
+    let alertContainer = $('.alert-container')
+    ajaxForm.ajaxSubmit(function(response) {
+        let r = JSON.parse(response)
+        alertContainer.append(template(r))
+        $('.alert').delay(5000).fadeOut(600)
+
     });
-    t = 60
+    let t = 60
     mailCodeButton.text(`获取验证邮件（ ${t} ）`)
     mailCodeButton.attr('disabled', true)
     let timer = setInterval(function() {

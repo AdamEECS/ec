@@ -78,8 +78,10 @@ def forget_password_send():
 
 @main.route('/email_verify/<tb64>')
 def email_verify(tb64):
-    User.email_verify(tb64)
-    flash('邮箱验证通过', 'success')
+    if User.email_verify(tb64):
+        flash('邮箱验证通过', 'success')
+    else:
+        flash('邮箱验证失败', 'danger')
     return redirect(url_for('user.profile'))
 
 
@@ -132,14 +134,14 @@ def update_email():
     new_email = form.get('email', '')
     captcha = form.get('captcha', '').lower()
     if captcha != session.get('captcha', 'no captcha!'):
-        return json.dumps({'status': 'error', 'msg': 'captcha error'})
+        return json.dumps({'status': 'warning', 'msg': '验证码错误'})
     if User.has(email=new_email) and User.find_one(email=new_email).uuid != u.uuid:
-        return json.dumps({'status': 'error', 'msg': 'email exist'})
+        return json.dumps({'status': 'warning', 'msg': '该邮箱已被占用'})
     if u.validate_login(form):
         u.send_email_verify(new_email)
-        return redirect(url_for('user.profile'))
+        return json.dumps({'status': 'info', 'msg': '已发送验证邮件，请查收'})
     else:
-        return json.dumps({'status': 'error', 'msg': 'password error'})
+        return json.dumps({'status': 'warning', 'msg': '密码错误'})
 
 
 @main.route('/uploadavatar', methods=['POST'])
