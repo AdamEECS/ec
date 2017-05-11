@@ -48,6 +48,7 @@ def register():
         u = User.new(form)
         u.send_email_verify(u.email)
         session['uid'] = u.id
+        flash('验证邮件已发送，请查收', 'info')
         return redirect(url_for('index.index'))
     else:
         for msg in msgs:
@@ -78,6 +79,7 @@ def forget_password_send():
 @main.route('/email_verify/<tb64>')
 def email_verify(tb64):
     User.email_verify(tb64)
+    flash('邮箱验证通过', 'success')
     return redirect(url_for('user.profile'))
 
 
