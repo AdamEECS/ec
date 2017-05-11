@@ -235,7 +235,9 @@ class User(MongoModel):
 
     @classmethod
     def email_verify(cls, tb64):
-        s = base64.b64decode(tb64).decode('ascii')
+        s = cls.safe_decode_b64(tb64)
+        if s is None:
+            return False
         uuid, token_sha1 = s.split('-', 1)
         u = cls.get_uuid(uuid)
         if u.email_token_valid(token_sha1):
@@ -269,13 +271,17 @@ class User(MongoModel):
         username = form.get('username')
         email = form.get('email')
         u = cls.find_one(username=username)
-        if u.email_verified() and u.email == email:
+        if u is not None and u.email_verified() and u.email == email:
             tb64 = u.set_token(email)
             send_password_email(email, tb64)
+            return True
+        return False
 
     @classmethod
     def forget_password_verify(cls, tb64):
-        s = base64.b64decode(tb64).decode('ascii')
+        s = cls.safe_decode_b64(tb64)
+        if s is None:
+            return False
         uuid, token_sha1 = s.split('-', 1)
         u = cls.get_uuid(uuid)
         if u.email_token_valid(token_sha1):
@@ -285,7 +291,9 @@ class User(MongoModel):
 
     @classmethod
     def get_user_by_tb64(cls, tb64):
-        s = base64.b64decode(tb64).decode('ascii')
+        s = cls.safe_decode_b64(tb64)
+        if s is None:
+            return None
         uuid, token_sha1 = s.split('-', 1)
         u = cls.get_uuid(uuid)
         if u.email_token_valid(token_sha1):
@@ -303,3 +311,11 @@ class User(MongoModel):
         self.email_token = ''
         self.email_token_exp = 0
         self.save()
+
+    @staticmethod
+    def safe_decode_b64(tb64):
+        try:
+            return base64.b64decode(tb64).decode('ascii')
+        except:
+            return None
+

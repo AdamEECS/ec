@@ -41,6 +41,7 @@ def register():
     form = request.form
     captcha = form.get('captcha', '').lower()
     if captcha != session.get('captcha', 'no captcha!'):
+        flash('验证码错误', 'warning')
         return redirect(url_for('user.register'))
     status, msgs = User.valid(form)
     if status is True:
@@ -49,7 +50,9 @@ def register():
         session['uid'] = u.id
         return redirect(url_for('index.index'))
     else:
-        return redirect(url_for('user.register'))  # TODO 改为flash提示
+        for msg in msgs:
+            flash(msg, 'warning')
+        return redirect(url_for('user.register'))
 
 
 @main.route('/forget_password')
@@ -62,8 +65,13 @@ def forget_password_send():
     form = request.form
     captcha = form.get('captcha', '').lower()
     if captcha != session.get('captcha', 'no captcha!'):
+        flash('验证码错误', 'warning')
         return redirect(url_for('user.forget_password'))
-    User.forget_password(form)
+    r = User.forget_password(form)
+    if r:
+        flash('密码重置邮件已经发送，请查收邮箱', 'success')
+    else:
+        flash('用户名或邮箱不匹配', 'warning')
     return redirect(url_for('user.forget_password'))
 
 
@@ -76,7 +84,11 @@ def email_verify(tb64):
 @main.route('/forget_password_verify/<tb64>')
 def forget_password_verify(tb64):
     if User.forget_password_verify(tb64):
+        flash('重置邮件验证通过', 'success')
         return render_template('user/reset_password.html', tb64=tb64)
+    else:
+        flash('重置邮件验证失败', 'danger')
+        return redirect(url_for('user.index'))
 
 
 @main.route('/reset_password/<tb64>', methods=['POST'])
@@ -86,7 +98,11 @@ def reset_password(tb64):
         u = User.get_user_by_tb64(tb64)
         u.reset_password(password)
         session['uid'] = u.id
+        flash('密码已重置', 'success')
         return redirect(url_for('index.index'))
+    else:
+        flash('重置邮件验证失败', 'warning')
+        return redirect(url_for('user.index'))
 
 
 @main.route('/profile')
@@ -102,6 +118,7 @@ def profile_update():
     cu = current_user()
     form = request.form
     cu.safe_update_user(form)
+    flash('信息已更新', 'success')
     return redirect(url_for('user.profile'))
 
 
@@ -173,6 +190,7 @@ def cart_clear():
 def logout():
     p = session.pop('uid')
     print('logout: pop uid', p)
+    flash('账号已安全退出', 'success')
     return redirect(url_for('index.index'))
 
 

@@ -230,7 +230,7 @@ label {
     max-width: 400px;
 }
 .alert-container {
-    position: absolute;
+    position: fixed;
     top: 70px;
     width: 100%;
     z-index: 2;
