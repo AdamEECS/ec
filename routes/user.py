@@ -20,12 +20,14 @@ def login():
     username = form.get('username', '')
     captcha = form.get('captcha', '').lower()
     if captcha != session.get('captcha', 'no captcha!'):
+        flash('验证码错误', 'warning')
         return redirect(url_for('user.index'))
     u = User.find_one(username=username)
     if u is not None and u.validate_login(form):
         session['uid'] = u.id
         return redirect(url_for('index.index'))
     else:
+        flash('用户名密码错误', 'warning')
         return redirect(url_for('user.index'))
 
 
@@ -45,7 +47,7 @@ def register():
         u = User.new(form)
         u.send_email_verify(u.email)
         session['uid'] = u.id
-        return redirect(url_for('index.index'))  # TODO 邮件重置密码
+        return redirect(url_for('index.index'))
     else:
         return redirect(url_for('user.register'))  # TODO 改为flash提示
 

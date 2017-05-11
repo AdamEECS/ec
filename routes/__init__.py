@@ -6,6 +6,7 @@ from flask import render_template
 from flask import url_for
 from flask import Response
 from flask import session
+from flask import flash
 
 from models.user import User
 from functools import wraps

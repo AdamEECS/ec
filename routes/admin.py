@@ -134,7 +134,7 @@ def user(id):
     return render_template('admin/user.html', m=m, ps=ps, u=u)
 
 
-@main.route('/user_delete/<int:id>')
+@main.route('/user/delete/<int:id>')
 @admin_required
 def user_delete(id):
     # m = User.get(id)
@@ -143,7 +143,7 @@ def user_delete(id):
     return redirect(url_for('admin.users'))
 
 
-@main.route('/user_update/<int:id>', methods=['POST'])
+@main.route('/user/update/<int:id>', methods=['POST'])
 @admin_required
 def user_update(id):
     m = User.get(id)
