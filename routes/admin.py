@@ -13,14 +13,14 @@ main = Blueprint('admin', __name__)
 
 
 # ------------------------- 产品管理 --------------------------
-@main.route('/product_new')
+@main.route('/product/new')
 @admin_required
 def product_new_page():
     u = current_user()
     return render_template('admin/product_new.html', u=u)
 
 
-@main.route('/product_new', methods=['POST'])
+@main.route('/product/new', methods=['POST'])
 @admin_required
 def product_new():
     u = current_user()
@@ -181,7 +181,7 @@ def order(orderNo):
     return render_template('admin/order.html', o=o, u=u)
 
 
-@main.route('/order_delivery/<orderNo>')
+@main.route('/order/delivery/<orderNo>')
 @admin_required
 def order_delivery(orderNo):
     o = Order.find_one(orderNo=orderNo)
