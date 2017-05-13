@@ -3,7 +3,7 @@ from routes import *
 main = Blueprint('api', __name__)
 
 
-@main.route('/cart_add', methods=['POST'])
+@main.route('/cart/add', methods=['POST'])
 @login_required
 def cart_add():
     u = current_user()
@@ -16,7 +16,7 @@ def cart_add():
     return json.dumps(response)
 
 
-@main.route('/cart_sub', methods=['POST'])
+@main.route('/cart/sub', methods=['POST'])
 @login_required
 def cart_sub():
     u = current_user()

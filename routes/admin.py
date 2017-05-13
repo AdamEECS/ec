@@ -223,19 +223,19 @@ def order_delivery(orderNo):
 #     return redirect(url_for('admin.products'))
 
 
-@main.route('/clear_orders')
-@admin_required
-def clear_orders():
-    os = Order.all()
-    for o in os:
-        o.delete()
-    return redirect(url_for('admin.products'))
-
-
-@main.route('/clear_carts')
-@admin_required
-def clear_carts():
-    us = User.all()
-    for u in us:
-        u.cart_clear()
-    return redirect(url_for('admin.products'))
+# @main.route('/clear_orders')
+# @admin_required
+# def clear_orders():
+#     os = Order.all()
+#     for o in os:
+#         o.delete()
+#     return redirect(url_for('admin.products'))
+#
+#
+# @main.route('/clear_carts')
+# @admin_required
+# def clear_carts():
+#     us = User.all()
+#     for u in us:
+#         u.cart_clear()
+#     return redirect(url_for('admin.products'))
