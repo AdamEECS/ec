@@ -56,12 +56,12 @@ def register():
         return redirect(url_for('user.register'))
 
 
-@main.route('/forget_password')
+@main.route('/password/forget')
 def forget_password():
     return render_template('user/forget_password.html')
 
 
-@main.route('/forget_password', methods=['POST'])
+@main.route('/password/forget', methods=['POST'])
 def forget_password_send():
     form = request.form
     captcha = form.get('captcha', '').lower()
@@ -76,7 +76,7 @@ def forget_password_send():
     return redirect(url_for('user.forget_password'))
 
 
-@main.route('/email_verify/<tb64>')
+@main.route('/email/verify/<tb64>')
 def email_verify(tb64):
     if User.email_verify(tb64):
         flash('邮箱验证通过', 'success')
@@ -85,7 +85,7 @@ def email_verify(tb64):
     return redirect(url_for('user.profile'))
 
 
-@main.route('/forget_password_verify/<tb64>')
+@main.route('/password/forget/verify/<tb64>')
 def forget_password_verify(tb64):
     if User.forget_password_verify(tb64):
         flash('重置邮件验证通过', 'success')
@@ -95,7 +95,7 @@ def forget_password_verify(tb64):
         return redirect(url_for('user.index'))
 
 
-@main.route('/reset_password/<tb64>', methods=['POST'])
+@main.route('/password/reset/<tb64>', methods=['POST'])
 def reset_password(tb64):
     password = request.form.get('password', '')
     if User.forget_password_verify(tb64):
@@ -126,7 +126,7 @@ def profile_update():
     return redirect(url_for('user.profile'))
 
 
-@main.route('/update_email', methods=['POST'])
+@main.route('/email/update', methods=['POST'])
 @login_required
 def update_email():
     u = current_user()
@@ -153,7 +153,7 @@ def avatar():
     return redirect(url_for('.profile'))
 
 
-@main.route('/cart_add', methods=['GET'])
+@main.route('/cart/add', methods=['GET'])
 @login_required
 def cart_add():
     u = current_user()
@@ -162,7 +162,7 @@ def cart_add():
     return redirect(url_for('user.cart'))
 
 
-@main.route('/cart_sub', methods=['GET'])
+@main.route('/cart/sub', methods=['GET'])
 @login_required
 def cart_sub():
     u = current_user()
@@ -181,7 +181,7 @@ def cart():
     return render_template('user/cart.html', u=u, ps=ps)
 
 
-@main.route('/cart_clear')
+@main.route('/cart/clear')
 @login_required
 def cart_clear():
     u = current_user()
@@ -198,7 +198,7 @@ def logout():
     return redirect(url_for('index.index'))
 
 
-@main.route('/check_order')
+@main.route('/order/check')
 @login_required
 @cart_not_empty_required
 @email_verify_required
@@ -266,7 +266,7 @@ def address_add():
     return render_template('user/address.html', u=cu)
 
 
-@main.route('/address_update/<int:id>', methods=['POST'])
+@main.route('/address/update/<int:id>', methods=['POST'])
 @login_required
 def address_update(id):
     cu = current_user()
@@ -280,7 +280,7 @@ def address_update(id):
     return redirect(url_for('user.address'))
 
 
-@main.route('/address_default/<int:id>')
+@main.route('/address/default/<int:id>')
 @login_required
 def address_default(id):
     cu = current_user()
