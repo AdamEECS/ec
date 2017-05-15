@@ -80,7 +80,7 @@ def product_update(uuid):
     return redirect(url_for('admin.product', uuid=p.uuid))
 
 
-@main.route('/set_product_pic_url/<uuid>', methods=['POST'])
+@main.route('/product/picture/url/<uuid>', methods=['POST'])
 @admin_required
 def set_product_pic_url(uuid):
     p = Product.find_one(uuid=uuid)
@@ -89,7 +89,7 @@ def set_product_pic_url(uuid):
     return redirect(url_for('admin.product', uuid=p.uuid))
 
 
-@main.route('/ajax_pic/<uuid>', methods=['POST'])
+@main.route('/picture/ajax/<uuid>', methods=['POST'])
 @admin_required
 def ajax_pic(uuid):
     p = Product.find_one(uuid=uuid)

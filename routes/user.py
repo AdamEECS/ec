@@ -144,7 +144,7 @@ def update_email():
         return json.dumps({'status': 'warning', 'msg': '密码错误'})
 
 
-@main.route('/uploadavatar', methods=['POST'])
+@main.route('/avatar/upload', methods=['POST'])
 @login_required
 def avatar():
     u = current_user()
