@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>HOUSE</title>
+</head>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<style media="screen">
+    /*整体架构*/
+    .house {
+        border: 3px solid black;
+        width: 870px;
+        height: 1010px;
+        position: relative;
+        background-color: #ccc;
+    }
+
+    .room {
+        outline: 1px solid black;
+        position: absolute;
+        background-color: #888;
+        text-align: center;
+    }
+
+    .item {
+        outline: 1px solid black;
+        position: absolute;
+        background-color: white;
+        text-align: center;
+    }
+
+    .实用面积 {
+        outline: 1px solid black;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        background-color: white;
+        position: absolute;
+        transform: translate(-50%, -50%);
+    }
+    /*房间*/
+    #客厅及餐厅 {
+        width: 350px;
+        height: 630px;
+        bottom: 0;
+    }
+
+    #客厅及餐厅实用面积 {
+        width: 321px;
+        height: 610px;
+    }
+
+    #主卧 {
+        width: 330px;
+        height: 410px;
+        bottom: 0;
+        left: 350px;
+    }
+
+    #主卧实用面积 {
+        width: 301px;
+        height: 396px;
+    }
+
+    #次卧 {
+        width: 250px;
+        height: 380px;
+        top: 0;
+        right: 0;
+    }
+
+    #次卧实用面积 {
+        width: 233px;
+        height: 343px;
+    }
+
+    #厨房 {
+        width: 330px;
+        height: 220px;
+        bottom: 410px;
+        left: 350px;
+    }
+
+    #厨房实用面积 {
+        width: 310px;
+        height: 200px;
+    }
+
+    #玄关 {
+        width: 170px;
+        height: 250px;
+        bottom: 630px;
+        left: 215px;
+    }
+
+    #玄关实用面积 {
+        width: 150px;
+        height: 240px;
+    }
+
+    #走廊 {
+        width: 235px;
+        height: 100px;
+        bottom: 630px;
+        right: 250px;
+    }
+
+    #走廊实用面积 {
+        width: 235px;
+        height: 90px;
+    }
+
+    #洗衣间 {
+        width: 100px;
+        height: 70px;
+        bottom: 730px;
+        left: 335px;
+    }
+
+    #洗衣间实用面积 {
+        width: 80px;
+        height: 57px;
+    }
+
+    #洗手间 {
+        width: 235px;
+        height: 280px;
+        top: 0px;
+        right: 250px;
+        clip-path: polygon( 0px 110px,
+        125px 110px,
+        125px 0px,
+        235px 0px,
+        235px 280px,
+        0px 280px);
+    }
+
+    #洗手间实用面积 {
+        width: 220px;
+        height: 250px;
+        clip-path: polygon( 43px 110px,
+        125px 110px,
+        125px 0px,
+        235px 0px,
+        235px 250px,
+        43px 250px);
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        text-align: right;
+    }
+    #庭院 {
+        width: 190px;
+        height: 630px;
+        bottom: 0px;
+        right: 0px;
+        background-color: lightblue;
+    }
+    /*门窗*/
+    #玄关到客厅 {
+        width: 110px;
+        height: 20px;
+        background-color: white;
+        position: absolute;
+        bottom: -20px;
+        outline: none;
+    }
+    #玄关到走廊 {
+        width: 20px;
+        height: 90px;
+        writing-mode:vertical-lr;
+        background-color: white;
+        position: absolute;
+        bottom: 0px;
+        right:-12px;
+        outline: none;
+    }
+    #厨房门 {
+        width: 20px;
+        height: 100px;
+        writing-mode:vertical-lr;
+        background-color: white;
+        position: absolute;
+        top: 10px;
+        left:-12px;
+    }
+    #主卧门 {
+        width: 20px;
+        height: 100px;
+        writing-mode:vertical-lr;
+        background-color: white;
+        position: absolute;
+        top: 10px;
+        left:-12px;
+    }
+    #次卧门 {
+        width: 20px;
+        height: 100px;
+        writing-mode:vertical-lr;
+        background-color: white;
+        position: absolute;
+        bottom: 0px;
+        left:-12px;
+    }
+    #洗手间门 {
+        width: 100px;
+        height: 20px;
+        background-color: white;
+        position: absolute;
+        bottom: -2px;
+        left:50px;
+    }
+    #正门 {
+        width: 100px;
+        height: 20px;
+        background-color: white;
+        position: absolute;
+        top: -15px;
+        left:10px;
+    }
+
+    /*客厅设备*/
+
+    #sofa1 {
+        width: 97px;
+        height: 81px;
+        bottom: 250px;
+        left: 50px;
+        z-index: 10;
+        transform: rotate(30deg);
+    }
+
+    #sofa3 {
+        width: 104px;
+        height: 217px;
+        bottom: 10px;
+        left: 10px;
+        z-index: 10;
+    }
+
+    #茶几1 {
+        width: 60px;
+        height: 60px;
+        bottom: 170px;
+        left: 150px;
+        z-index: 10;
+    }
+
+    #茶几2 {
+        width: 60px;
+        height: 60px;
+        bottom: 80px;
+        left: 150px;
+        z-index: 10;
+    }
+
+    #tv {
+        width: 5px;
+        height: 300px;
+        bottom: 5px;
+        right: 2px;
+    }
+
+    #地毯 {
+        width: 170px;
+        height: 240px;
+        bottom: 30px;
+        left: 100px;
+        z-index: 1;
+        text-align: right;
+    }
+    /*餐厅设备*/
+
+    #餐厅柜子 {
+        width: 185px;
+        height: 40px;
+        top: 0px;
+        left: 0px;
+        z-index: 10;
+    }
+
+    #餐桌 {
+        width: 185px;
+        height: 90px;
+        top: 100px;
+        left: 0px;
+        z-index: 10;
+    }
+
+    .餐椅 {
+        width: 50px;
+        height: 50px;
+        z-index: 1;
+    }
+
+    #餐椅1 {
+        top: 50px;
+        left: 30px;
+    }
+
+    #餐椅2 {
+        top: 50px;
+        left: 110px;
+    }
+
+    #餐椅3 {
+        top: 190px;
+        left: 30px;
+    }
+
+    #餐椅4 {
+        top: 190px;
+        left: 110px;
+    }
+    #镜子 {
+        width: 10px;
+        height: 100px;
+        top: 110px;
+        right: 2px;
+    }
+
+    /*次卧设备*/
+
+    #次卧床 {
+        width: 209px;
+        height: 166px;
+        top: 0px;
+        right: 0px;
+    }
+
+    #工作桌 {
+        width: 65px;
+        height: 140px;
+        top: 170px;
+        right: 0px;
+    }
+
+    #工作椅1 {
+        width: 66px;
+        height: 55px;
+        top: 180px;
+        right: 70px;
+    }
+
+    #工作椅2 {
+        width: 66px;
+        height: 55px;
+        top: 250px;
+        right: 70px;
+    }
+    /*主卧设备*/
+
+    #主卧柜子 {
+        width: 205px;
+        height: 60px;
+        top: 0;
+        right: 0;
+    }
+
+    #主卧床 {
+        width: 210px;
+        height: 185px;
+        top: 140px;
+        right: 0;
+    }
+    /*玄关设备*/
+
+    #衣帽鞋柜 {
+        width: 40px;
+        height: 80px;
+        top: 0px;
+        right: 0;
+    }
+    /*洗手间设备*/
+
+    #淋浴间 {
+        width: 100px;
+        height: 110px;
+        top: 0px;
+        right: 0;
+    }
+
+    #马桶 {
+        width: 40px;
+        height: 60px;
+        bottom: 80px;
+        right: 120px;
+    }
+
+    #洗脸池 {
+        width: 40px;
+        height: 100px;
+        bottom: 0px;
+        right: 0;
+    }
+    /*厨房设备*/
+    #冰箱 {
+        width: 63px;
+        height: 68px;
+        bottom: 3px;
+        left: 5px;
+    }
+    #操作台 {
+        width: 235px;
+        height: 61px;
+        bottom: 0px;
+        right: 0px;
+    }
+</style>
+
+<body>
+    <div class="house">
+        <div class="room" id=走廊>
+            <div class=" 实用面积" id=走廊实用面积>走廊</div>
+        </div>
+        <div class="room" id=洗手间>
+            <div class="item" id=洗手间门>洗手间门</div>
+            <div class="实用面积 " id=洗手间实用面积>洗手间
+                <div class="item" id=淋浴间>淋浴间</div>
+                <div class="item" id=马桶>马桶</div>
+                <div class="item" id=洗脸池>洗脸池</div>
+            </div>
+        </div>
+        <div class="room 建筑面积" id=客厅及餐厅>
+            <div class=" 实用面积" id=客厅及餐厅实用面积>
+                <div class="item" id=sofa1>单人沙发</div>
+                <div class="item" id=sofa3>三人沙发</div>
+                <div class="item" id=tv></div>
+                <div class="item" id=地毯>地毯</div>
+                <div class="item" id=茶几1>茶几</div>
+                <div class="item" id=茶几2>茶几</div>
+
+                <div class="item" id=餐厅柜子>餐厅柜子</div>
+                <div class="item" id=餐桌>餐桌</div>
+                <div class="item 餐椅" id=餐椅1>餐椅</div>
+                <div class="item 餐椅" id=餐椅2>餐椅</div>
+                <div class="item 餐椅" id=餐椅3>餐椅</div>
+                <div class="item 餐椅" id=餐椅4>餐椅</div>
+                <div class="item" id=镜子>镜子</div>
+
+            </div>
+
+        </div>
+        <div class="room" id=主卧>
+            <div class="item" id=主卧门>主卧门</div>
+            <div class=" 实用面积" id=主卧实用面积>
+                <div class="item" id=主卧柜子>柜子</div>
+                <div class="item" id=主卧床>床</div>
+            </div>
+        </div>
+        <div class="room" id=次卧>
+            <div class="item" id=次卧门>次卧门</div>
+            <div class=" 实用面积" id=次卧实用面积>
+                <div class="item" id=次卧床>高箱液压床</div>
+                <div class="item" id=工作桌>工作桌</div>
+                <div class="item" id=工作椅1>工作椅</div>
+                <div class="item" id=工作椅2>工作椅</div>
+            </div>
+
+        </div>
+        <div class="room" id=厨房>
+            <div class="item" id=厨房门>厨房门</div>
+            <div class=" 实用面积" id=厨房实用面积>厨房
+                <div class="item" id=冰箱>冰箱</div>
+                <div class="item" id=操作台>操作台</div>
+            </div>
+        </div>
+        <div class="room" id=玄关>
+            <div class="item" id=正门>正门</div>
+            <div class=" 实用面积" id=玄关实用面积>玄关
+                <div class="item" id=衣帽鞋柜>衣帽鞋柜</div>
+                <div class="item" id=玄关到客厅>玄关到客厅</div>
+                <div class="item" id=玄关到走廊>玄关到走廊</div>
+            </div>
+        </div>
+        <div class="room" id=洗衣间>
+            <div class=" 实用面积" id=洗衣间实用面积>洗衣间</div>
+        </div>
+        <div class="room" id=庭院>庭院</div>
+    </div>
+</body>
+<script type="text/javascript">
+    var log = console.log.bind(console)
+    var div = $('div.room')
+    // div.hover(function(e){
+    //     var t = $(e.target)
+    //     t.text(`width: ${t.width()} height: ${t.height()}`)
+    // },function(e){
+    //     var t = $(e.target)
+    //     t.text('')
+    // },)
+</script>
+
+</html>

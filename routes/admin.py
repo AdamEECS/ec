@@ -188,6 +188,11 @@ def order_delivery(orderNo):
     o.delivery()
     return redirect(url_for('admin.orders'))
 
+
+@main.route('/house')
+def house():
+    return render_template('house.html')
+
 # @main.route('/root')
 # @login_required
 # def root_set():
