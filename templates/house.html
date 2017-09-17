@@ -8,12 +8,19 @@
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <style media="screen">
     /*整体架构*/
+
+    .description {
+        width: 200px;
+        display: inline-block;
+    }
+
     .house {
         border: 3px solid black;
         width: 870px;
         height: 1010px;
         position: relative;
         background-color: #ccc;
+        display: inline-block;
     }
 
     .room {
@@ -40,6 +47,7 @@
         transform: translate(-50%, -50%);
     }
     /*房间*/
+
     #客厅及餐厅 {
         width: 350px;
         height: 630px;
@@ -151,6 +159,7 @@
         transform: translate(-50%, -50%);
         text-align: right;
     }
+
     #庭院 {
         width: 190px;
         height: 630px;
@@ -159,6 +168,7 @@
         background-color: lightblue;
     }
     /*门窗*/
+
     #玄关到客厅 {
         width: 110px;
         height: 20px;
@@ -167,60 +177,65 @@
         bottom: -20px;
         outline: none;
     }
+
     #玄关到走廊 {
         width: 20px;
         height: 90px;
-        writing-mode:vertical-lr;
+        writing-mode: vertical-lr;
         background-color: white;
         position: absolute;
         bottom: 0px;
-        right:-12px;
+        right: -12px;
         outline: none;
     }
+
     #厨房门 {
         width: 20px;
         height: 100px;
-        writing-mode:vertical-lr;
+        writing-mode: vertical-lr;
         background-color: white;
         position: absolute;
         top: 10px;
-        left:-12px;
+        left: -12px;
     }
+
     #主卧门 {
         width: 20px;
         height: 100px;
-        writing-mode:vertical-lr;
+        writing-mode: vertical-lr;
         background-color: white;
         position: absolute;
         top: 10px;
-        left:-12px;
+        left: -12px;
     }
+
     #次卧门 {
         width: 20px;
         height: 100px;
-        writing-mode:vertical-lr;
+        writing-mode: vertical-lr;
         background-color: white;
         position: absolute;
         bottom: 0px;
-        left:-12px;
+        left: -12px;
     }
+
     #洗手间门 {
         width: 100px;
         height: 20px;
         background-color: white;
         position: absolute;
         bottom: -2px;
-        left:50px;
+        left: 50px;
     }
+
     #正门 {
         width: 100px;
         height: 20px;
         background-color: white;
         position: absolute;
         top: -15px;
-        left:10px;
+        left: 10px;
     }
-
     /*客厅设备*/
 
     #sofa1 {
@@ -314,13 +329,13 @@
         top: 190px;
         left: 110px;
     }
+
     #镜子 {
         width: 10px;
         height: 100px;
         top: 110px;
         right: 2px;
     }
-
     /*次卧设备*/
 
     #次卧床 {
@@ -396,12 +411,14 @@
         right: 0;
     }
     /*厨房设备*/
+
     #冰箱 {
         width: 63px;
         height: 68px;
         bottom: 3px;
         left: 5px;
     }
+
     #操作台 {
         width: 235px;
         height: 61px;
@@ -480,17 +497,49 @@
         </div>
         <div class="room" id=庭院>庭院</div>
     </div>
+    <div class="description"></div>
 </body>
 <script type="text/javascript">
     var log = console.log.bind(console)
-    var div = $('div.room')
-    // div.hover(function(e){
-    //     var t = $(e.target)
-    //     t.text(`width: ${t.width()} height: ${t.height()}`)
-    // },function(e){
-    //     var t = $(e.target)
-    //     t.text('')
-    // },)
+    var item = $('.item')
+    var room = $('.实用面积')
+    var currentRoom
+    var description = $('div.description')
+    var template = function(t) {
+        var temp = `
+            名称: ${t[0].id}
+            <br>
+            宽: ${t.width()} CM
+            <br>
+            高: ${t.height()} CM
+        `
+        return temp
+    }
+    item.hover(function(e) {
+        var t = $(e.target)
+        t.css('background-color', 'pink')
+        try {
+            currentRoom.css('background-color', 'white')
+        } catch (e) {
+
+        }
+        description.html(template(t))
+    }, function(e) {
+        var t = $(e.target)
+        t.css('background-color', 'white')
+        description.text('')
+    }, )
+    room.click(function(e) {
+        var lastRoom = currentRoom
+        try {
+            lastRoom.css('background-color', 'white')
+        } catch (e) {
+
+        }
+        currentRoom = $(e.target)
+        currentRoom.css('background-color', 'pink')
+        description.html(template(currentRoom))
+    })
 </script>
 
 </html>
