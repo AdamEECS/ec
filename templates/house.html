@@ -10,9 +10,10 @@
     /*整体架构*/
 
     .description {
-        width: 500px;
-        font-size: 40px;
+        width: 600px;
+        font-size: 36px;
         display: inline-block;
+        word-wrap: break-word;
     }
 
     .house {
@@ -48,660 +49,57 @@
         transform: translate(-50%, -50%);
     }
 
-    #庭院 {
-        width: 190px;
-        height: 630px;
-        bottom: 0px;
-        right: 0px;
-        background-color: lightblue;
-    }
+{#    #庭院 {#}
+{#        width: 190px;#}
+{#        height: 630px;#}
+{#        bottom: 0px;#}
+{#        right: 0px;#}
+{#        background-color: lightblue;#}
+{#    }#}
 
 </style>
 
 <body>
-    <div class="house">
-        <div class="room" id=庭院>庭院</div>
-    </div>
-    <div class="description"></div>
+<div class="house">
+{#    <div class="room" id=庭院>庭院</div>#}
+</div>
+<div class="description"></div>
 </body>
+<script src="{{ url_for('static', filename='js/house_data.js') }}"></script>
 <script type="text/javascript">
-var data = [
-    {
-        room: '走廊',
-        css: {
-            width: 235,
-            height: 90,
-        },
-        edge: '走廊建筑面积',
-        edgeCss: {
-            width: 235,
-            height: 100,
-            bottom: 630,
-            right: 250,
-        },
-        items: [],
-    },
-    {
-        room: '次卧',
-        css: {
-            width: 233,
-            height: 340,
-        },
-        edge: '次卧建筑面积',
-        edgeCss: {
-            width: 250,
-            height: 380,
-            top: 0,
-            right: 0,
-        },
-        door: '次卧门',
-        doorCss: {
-            width: 20,
-            height: 100,
-            'writing-mode': 'vertical-lr',
-            'background-color': 'white',
-            position: 'absolute',
-            bottom: 0,
-            left: -12,
-        },
-        items: [
-            {
-                id: '次卧床',
-                data: {
-                    价格: 3999,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 220,
-                    height: 154,
-                    top: 0,
-                    right: 0,
-                },
-            },
-            {
-                id: '次卧床垫',
-                data: {
-                    价格: 2000,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 100,
-                    height: 100,
-                    top: 40,
-                    right: 10,
-                },
-            },
-            {
-                id: '工作桌',
-                data: {
-                    价格: 999,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 65,
-                    height: 140,
-                    top: 170,
-                    right: 0,
-                },
-            },
-            {
-                id: '工作椅1',
-                data: {
-                    价格: 2358,
-                    品牌: '金豪',
-                    链接: "https://item.jd.com/4486479.html",
-                },
-                css: {
-                    width: 66,
-                    height: 55,
-                    top: 180,
-                    right: 70,
-                },
-            },
-            {
-                id: '工作椅2',
-                data: {
-                    价格: 2650,
-                    品牌: 'Marrit',
-                    链接: "https://item.jd.com/1298733706.html",
-                },
-                css: {
-                    width: 66,
-                    height: 55,
-                    top: 250,
-                    right: 70,
-                },
-            },
-        ],
-    },
-    {
-        room: '洗手间',
-        css: {
-            width: 220,
-            height: 250,
-            "clip-path": "polygon( 43px 110px, 125px 110px, 125px 0px, 235px 0px, 235px 250px, 43px 250px)",
-            top: '50%',
-            left: '50%',
-            position: 'absolute',
-            transform: "translate(-50%, -50%)",
-            'text-align': 'right',
-        },
-        edge: '次卧建筑面积',
-        edgeCss: {
-            width: 235,
-            height: 280,
-            top: 0,
-            right: 250,
-            'clip-path': "polygon( 0px 110px, 125px 110px, 125px 0px, 235px 0px, 235px 280px, 0px 280px)",
-        },
-        door: '洗手间门',
-        doorCss: {
-            width: 100,
-            height: 20,
-            'background-color': 'white',
-            position: 'absolute',
-            bottom: -2,
-            left: 50,
-        },
-        items: [
-            {
-                id: '淋浴间',
-                data: {
-                    价格: 0,
-                    品牌: '万科',
-                },
-                css: {
-                    width: 100,
-                    height: 110,
-                    top: 0,
-                    right: 0,
-                },
-            },
-            {
-                id: '马桶',
-                data: {
-                    价格: 0,
-                    品牌: '宜家',
-                },
-                css: {
-                    width: 40,
-                    height: 60,
-                    bottom: 80,
-                    right: 120,
-                },
-            },
-            {
-                id: '洗脸池',
-                data: {
-                    价格: 0,
-                    品牌: '宜家',
-                },
-                css: {
-                    width: 40,
-                    height: 100,
-                    bottom: 0,
-                    right: 0,
-                },
-            },
-        ],
-    },
-    {
-        room: '玄关',
-        css: {
-            width: 150,
-            height: 240,
-        },
-        edge: '玄关建筑面积',
-        edgeCss: {
-            width: 170,
-            height: 250,
-            bottom: 630,
-            left: 215,
-        },
-        door: '正门',
-        doorCss: {
-            width: 100,
-            height: 20,
-            top: -15,
-            left: 10,
-            'background-color': 'white',
-            position: 'absolute',
-        },
-        items: [
-            {
-                id: '衣帽鞋柜',
-                data: {
-                    价格: 0,
-                    品牌: '万科',
-                },
-                css: {
-                    width: 40,
-                    height: 80,
-                    top: 0,
-                    right: 0,
-                },
-            },
-            {
-                id: '玄关到客厅',
-                data: {
-                    价格: 0,
-                    品牌: '万科',
-                },
-                css: {
-                    width: 110,
-                    height: 20,
-                    bottom: -20,
-                    'background-color': 'white',
-                    position: 'absolute',
-                    outline: 'none',
-                },
-            },
-            {
-                id: '玄关到走廊',
-                data: {
-                    价格: 0,
-                    品牌: '万科',
-                },
-                css: {
-                    width: 20,
-                    height: 90,
-                    bottom: 0,
-                    right: -12,
-                    'writing-mode': 'vertical-lr',
-                    'background-color': 'white',
-                    position: 'absolute',
-                    outline: 'none',
-                },
-            },
-        ],
-    },
-    {
-        room: '洗衣间',
-        css: {
-            width: 80,
-            height: 57,
-        },
-        edge: '洗衣间建筑面积',
-        edgeCss: {
-            width: 100,
-            height: 70,
-            bottom: 730,
-            left: 335,
-        },
-        items: [
-            {
-                id: '洗衣机',
-                data: {
-                    价格: 7999,
-                    品牌: '海尔',
-                    链接: "https://item.jd.com/3655643.html",
-                },
-                css: {
-                    width: 62,
-                    height: 48,
-                    top: 5,
-                    left: 10,
-                },
-            },
-        ],
-    },
-    {
-        room: '客厅及餐厅',
-        css: {
-            width: 321,
-            height: 610,
-        },
-        edge: '客厅及餐厅建筑面积',
-        edgeCss: {
-            width: 350,
-            height: 630,
-            bottom: 0,
-        },
-        items: [
-            {
-                id: '餐厅柜子',
-                data: {
-                    价格: 1999,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 185,
-                    height: 40,
-                    top: 0,
-                    left: 0,
-                    'z-index': 10,
-                },
-            },
-            {
-                id: '餐桌',
-                data: {
-                    价格: 2000,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 185,
-                    height: 90,
-                    top: 100,
-                    left: 0,
-                    'z-index': 10,
-                },
-            },
-            {
-                id: '餐椅1',
-                data: {
-                    价格: 499,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
-                },
-                css: {
-                    top: 50,
-                    left: 30,
-                    width: 50,
-                    height: 50,
-                },
-            },
-            {
-                id: '餐椅2',
-                data: {
-                    价格: 499,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
-                },
-                css: {
-                    top: 50,
-                    left: 110,
-                    width: 50,
-                    height: 50,
-                },
-            },
-            {
-                id: '餐椅3',
-                data: {
-                    价格: 499,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
-                },
-                css: {
-                    top: 190,
-                    left: 30,
-                    width: 50,
-                    height: 50,
-                },
-            },
-            {
-                id: '餐椅4',
-                data: {
-                    价格: 499,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
-                },
-                css: {
-                    top: 190,
-                    left: 110,
-                    width: 50,
-                    height: 50,
-                },
-            },
-            {
-                id: '镜子',
-                data: {
-                    价格: 700,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 10,
-                    height: 100,
-                    top: 110,
-                    right: 2,
-                },
-            },
-            {
-                id: '一人沙发',
-                data: {
-                    价格: 6000,
-                    品牌: 'Lazboy',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 97,
-                    height: 81,
-                    bottom: 250,
-                    left: 50,
-                    'z-index': 10,
-                    transform: 'rotate(30deg)',
-                },
-            },
-            {
-                id: '三人沙发',
-                data: {
-                    价格: 9000,
-                    品牌: 'Lazboy',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 104,
-                    height: 217,
-                    bottom: 10,
-                    left: 10,
-                    'z-index': 10,
-                },
-            },
-            {
-                id: '茶几1',
-                data: {
-                    价格: 600,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 60,
-                    height: 60,
-                    bottom: 170,
-                    left: 150,
-                    'z-index': 10,
-                },
-            },
-            {
-                id: '茶几2',
-                data: {
-                    价格: 600,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 60,
-                    height: 60,
-                    bottom: 80,
-                    left: 150,
-                    'z-index': 10,
-                },
-            },
-            {
-                id: '投影墙',
-                data: {
-                    价格: 6000,
-                    品牌: '极米',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 5,
-                    height: 300,
-                    bottom: 5,
-                    right: 2,
-                },
-            },
-            {
-                id: '地毯',
-                data: {
-                    价格: 2000,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
-                },
-                css: {
-                    width: 170,
-                    height: 240,
-                    bottom: 30,
-                    left: 100,
-                    'z-index': 1,
-                    'text-align': 'right',
-                },
-            },
-        ],
-    },
-    {
-        room: '厨房',
-        css: {
-            width: 310,
-            height: 200,
-        },
-        edge: '厨房建筑面积',
-        edgeCss: {
-            width: 330,
-            height: 220,
-            bottom: 410,
-            left: 350,
-        },
-        door: '厨房门',
-        doorCss: {
-            width: 20,
-            height: 100,
-            top: 10,
-            left: -12,
-            'writing-mode': 'vertical-lr',
-            'background-color': 'white',
-            position: 'absolute',
-        },
-        items: [
-            {
-                id: '冰箱',
-                data: {
-                    价格: 7999,
-                    品牌: '松下',
-                },
-                css: {
-                    width: 63,
-                    height: 68,
-                    bottom: 3,
-                    left: 5,
-                },
-            },
-            {
-                id: '操作台',
-                data: {
-                    价格: 0,
-                    品牌: '万科',
-                },
-                css: {
-                    width: 235,
-                    height: 61,
-                    bottom: 0,
-                    right: 0,
-                },
-            },
+    const log = console.log.bind(console)
 
-        ],
-    },
-    {
-        room: '主卧',
-        css: {
-            width: 301,
-            height: 396,
-        },
-        edge: '主卧建筑面积',
-        edgeCss: {
-            width: 330,
-            height: 410,
-            bottom: 0,
-            left: 350,
-        },
-        door: '主卧门',
-        doorCss: {
-            width: 20,
-            height: 100,
-            top: 10,
-            left: -12,
-            'writing-mode': 'vertical-lr',
-            'background-color': 'white',
-            position: 'absolute',
-        },
-        items: [
-            {
-                id: '主卧柜子',
-                data: {
-                    价格: 0,
-                    品牌: '万科',
-                },
-                css: {
-                    width: 205,
-                    height: 60,
-                    top: 0,
-                    right: 0,
-                },
-            },
-            {
-                id: '主卧床',
-                data: {
-                    价格: 5000,
-                    品牌: '舒达',
-                },
-                css: {
-                    width: 210,
-                    height: 185,
-                    top: 140,
-                    right: 0,
-                },
-            },
-            {
-                id: '主卧床垫',
-                data: {
-                    价格: 30000,
-                    品牌: '丝涟',
-                },
-                css: {
-                    width: 200,
-                    height: 155,
-                    top: 160,
-                    right: 10,
-                },
-            },
-
-        ],
-    },
-]
-    var log = console.log.bind(console)
-    var findRoom = function(room) {
+    const findRoom = function (room) {
         for (let i of data) {
-            if (i.room == room) {
+            if (i.room === room) {
                 return i
             }
         }
     }
-    var house = $('.house')
-    var item = $('.item')
-    var room = $('.实用面积')
-    var currentRoom
-    var description = $('div.description')
-    var template = function(t) {
-        var temp = `
+
+    const house = $('.house')
+
+    const description = $('div.description')
+
+    let currentRoom
+
+    const template = function (t) {
+        let temp = `
             名称: ${t[0].id}
             <br>
             宽: ${t.width()} CM
             <br>
             高: ${t.height()} CM
         `
-        var data = t.data()
-        for (var i in data) {
-            if (i == '链接') {
+        let data = t.data()
+        for (let i in data) {
+            if (i === '链接') {
                 temp += `
                     <br />
-                    ${i}: <a href=${data[i]} target=_blank>${data[i]}</a>
+                    <a href=${data[i]} target=_blank>${data[i]}</a>
                 `
+                let frame = `<iframe width=600 height=600 src=${data[i]}></iframe><br>`
+                temp = frame + temp
                 continue
             }
             temp += `
@@ -710,14 +108,14 @@ var data = [
             `
         }
         if (t.hasClass('实用面积')) {
-            var room = findRoom(t[0].id)
+            let room = findRoom(t[0].id)
             let 总价 = 0
             for (let i of room.items) {
                 temp += `
                     <br />
                     物品: ${i.id} ￥${i.data.价格}
                 `
-                总价 += typeof i.data.价格 == 'number' ? i.data.价格 : 0
+                总价 += typeof i.data.价格 === 'number' ? i.data.价格 : 0
             }
             temp += `
                 <br />
@@ -727,20 +125,54 @@ var data = [
         return temp
     }
 
-    house.on('click', '.实用面积, .item', function(e) {
-        var lastRoom = currentRoom
+    const houseTemplate = function () {
+        let temp = `名称: 房屋整体`
+        let sumHouse = 0
+        for (let room of data) {
+            let sum = 0
+            for (let i of room.items) {
+                sum += typeof i.data.价格 === 'number' ? i.data.价格 : 0
+            }
+            sumHouse += sum
+            temp += `<br>${room.room}: ￥${sum}`
+        }
+        temp += `<br>总价: ￥${sumHouse}`
+        temp = `<div>` + temp + `</div>`
+        temp = $(temp)
+        temp.css({'text-align': 'right', 'width': '350'})
+        return temp
+    }
+
+    house.on('click', '.实用面积, .item', function (e) {
+        let lastRoom = currentRoom
         try {
             lastRoom.css('background-color', 'white')
+            if (lastRoom[0].id === '窗外庭院') {
+                lastRoom.css('background-color', 'lightblue')
+            }
         } catch (e) {
 
         }
         currentRoom = $(e.target)
         currentRoom.css('background-color', 'pink')
         description.html(template(currentRoom))
+        return false
+    })
+    house.on('click', function (e) {
+        let lastRoom = currentRoom
+        try {
+            lastRoom.css('background-color', 'white')
+            if (lastRoom[0].id === '窗外庭院') {
+                lastRoom.css('background-color', 'lightblue')
+            }
+        } catch (e) {
+
+        }
+        description.html(houseTemplate())
     })
 
-    var itemTemplate = function(item) {
-        var temp = $(`
+    const itemTemplate = function (item) {
+        let temp = $(`
             <div class="item" id=${item.id}>${item.id}</div>
         `)
         temp.css(item.css)
@@ -748,21 +180,21 @@ var data = [
         return temp
     }
 
-    var roomTemplate = function(room) {
-        var edge = $(`
+    const roomTemplate = function (room) {
+        let edge = $(`
             <div class="room" id=${room.edge}></div>
         `)
         edge.css(room.edgeCss)
 
         if (room.door) {
-            var door = $(`
+            let door = $(`
                 <div class="door" id=${room.door}>${room.door}</div>
             `)
             door.css(room.doorCss)
             edge.append(door)
         }
 
-        var roomDiv = $(`
+        let roomDiv = $(`
             <div class="实用面积" id="${room.room}"></div>
         `)
         roomDiv.css(room.css)
@@ -770,16 +202,16 @@ var data = [
         return edge
     }
 
-    var loadItems = function(room) {
-        var items = room.items
-        var roomDiv = $('#' + room.room)
+    const loadItems = function (room) {
+        let items = room.items
+        let roomDiv = $('#' + room.room)
         for (item of items) {
             let itemDiv = itemTemplate(item)
             roomDiv.append(itemDiv)
         }
     }
 
-    var loadRooms = function() {
+    const loadRooms = function () {
         for (room of data) {
             let roomDiv = roomTemplate(room)
             house.append(roomDiv)
@@ -787,7 +219,7 @@ var data = [
         }
     }
 
-    var __main = function() {
+    const __main = function () {
         loadRooms()
     }
 
