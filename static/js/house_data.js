@@ -299,7 +299,7 @@ const data = [
                 data: {
                     价格: 6000,
                     品牌: 'Lazboy',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    链接: "http://www.lazboychina.com/productinfo.aspx?id=32",
                 },
                 css: {
                     width: 97,
@@ -582,6 +582,7 @@ const data = [
                 data: {
                     价格: 5000,
                     品牌: '舒达',
+                    链接: "http://www.serta.cn/product_show/show-450.html",
                 },
                 css: {
                     width: 210,
