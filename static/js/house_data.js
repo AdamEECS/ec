@@ -315,7 +315,7 @@ const data = [
                 data: {
                     价格: 9000,
                     品牌: 'Lazboy',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    链接: "https://detail.tmall.com/item.htm?spm=a1z10.1-b-s.w5003-16356361461.2.1933549351AMS5&id=549480019747&rn=8e92a22e3a4f29afeb91c3de9a712eab&abbucket=7&scene=taobao_shop&skuId=3584624935730",
                 },
                 css: {
                     width: 104,
