@@ -593,8 +593,9 @@ const data = [
             {
                 id: '主卧床垫',
                 data: {
-                    价格: 30000,
+                    价格: 30200,
                     品牌: '丝涟',
+                    链接: "https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-15139193946.60.46f16db03e8WHi&id=45336990917&rn=0ae58f7c2e46abd7efc7940d3132f4c3&abbucket=10&skuId=3239595849974",
                 },
                 css: {
                     width: 200,
