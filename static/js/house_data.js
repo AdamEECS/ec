@@ -12,7 +12,25 @@ const data = [
             bottom: 630,
             right: 250,
         },
-        items: [],
+        items: [
+            {
+                id: '扫地机',
+                data: {
+                    价格: 3299,
+                    品牌: 'iRobot 891',
+                    链接: "https://item.jd.com/5014090.html?",
+                },
+                css: {
+                    width: 36,
+                    height: 36,
+                    top: 0,
+                    left: 10,
+                    outline: 'none',
+                    border: '1px solid black',
+                    'border-radius': '50%',
+                },
+            },
+        ],
     },
     {
         room: '次卧',
@@ -41,13 +59,13 @@ const data = [
             {
                 id: '次卧床',
                 data: {
-                    价格: 3999,
-                    品牌: '宜家',
+                    价格: 2999,
+                    品牌: '宜家 马尔姆',
                     链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
                 },
                 css: {
-                    width: 220,
-                    height: 154,
+                    width: 209,
+                    height: 166,
                     top: 0,
                     right: 0,
                 },
@@ -55,9 +73,9 @@ const data = [
             {
                 id: '次卧床垫',
                 data: {
-                    价格: 2000,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 1499,
+                    品牌: '宜家 海沃格',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/10269352/",
                 },
                 css: {
                     width: 100,
@@ -65,18 +83,44 @@ const data = [
                     top: 40,
                     right: 10,
                 },
+            },{
+                id: '储物袋*8',
+                data: {
+                    价格: 320,
+                    品牌: '宜家 思库布',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/70294990/",
+                },
+                css: {
+                    width: 69,
+                    height: 55,
+                    top: 40,
+                    right: 120,
+                },
             },
             {
                 id: '工作桌',
                 data: {
-                    价格: 999,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 649,
+                    品牌: '宜家 希勒',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/S89047155/",
                 },
                 css: {
                     width: 65,
                     height: 140,
                     top: 170,
+                    right: 0,
+                },
+            },{
+                id: '屏幕支架*2',
+                data: {
+                    价格: 818,
+                    品牌: '乐歌 D8A',
+                    链接: "https://item.jd.com/4163789.html",
+                },
+                css: {
+                    width: 20,
+                    height: 110,
+                    top: 190,
                     right: 0,
                 },
             },
@@ -106,6 +150,21 @@ const data = [
                     height: 55,
                     top: 250,
                     right: 70,
+                },
+            },
+            {
+                id: '次卧空调',
+                data: {
+                    价格: 3048,
+                    品牌: '松下 1匹',
+                    链接: "https://item.jd.com/1451088.html",
+                },
+                css: {
+                    width: 24,
+                    height: 78,
+                    bottom: 170,
+                    right: 1,
+                    'writing-mode': 'vertical-lr',
                 },
             },
         ],
@@ -195,15 +254,15 @@ const data = [
         },
         items: [
             {
-                id: '餐厅柜子',
+                id: '餐厅壁柜',
                 data: {
-                    价格: 1999,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 800,
+                    品牌: '宜家 伊克特',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/90333957",
                 },
                 css: {
-                    width: 185,
-                    height: 40,
+                    width: 140,
+                    height: 35,
                     top: 0,
                     left: 0,
                     'z-index': 10,
@@ -212,14 +271,14 @@ const data = [
             {
                 id: '餐桌',
                 data: {
-                    价格: 2000,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 999,
+                    品牌: '宜家 利萨伯',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/80365717/",
                 },
                 css: {
-                    width: 185,
-                    height: 90,
-                    top: 100,
+                    width: 140,
+                    height: 78,
+                    top: 80,
                     left: 0,
                     'z-index': 10,
                 },
@@ -232,8 +291,8 @@ const data = [
                     链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
                 },
                 css: {
-                    top: 50,
-                    left: 30,
+                    top: 40,
+                    left: 10,
                     width: 50,
                     height: 50,
                 },
@@ -246,8 +305,8 @@ const data = [
                     链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
                 },
                 css: {
-                    top: 50,
-                    left: 110,
+                    top: 40,
+                    left: 80,
                     width: 50,
                     height: 50,
                 },
@@ -260,8 +319,8 @@ const data = [
                     链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
                 },
                 css: {
-                    top: 190,
-                    left: 30,
+                    top: 155,
+                    left: 10,
                     width: 50,
                     height: 50,
                 },
@@ -274,8 +333,8 @@ const data = [
                     链接: "http://www.ikea.com/cn/zh/catalog/products/40359997/",
                 },
                 css: {
-                    top: 190,
-                    left: 110,
+                    top: 155,
+                    left: 80,
                     width: 50,
                     height: 50,
                 },
@@ -283,13 +342,13 @@ const data = [
             {
                 id: '镜子',
                 data: {
-                    价格: 700,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 699,
+                    品牌: '宜家 霍维特',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/60178892/",
                 },
                 css: {
                     width: 10,
-                    height: 100,
+                    height: 78,
                     top: 110,
                     right: 2,
                 },
@@ -297,13 +356,13 @@ const data = [
             {
                 id: '一人沙发',
                 data: {
-                    价格: 6000,
+                    价格: 4299,
                     品牌: 'Lazboy',
-                    链接: "http://www.lazboychina.com/productinfo.aspx?id=32",
+                    链接: "https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-16356361476.102.46f16db0Q6IKj2&id=549480019747&rn=c380ff7ed9417daf3e16df3b65b53032&abbucket=10&skuId=3584624935732",
                 },
                 css: {
-                    width: 97,
-                    height: 81,
+                    width: 104,
+                    height: 105,
                     bottom: 250,
                     left: 50,
                     'z-index': 10,
@@ -313,28 +372,58 @@ const data = [
             {
                 id: '三人沙发',
                 data: {
-                    价格: 9000,
+                    价格: 8499,
                     品牌: 'Lazboy',
-                    链接: "https://detail.tmall.com/item.htm?spm=a1z10.1-b-s.w5003-16356361461.2.1933549351AMS5&id=549480019747&rn=8e92a22e3a4f29afeb91c3de9a712eab&abbucket=7&scene=taobao_shop&skuId=3584624935730",
+                    链接: "https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-16356361476.102.46f16db0Q6IKj2&id=549480019747&rn=c380ff7ed9417daf3e16df3b65b53032&abbucket=10&skuId=3584624935730",
                 },
                 css: {
                     width: 104,
                     height: 217,
                     bottom: 10,
-                    left: 10,
+                    left: 20,
+                    'z-index': 10,
+                },
+            },
+            {
+                id: '立柜',
+                data: {
+                    价格: 389,
+                    品牌: '宜家 毕利',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/S19217735/",
+                },
+                css: {
+                    width: 28,
+                    height: 40,
+                    bottom: 242,
+                    left: 0,
+                    'z-index': 10,
+                },
+            },
+            {
+                id: '墙搁板',
+                data: {
+                    价格: 488,
+                    品牌: '宜家 埃克比 莫斯比 / 埃克比 比亚姆',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/S69885470/",
+                },
+                css: {
+                    width: 28,
+                    height: 239,
+                    bottom: 0,
+                    left: 0,
                     'z-index': 10,
                 },
             },
             {
                 id: '茶几1',
                 data: {
-                    价格: 600,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 249,
+                    品牌: '宜家 新贝',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/60295928/#/60295928",
                 },
                 css: {
-                    width: 60,
-                    height: 60,
+                    width: 50,
+                    height: 50,
                     bottom: 170,
                     left: 150,
                     'z-index': 10,
@@ -343,13 +432,13 @@ const data = [
             {
                 id: '茶几2',
                 data: {
-                    价格: 600,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 249,
+                    品牌: '宜家 新贝',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/60295928/#/60295928",
                 },
                 css: {
-                    width: 60,
-                    height: 60,
+                    width: 50,
+                    height: 50,
                     bottom: 80,
                     left: 150,
                     'z-index': 10,
@@ -358,23 +447,23 @@ const data = [
             {
                 id: '投影墙',
                 data: {
-                    价格: 6000,
-                    品牌: '极米',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 4599,
+                    品牌: '极米 H1S',
+                    链接: "https://item.jd.com/4860246.html",
                 },
                 css: {
-                    width: 5,
-                    height: 300,
-                    bottom: 5,
+                    width: 10,
+                    height: 240,
+                    bottom: 20,
                     right: 2,
                 },
             },
             {
                 id: '地毯',
                 data: {
-                    价格: 2000,
-                    品牌: '宜家',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
+                    价格: 599,
+                    品牌: '宜家 阿达姆',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/30174616/#/70174619",
                 },
                 css: {
                     width: 170,
@@ -383,6 +472,22 @@ const data = [
                     left: 100,
                     'z-index': 1,
                     'text-align': 'right',
+                },
+            },
+            {
+                id: '客厅空调',
+                data: {
+                    价格: 3348,
+                    品牌: '松下 1.5匹',
+                    链接: "https://item.jd.com/1451093.html",
+                },
+                css: {
+                    width: 24,
+                    height: 78,
+                    bottom: 5,
+                    left: 1,
+                    'writing-mode': 'vertical-lr',
+                    'z-index': 20,
                 },
             },
         ],
@@ -474,8 +579,9 @@ const data = [
             {
                 id: '洗衣机',
                 data: {
-                    价格: 7999,
-                    品牌: '海尔',
+                    价格: 7199,
+                    品牌: '海尔 EG8014HB88LGU1',
+                    特性: '8公斤直驱变频洗烘一体',
                     链接: "https://item.jd.com/3655643.html",
                 },
                 css: {
@@ -514,14 +620,30 @@ const data = [
             {
                 id: '冰箱',
                 data: {
-                    价格: 7999,
-                    品牌: '松下',
+                    价格: 2999,
+                    品牌: '海尔 BCD-325WDSD',
+                    链接: "https://item.jd.com/1792767.html",
                 },
                 css: {
-                    width: 63,
+                    width: 64,
                     height: 68,
                     bottom: 3,
                     left: 5,
+                },
+            },{
+                id: '洗碗机',
+                data: {
+                    价格: 3580,
+                    品牌: '松下 台式',
+                    链接: "https://item.jd.com/3073802.html",
+                },
+                css: {
+                    width: 35,
+                    height: 55,
+                    bottom: 3,
+                    right: 5,
+                    'writing-mode': 'vertical-lr',
+                    'z-index': 10,
                 },
             },
             {
@@ -587,7 +709,7 @@ const data = [
                 css: {
                     width: 210,
                     height: 185,
-                    top: 140,
+                    top: 120,
                     right: 0,
                 },
             },
@@ -601,11 +723,54 @@ const data = [
                 css: {
                     width: 200,
                     height: 155,
-                    top: 160,
+                    top: 140,
                     right: 10,
                 },
             },
-
+            {
+                id: '化妆台',
+                data: {
+                    价格: 599,
+                    品牌: '宜家 百灵',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/90355421/",
+                },
+                css: {
+                    width: 42,
+                    height: 70,
+                    bottom: 10,
+                    right: 0,
+                    'writing-mode': 'vertical-lr',
+                },
+            },
+            {
+                id: '化妆镜',
+                data: {
+                    价格: 1000,
+                    品牌: '预留位',
+                },
+                css: {
+                    width: 20,
+                    height: 50,
+                    bottom: 20,
+                    right: 2,
+                    'writing-mode': 'vertical-lr',
+                },
+            },
+            {
+                id: '主卧空调',
+                data: {
+                    价格: 3048,
+                    品牌: '松下 1匹',
+                    链接: "https://item.jd.com/1451088.html",
+                },
+                css: {
+                    width: 24,
+                    height: 78,
+                    bottom: 5,
+                    left: 1,
+                    'writing-mode': 'vertical-lr',
+                },
+            },
         ],
     },
     {
