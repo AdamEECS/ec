@@ -83,7 +83,7 @@ const data = [
                     top: 40,
                     right: 10,
                 },
-            },{
+            }, {
                 id: '储物袋*8',
                 data: {
                     价格: 320,
@@ -110,7 +110,7 @@ const data = [
                     top: 170,
                     right: 0,
                 },
-            },{
+            }, {
                 id: '屏幕支架*2',
                 data: {
                     价格: 818,
@@ -165,6 +165,20 @@ const data = [
                     bottom: 170,
                     right: 1,
                     'writing-mode': 'vertical-lr',
+                },
+            },
+            {
+                id: '次卧空净',
+                data: {
+                    价格: 1099,
+                    品牌: '松下 F-PXF35C-S',
+                    链接: "https://item.jd.com/318110.html?dist=jd",
+                },
+                css: {
+                    bottom: 0,
+                    right: 0,
+                    width: 70,
+                    height: 20,
                 },
             },
         ],
@@ -233,9 +247,40 @@ const data = [
                 },
                 css: {
                     width: 40,
-                    height: 100,
+                    height: 80,
                     bottom: 0,
                     right: 0,
+                },
+            },
+            {
+                id: '吹风',
+                data: {
+                    价格: 2990,
+                    品牌: '戴森',
+                    链接: "https://item.jd.com/3368118.html",
+                },
+                css: {
+                    bottom: 2,
+                    right: 2,
+                    width: 35,
+                    height: 15,
+                },
+            },
+            {
+                id: '洗脚盆',
+                data: {
+                    价格: 549,
+                    品牌: '泰昌',
+                    链接: "https://item.jd.com/3707034.html",
+                },
+                css: {
+                    bottom: 90,
+                    right: 2,
+                    width: 50,
+                    height: 40,
+                    outline: 'none',
+                    border: '1px solid black',
+                    'border-radius': '20%',
                 },
             },
         ],
@@ -337,6 +382,20 @@ const data = [
                     left: 80,
                     width: 50,
                     height: 50,
+                },
+            },
+            {
+                id: '客厅空净',
+                data: {
+                    价格: 2299,
+                    品牌: '松下 F-VXG70C-N',
+                    链接: "https://item.jd.com/497227.html?dist=jd",
+                },
+                css: {
+                    top: 220,
+                    left: 2,
+                    width: 40,
+                    height: 40,
                 },
             },
             {
@@ -560,6 +619,21 @@ const data = [
                     outline: 'none',
                 },
             },
+            {
+                id: '挂钩',
+                data: {
+                    价格: 199,
+                    品牌: '宜家 杉皮格',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/80362262/",
+                },
+                css: {
+                    width: 20,
+                    height: 40,
+                    bottom: 120,
+                    left: 0,
+                    'writing-mode': 'vertical-lr',
+                },
+            },
         ],
     },
     {
@@ -630,7 +704,7 @@ const data = [
                     bottom: 3,
                     left: 5,
                 },
-            },{
+            }, {
                 id: '洗碗机',
                 data: {
                     价格: 3580,
@@ -757,6 +831,20 @@ const data = [
                 },
             },
             {
+                id: '主卧空净',
+                data: {
+                    价格: 1099,
+                    品牌: '松下 F-PXF35C-S',
+                    链接: "https://item.jd.com/318110.html?dist=jd",
+                },
+                css: {
+                    bottom: 0,
+                    left: 0,
+                    width: 70,
+                    height: 20,
+                },
+            },
+            {
                 id: '主卧空调',
                 data: {
                     价格: 3048,
@@ -796,6 +884,49 @@ const data = [
                     width: '100%',
                     height: '100%',
                     'background-color': 'lightblue',
+                },
+            },
+            {
+                id: '梯子',
+                data: {
+                    价格: 299,
+                    品牌: '宜家 贝卡姆',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/70190412/",
+                },
+                css: {
+                    top: 2,
+                    right: 2,
+                    width: 40,
+                    height: 20,
+                },
+            },
+            {
+                id: '花架',
+                data: {
+                    价格: 299,
+                    品牌: '宜家 沙图玛斯',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/80294961/",
+                },
+                css: {
+                    top: 20,
+                    left: 2,
+                    width: 28,
+                    height: 84,
+                },
+            },
+            {
+                id: '阳伞',
+                data: {
+                    价格: 998,
+                    品牌: '宜家 朗霍蒙',
+                    链接: "http://www.ikea.com/cn/zh/catalog/products/S99219330/",
+                },
+                css: {
+                    top: 70,
+                    left: 34,
+                    width: 120,
+                    height: 120,
+                    transform: 'rotate(45deg)',
                 },
             },
         ],
