@@ -463,7 +463,7 @@ const data = [
                 data: {
                     价格: 599,
                     品牌: '宜家 阿达姆',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/30174616/#/70174619",
+                    链接: "//www.ikea.com/cn/zh/catalog/products/30174616/#/70174619",
                 },
                 css: {
                     width: 170,
