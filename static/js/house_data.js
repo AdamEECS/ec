@@ -707,9 +707,24 @@ const data = [
             }, {
                 id: '洗碗机',
                 data: {
-                    价格: 3580,
+                    价格: 3280,
                     品牌: '松下 台式',
                     链接: "https://item.jd.com/3073802.html",
+                },
+                css: {
+                    width: 35,
+                    height: 55,
+                    bottom: 3,
+                    right: 5,
+                    'writing-mode': 'vertical-lr',
+                    'z-index': 10,
+                },
+            }, {
+                id: '电饭煲',
+                data: {
+                    价格: 0,
+                    品牌: '松下 赠品',
+                    链接: "https://detail.tmall.com/item.htm?spm=a230r.1.14.4.455949b1js4VWd&id=560072353529&cm_id=140105335569ed55e27b&abbucket=4&skuId=3662456982878",
                 },
                 css: {
                     width: 35,
