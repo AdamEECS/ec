@@ -170,9 +170,9 @@ const data = [
             {
                 id: '次卧空净',
                 data: {
-                    价格: 1099,
-                    品牌: '松下 F-PXF35C-S',
-                    链接: "https://item.jd.com/318110.html?dist=jd",
+                    价格: 1274,
+                    品牌: '松下 F-31C6VD',
+                    链接: "https://item.jd.com/2798660.html",
                 },
                 css: {
                     bottom: 0,
@@ -387,7 +387,7 @@ const data = [
             {
                 id: '客厅空净',
                 data: {
-                    价格: 2299,
+                    价格: 1899,
                     品牌: '松下 F-VXG70C-N',
                     链接: "https://item.jd.com/497227.html?dist=jd",
                 },
@@ -833,9 +833,9 @@ const data = [
             {
                 id: '主卧空净',
                 data: {
-                    价格: 1099,
-                    品牌: '松下 F-PXF35C-S',
-                    链接: "https://item.jd.com/318110.html?dist=jd",
+                    价格: 1274,
+                    品牌: '松下 F-31C6VD',
+                    链接: "https://item.jd.com/2798660.html",
                 },
                 css: {
                     bottom: 0,
