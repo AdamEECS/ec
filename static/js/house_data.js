@@ -727,10 +727,10 @@ const data = [
                     链接: "https://detail.tmall.com/item.htm?spm=a230r.1.14.4.455949b1js4VWd&id=560072353529&cm_id=140105335569ed55e27b&abbucket=4&skuId=3662456982878",
                 },
                 css: {
-                    width: 35,
-                    height: 55,
+                    width: 40,
+                    height: 31,
                     bottom: 3,
-                    right: 5,
+                    right: 50,
                     'writing-mode': 'vertical-lr',
                     'z-index': 10,
                 },
