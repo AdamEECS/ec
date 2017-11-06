@@ -731,7 +731,6 @@ const data = [
                     height: 31,
                     bottom: 3,
                     right: 50,
-                    'writing-mode': 'vertical-lr',
                     'z-index': 10,
                 },
             },
