@@ -59,8 +59,8 @@ const data = [
             {
                 id: '次卧床',
                 data: {
-                    价格: 2999,
-                    品牌: '宜家 马尔姆',
+                    价格: 8480,
+                    品牌: '雅兰套装',
                     链接: "http://www.ikea.com/cn/zh/catalog/products/60274921",
                 },
                 css: {
@@ -71,19 +71,6 @@ const data = [
                 },
             },
             {
-                id: '次卧床垫',
-                data: {
-                    价格: 1499,
-                    品牌: '宜家 海沃格',
-                    链接: "http://www.ikea.com/cn/zh/catalog/products/10269352/",
-                },
-                css: {
-                    width: 100,
-                    height: 100,
-                    top: 40,
-                    right: 10,
-                },
-            }, {
                 id: '储物袋*8',
                 data: {
                     价格: 320,
@@ -413,11 +400,11 @@ const data = [
                 },
             },
             {
-                id: 'muji沙发',
+                id: 'line friend 懒豆子',
                 data: {
                     价格: 1200,
-                    品牌: 'muji',
-                    链接: "http://www.muji.com.cn/cn/store/goods/4934761049182",
+                    品牌: 'line friend',
+                    链接: "",
                 },
                 css: {
                     width: 65,
